@@ -4,11 +4,13 @@ public class MainMenuPresenter : MonoBehaviour
 {
     [SerializeField] private MainMenu mainMenu;
     [SerializeField] private Canvas mainMenuCanvas;
+    [SerializeField] private OptionsMenu optionsMenu;
+    [SerializeField] private Instructions instructions;
 
     // Start is called before the first frame update
     void Start()
     {
-        UpdateView();
+        ShowMenu();
     }
     public void ShowMenu()
     {
@@ -19,6 +21,20 @@ public class MainMenuPresenter : MonoBehaviour
     {
         mainMenu.IsVisible = false;
         UpdateView();
+    }
+    public void OnPlayButtonClicked()
+    {
+        HideMenu();
+        instructions.IsVisible = true;
+    }
+    public void OnOptionsButtonClicked()
+    {
+        HideMenu();
+        optionsMenu.IsVisible = true;
+    }
+    public void OnQuitButtonClicked()
+    {
+        mainMenu.Quit();
     }
     public void UpdateView()
     {
