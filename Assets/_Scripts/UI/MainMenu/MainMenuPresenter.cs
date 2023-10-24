@@ -18,17 +18,26 @@ public class MainMenuPresenter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (mainMenu != null)
+        {
+            mainMenu.VisibilityChanged += OnVisibilityChanged;
+        }
         ShowMenu();
+    }
+    private void OnDestroy()
+    {
+        if(mainMenu != null)
+        {
+            mainMenu.VisibilityChanged -= OnVisibilityChanged;
+        }
     }
     public void ShowMenu()
     {
         mainMenu.IsVisible = true;
-        UpdateView();
     }
     public void HideMenu()
     {
         mainMenu.IsVisible = false;
-        UpdateView();
     }
     public void OnPlayButtonClicked()
     {
@@ -48,5 +57,9 @@ public class MainMenuPresenter : MonoBehaviour
     {
         if (mainMenu == null) return;
         mainMenuCanvas.enabled = mainMenu.IsVisible;
+    }
+    public void OnVisibilityChanged()
+    {
+        UpdateView();
     }
 }

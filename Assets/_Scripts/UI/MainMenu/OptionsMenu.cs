@@ -6,22 +6,17 @@
  *                  the presenter when its state has changed.
  */
 
+using System;
 using UnityEngine;
 
 public class OptionsMenu : MonoBehaviour
 {
+    public event Action VisibilityChanged;
     [SerializeField] private bool isVisible;
     public bool IsVisible { get => isVisible; set => isVisible = value; }
 
-    // Start is called before the first frame update
-    void Start()
+    public void UpdateVisibility()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        VisibilityChanged?.Invoke();
     }
 }
