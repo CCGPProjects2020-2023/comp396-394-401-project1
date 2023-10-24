@@ -1,5 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+/*  Script Name:    BackgroundScrolling.cs
+ *  Author:         Marcus Ngooi
+ *  Creation Date:  October 23, 2023
+ *  Modified Date:  October 24, 2023
+ *  Description:    Smoothly scrolls the background in the main menu scene.
+ */
+
 using UnityEngine;
 
 public class BackgroundScrolling : MonoBehaviour

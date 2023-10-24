@@ -1,3 +1,11 @@
+/*  Script Name:    MainMenuPresenter.cs
+ *  Author:         Marcus Ngooi
+ *  Creation Date:  October 21, 2023
+ *  Modified Date:  October 24, 2023
+ *  Description:    Receives the user inputs via UI events (e.g., Button click)
+ *                  and, in turn manipulates the Main Menu's data (state).
+ */
+
 using UnityEngine;
 
 public class MainMenuPresenter : MonoBehaviour

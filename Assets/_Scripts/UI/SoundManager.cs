@@ -1,3 +1,10 @@
+/*  Script Name:    SoundManager.cs
+ *  Author:         Marcus Ngooi
+ *  Creation Date:  October 23, 2023
+ *  Modified Date:  October 24, 2023
+ *  Description:    Manages sound --> Plays sounds and changes volume.
+ */
+
 using UnityEngine;
 using UnityEngine.Audio;
 

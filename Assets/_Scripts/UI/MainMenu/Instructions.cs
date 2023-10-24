@@ -1,5 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+/*  Script Name:    Instructions.cs
+ *  Author:         Marcus Ngooi
+ *  Creation Date:  October 23, 2023
+ *  Modified Date:  October 24, 2023
+ *  Description:    Manages the state of the Instructions screen. Will notify
+ *                  the presenter when its state has changed.
+ */
+
 using UnityEngine;
 
 public class Instructions : MonoBehaviour

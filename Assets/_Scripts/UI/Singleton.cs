@@ -1,3 +1,11 @@
+/*  Script Name:    Singleton.cs
+ *  Author:         Marcus Ngooi
+ *  Creation Date:  October 23, 2023
+ *  Modified Date:  October 24, 2023
+ *  Description:    Parent class implementing Singleton pattern. 
+ *                  If a class needs to be a Singleton, just inherit this class.
+ */
+
 using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Component
