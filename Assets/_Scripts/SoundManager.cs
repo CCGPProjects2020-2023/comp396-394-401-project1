@@ -1,13 +1,17 @@
-/*  Script Name:    SoundManager.cs
- *  Author:         Marcus Ngooi
- *  Creation Date:  October 23, 2023
- *  Modified Date:  October 24, 2023
- *  Description:    Manages sound --> Plays sounds and changes volume.
+/*  Author's Name:          Marcus Ngooi
+ *  Last Modified By:       October 23, 2023
+ *  Date Last Modified:     October 24, 2023
+ *  Program Description:    Manages sound --> Plays sounds and changes volume.
+ *  Revision History:       October 23, 2023: Initial SoundManager script.
+ *                          October 24, 2023: Added documentation.
  */
 
 using UnityEngine;
 using UnityEngine.Audio;
 
+/// <summary>
+/// A global manager for game sounds
+/// </summary>
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] AudioMixer audioMixer;
@@ -50,15 +54,28 @@ public class SoundManager : Singleton<SoundManager>
             SetVolume(PlayerPrefs.GetFloat(sfxParameter), SoundType.SFX);
         }
     }
+    /// <summary>
+    /// A function to change the background music.
+    /// </summary>
+    /// <param name="clip">The audio clip to be the new background music to play</param>
     public void ChangeMusic(AudioClip clip)
     {
         if (!musicAudioSource.clip.name.Equals(clip.name)) musicAudioSource.clip = clip;
         musicAudioSource.Play();
     }
+    /// <summary>
+    /// A function to play a sound effect.
+    /// </summary>
+    /// <param name="clip">The audio clip to be the sound effect to play</param>
     public void PlaySfx(AudioClip clip)
     {
         sfxAudioSource.PlayOneShot(clip);
     }
+    /// <summary>
+    /// A function to change the volume.
+    /// </summary>
+    /// <param name="value">How much to change the volume by.</param>
+    /// <param name="type">The type of sound</param>
     public void SetVolume(float value, SoundType type)
     {
         float newValue = Mathf.Log10(value) * setVolumeMultiplier;

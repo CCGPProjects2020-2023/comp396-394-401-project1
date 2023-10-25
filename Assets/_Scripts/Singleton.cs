@@ -1,13 +1,18 @@
-/*  Script Name:    Singleton.cs
- *  Author:         Marcus Ngooi
- *  Creation Date:  October 23, 2023
- *  Modified Date:  October 24, 2023
- *  Description:    Parent class implementing Singleton pattern. 
- *                  If a class needs to be a Singleton, just inherit this class.
+/*  Author's Name:          Marcus Ngooi
+ *  Last Modified By:       Marcus Ngooi
+ *  Date Last Modified:     October 24, 2023
+ *  Program Description:    Parent class implementing Singleton pattern. 
+ *                          If a class needs to be a Singleton, just inherit this class.
+ *  Revision History:       October 23, 2023: Initial Singleton script.
+ *                          October 24, 2023: Added documentation.
  */
 
 using UnityEngine;
 
+/// <summary>
+/// A generic class to provide a singleton implementation for inheriting classes.
+/// </summary>
+/// <typeparam name="T">The user-defined class</typeparam>
 public class Singleton<T> : MonoBehaviour where T : Component
 {
     private static T instance;
@@ -26,10 +31,13 @@ public class Singleton<T> : MonoBehaviour where T : Component
             return instance;
         }
     }
-    public virtual void Awak()
+    public virtual void Awake()
     {
         RemoveDuplicates();
     }
+    /// <summary>
+    /// Create an instance when there isn't already one in the scene.
+    /// </summary>
     private static void SetupInstance()
     {
         instance = (T)FindObjectOfType(typeof(T));
@@ -43,6 +51,9 @@ public class Singleton<T> : MonoBehaviour where T : Component
             DontDestroyOnLoad(gameObj);
         }
     }
+    /// <summary>
+    /// Remove duplicate instances.
+    /// </summary>
     private void RemoveDuplicates()
     {
         if (instance == null)

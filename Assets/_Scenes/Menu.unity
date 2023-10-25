@@ -2087,6 +2087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isVisible: 0
+  soundManager: {fileID: 0}
 --- !u!1 &1071319861
 GameObject:
   m_ObjectHideFlags: 0
@@ -4380,6 +4381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464da5177d204994a9ac520208fe4a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  optionsMenu: {fileID: 1042467143}
+  optionsMenuCanvas: {fileID: 825635996}
+  mainMenuPresenter: {fileID: 214783190}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
