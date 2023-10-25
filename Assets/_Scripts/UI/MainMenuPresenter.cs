@@ -16,8 +16,6 @@ public class MainMenuPresenter : MonoBehaviour
 {
     [SerializeField] private MainMenu mainMenu;
     [SerializeField] private Canvas mainMenuCanvas;
-    [SerializeField] private OptionsMenu optionsMenu;
-    [SerializeField] private Instructions instructions;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +38,7 @@ public class MainMenuPresenter : MonoBehaviour
     /// </summary>
     public void OnPlayButtonClicked()
     {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         SceneManager.LoadScene(SceneName.Level01.ToString());
     }
     /// <summary>
@@ -47,6 +46,7 @@ public class MainMenuPresenter : MonoBehaviour
     /// </summary>
     public void OnInstructionsButtonClicked()
     {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         SceneManager.LoadScene(SceneName.Instructions.ToString());
     }
     /// <summary>
@@ -54,6 +54,7 @@ public class MainMenuPresenter : MonoBehaviour
     /// </summary>
     public void OnOptionsButtonClicked()
     {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         SceneManager.LoadScene(SceneName.OptionsMenu.ToString());
     }
     /// <summary>
@@ -61,6 +62,7 @@ public class MainMenuPresenter : MonoBehaviour
     /// </summary>
     public void OnQuitButtonClicked()
     {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         mainMenu.Quit();
     }
     /// <summary>

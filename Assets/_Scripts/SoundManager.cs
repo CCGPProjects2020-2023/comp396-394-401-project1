@@ -3,7 +3,7 @@
  *  Date Last Modified:     October 24, 2023
  *  Program Description:    Manages sound --> Plays sounds and changes volume.
  *  Revision History:       October 23, 2023: Initial SoundManager script.
- *                          October 24, 2023: Added documentation.
+ *                          October 24, 2023: Added documentation, adjusted PlayerPref usage.
  */
 
 using UnityEngine;
@@ -96,10 +96,12 @@ public class SoundManager : Singleton<SoundManager>
             case SoundType.MUSIC:
                 musicVolume = value;
                 audioMixer.SetFloat(musicParameter, newValue);
+                PlayerPrefs.SetFloat(musicParameter, value);
                 break;
             case SoundType.SFX:
                 sfxVolume = value;
                 audioMixer.SetFloat(sfxParameter, newValue);
+                PlayerPrefs.SetFloat(sfxParameter, value);
                 break;
             default:
                 Debug.LogError("Please assign the sound type before setting volume");
