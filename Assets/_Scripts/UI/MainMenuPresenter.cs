@@ -15,7 +15,6 @@ using UnityEngine.SceneManagement;
 public class MainMenuPresenter : MonoBehaviour
 {
     [SerializeField] private MainMenu mainMenu;
-    [SerializeField] private Canvas mainMenuCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +27,7 @@ public class MainMenuPresenter : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if(mainMenu != null)
+        if (mainMenu != null)
         {
             // Unsubscribe from events.
         }

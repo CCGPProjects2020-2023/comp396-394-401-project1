@@ -16,7 +16,6 @@ using UnityEngine.UI;
 public class OptionsMenuPresenter : MonoBehaviour
 {
     [SerializeField] private OptionsMenu optionsMenu;
-    [SerializeField] private Canvas optionsMenuCanvas;
 
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;

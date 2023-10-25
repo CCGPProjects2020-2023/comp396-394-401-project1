@@ -75,7 +75,7 @@ public class SoundManager : Singleton<SoundManager>
                 sfxAudioSource.PlayOneShot(buttonClick);
                 break;
         }
-        
+
     }
     /// <summary>
     /// A function to change the volume.
