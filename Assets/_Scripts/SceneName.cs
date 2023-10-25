@@ -10,8 +10,8 @@
 /// </summary>
 public enum SceneName
 {
-    Menu,
-    Options,
+    MainMenu,
+    OptionsMenu,
     Instructions,
     Level01,
     Level02,

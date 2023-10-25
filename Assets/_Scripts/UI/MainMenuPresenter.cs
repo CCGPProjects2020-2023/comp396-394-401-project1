@@ -54,7 +54,7 @@ public class MainMenuPresenter : MonoBehaviour
     /// </summary>
     public void OnOptionsButtonClicked()
     {
-        SceneManager.LoadScene(SceneName.Options.ToString());
+        SceneManager.LoadScene(SceneName.OptionsMenu.ToString());
     }
     /// <summary>
     /// Event handler for Quit button

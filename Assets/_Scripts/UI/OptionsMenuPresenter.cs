@@ -8,6 +8,7 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// The Presenter for the Options Menu.
@@ -16,6 +17,10 @@ public class OptionsMenuPresenter : MonoBehaviour
 {
     [SerializeField] private OptionsMenu optionsMenu;
     [SerializeField] private Canvas optionsMenuCanvas;
+
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +28,15 @@ public class OptionsMenuPresenter : MonoBehaviour
         {
             // Subscribe to events
         }
+
+        // Initialize sliders
+        musicVolumeSlider.value = SoundManager.Instance.MusicVolume;
+        sfxVolumeSlider.value = SoundManager.Instance.SfxVolume;
+
+        // Add listeners for sliders
+        musicVolumeSlider.onValueChanged.AddListener(optionsMenu.ChangeMusicVolume);
+        sfxVolumeSlider.onValueChanged.AddListener(optionsMenu.ChangeSfxVolume);
+
         UpdateView();
     }
     private void OnDestroy()
@@ -35,9 +49,10 @@ public class OptionsMenuPresenter : MonoBehaviour
     /// <summary>
     /// Handles the event: Menu button clicked.
     /// </summary>
-    public void OnMenuButtonClicked()
+    public void OnMainMenuButtonClicked()
     {
-        SceneManager.LoadScene(SceneName.Menu.ToString());
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
+        SceneManager.LoadScene(SceneName.MainMenu.ToString());
     }
     /// <summary>
     /// Updates the view of the Options Menu.

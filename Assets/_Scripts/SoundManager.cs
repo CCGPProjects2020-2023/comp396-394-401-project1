@@ -18,8 +18,8 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioSource sfxAudioSource;
 
-    [Header("Audio Clips")]
-    [SerializeField] private AudioClip menuButtonClickAudioClip;
+    [Header("SFX Audio Clips")]
+    [SerializeField] AudioClip buttonClick;
 
     [Header("Debug")]
     [SerializeField] private float musicVolume = 1f;
@@ -66,10 +66,16 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// A function to play a sound effect.
     /// </summary>
-    /// <param name="clip">The audio clip to be the sound effect to play</param>
-    public void PlaySfx(AudioClip clip)
+    /// <param name="sfxEvent">The audio event to trigger the appropriate sound effect</param>
+    public void PlaySfx(SfxEvent sfxEvent)
     {
-        sfxAudioSource.PlayOneShot(clip);
+        switch (sfxEvent)
+        {
+            case SfxEvent.ButtonClick:
+                sfxAudioSource.PlayOneShot(buttonClick);
+                break;
+        }
+        
     }
     /// <summary>
     /// A function to change the volume.
