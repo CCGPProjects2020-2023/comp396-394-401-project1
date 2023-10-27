@@ -11,6 +11,7 @@
     -October 26, 2023
         -> Created initial playerController with only update that contains a call to MovePlayer and Shoot methods
         -> Addedplayer movement code that uses player inout to move the player
+        -> Added links to references used to help learn how to make the input always know where the front and right are based on rotation.
         -> Added Debug.Log to shoot method to test that it was being called 
         -> Added small logic fix to GetAxises
  */

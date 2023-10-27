@@ -1,19 +1,22 @@
 /*
-    //***NOTE: This code is modified from the COMP396 classwork examples***
-
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 26, 2023
-    Program Description: This script handles the camera movement of the player and rotation of the player object as well (to make the camera and player X rotations the same).
+    Last Modified Date: October 27, 2023
+    Program Description: This script handles the camera movement of the player and rotation of the player 
+    object as well (to make the camera and player X rotations the same).
     Revision History:   
     -October 26, 2023
         -> Added firstvariables.
         -> Added list of ressources used to help make the camera turn with mouse imput.
         -> Added code in the start to lock the cursor and make it invisible.
         -> Added code in the update to move the camera X and Y using the camera speed.
+        -> Added links to references used to help learn how to make the camera follow the mouse input.
         -> Added code to pair the player object and camera X rotations together.
         -> Added initial fix for player rortation for movement matching the camera's rotation
+    -October 27, 2023 
+        -> Added more fixes to the player rotation matching only the camera on the x axis.
+        ->transfered the player rotations adjustments to a new script named UpdatePlayerRotation
  */
 
 using System.Collections;
@@ -58,7 +61,8 @@ public class CameraController : MonoBehaviour
 
 
     /// <summary>
-    /// The code in the update sets the camera rotation based on the MOuse X and Y inputs. It also sets the X rotaion of the player to the same as the camera so the the movement controls match.
+    /// The code in the update sets the camera rotation based on the MOuse X and Y inputs. 
+    /// It also sets the X rotaion of the player to the same as the camera so the the movement controls match.
     /// </summary>
     // Update is called once per frame
     void Update()
@@ -67,8 +71,6 @@ public class CameraController : MonoBehaviour
         cameraPitch += cameraSpeedX * Input.GetAxis("Mouse X");
         //this one substracts or the up and dowwn movement is inverted for the controls
         cameraYaw -= cameraSpeedY * Input.GetAxis("Mouse Y");
-
-
         
         //clamp for look limit on the the Y axis. We do not need to do this to the x variable as
         //we need free 360 degree movement on the hgorizontal plane. We need to limit Y so we do not see the player or loop around too far on the y axis and get disoriented 
@@ -76,11 +78,5 @@ public class CameraController : MonoBehaviour
 
         //this set the camera transform to the new Vecto3 (cameram positions that get updated). Euluer angles is for 3D rotation
         this.transform.eulerAngles = new Vector3(cameraYaw, cameraPitch, 0);
-
-
-
-        //this was used for help on solving quaternion only on y
-        //sets the X rotaion of the player to the same as the camera so the the movement controls match. Time.deltaTime * 1000 controls the interpolation speed
-        player.transform.rotation = Quaternion.Slerp(player.transform.rotation, this.transform.rotation, Time.deltaTime * 1000);
     }
 }
