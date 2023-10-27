@@ -318,7 +318,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 1481838362}
   - component: {fileID: 1481838366}
   - component: {fileID: 1481838367}
+  - component: {fileID: 1481838368}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -387,7 +388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2fb1666a502071842ac8d7ead58edd4a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -426,10 +427,11 @@ Transform:
   m_GameObject: {fileID: 1481838361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.79, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1609174760}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1481838366
@@ -472,8 +474,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1481838366}
-  health: 100
   speed: 2
+--- !u!114 &1481838368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481838361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c140f96667c671429837ddf7d4b2761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  cooldownLength: 3
+  currentCooldownTime: 0
+  abilitiesReadyCheck: 1
 --- !u!1 &1609174757
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +502,7 @@ GameObject:
   - component: {fileID: 1609174760}
   - component: {fileID: 1609174759}
   - component: {fileID: 1609174758}
+  - component: {fileID: 1609174761}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -560,17 +578,33 @@ Transform:
   m_GameObject: {fileID: 1609174757}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0.46599996, z: 0.392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1481838365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1609174761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609174757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a2c3e98c325e44c84b121f8b4e5b3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1481838361}
+  cameraSpeedX: 4
+  cameraSpeedY: 4
+  yawLimitUpper: -40
+  yawLimitLower: 40
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1609174760}
   - {fileID: 216332951}
   - {fileID: 1481838365}
   - {fileID: 610714505}

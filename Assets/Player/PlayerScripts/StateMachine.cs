@@ -14,18 +14,11 @@
     -October 23, 2023 -> Created the simple state machine pattern with all methods and functions from the in class example
     -October 24, 2023 -> Added comment header, inline comments and descriptions for the functions
  */
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-/// <summary>
-/// This is the public class PlayerStateMachine that contains a State class that has
-/// onEnter, onFrame and onExit functionality for the the player ability states.
-/// </summary>
-public class PlayerStateMachine
+public class StateMachine
 {
     /// <summary>
     /// public State class that has a name for the states,\
@@ -72,8 +65,6 @@ public class PlayerStateMachine
 
         return state;
     }
-
-
 
 
     // Update is called once per frame and calls the apporpriate state checks and logic for the states. Also calls the onFrame for the states
