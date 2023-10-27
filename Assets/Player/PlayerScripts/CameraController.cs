@@ -13,6 +13,7 @@
         -> Added code in the start to lock the cursor and make it invisible.
         -> Added code in the update to move the camera X and Y using the camera speed.
         -> Added code to pair the player object and camera X rotations together.
+        -> Added initial fix for player rortation for movement matching the camera's rotation
  */
 
 using System.Collections;
@@ -42,6 +43,7 @@ public class CameraController : MonoBehaviour
 
     public float yawLimitUpper = 0;
     public float yawLimitLower = 0;
+
 
     /// <summary>
     /// The code in the start sets the cursor to the cneter and makes it invisible
@@ -77,7 +79,8 @@ public class CameraController : MonoBehaviour
 
 
 
-        //sets the X rotaion of the player to the same as the camera so the the movement controls match.
-        player.transform.rotation = Quaternion.Euler(player.transform.position.x, cameraYaw, player.transform.position.z);
+        //this was used for help on solving quaternion only on y
+        //sets the X rotaion of the player to the same as the camera so the the movement controls match. Time.deltaTime * 1000 controls the interpolation speed
+        player.transform.rotation = Quaternion.Slerp(player.transform.rotation, this.transform.rotation, Time.deltaTime * 1000);
     }
 }

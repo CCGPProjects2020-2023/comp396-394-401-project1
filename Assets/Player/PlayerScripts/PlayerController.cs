@@ -12,6 +12,7 @@
         -> Created initial playerController with only update that contains a call to MovePlayer and Shoot methods
         -> Addedplayer movement code that uses player inout to move the player
         -> Added Debug.Log to shoot method to test that it was being called 
+        -> Added small logic fix to GetAxises
  */
 
 using OpenCover.Framework.Model;
@@ -68,24 +69,15 @@ public class PlayerController : MonoBehaviour
         Vector3 playerMovement = Vector3.zero;
 
         //if the movement is horizontal set movement to 
-        if (Input.GetAxis("Horizontal") > 0) 
-        {
+        if (Input.GetAxis("Horizontal") > 0.1) 
             playerMovement += transform.right;
-
-        }
-        if(Input.GetAxis("Horizontal") < 0)
-        {
-            playerMovement -= transform.right;
-        }
-        if (Input.GetAxis("Vertical") > 0)
-        {
+        if(Input.GetAxis("Horizontal") < -0.1)
+            playerMovement -= transform.right;       
+        if (Input.GetAxis("Vertical") > 0.1)
             playerMovement += transform.forward;
-
-        }
-        if (Input.GetAxis("Vertical") < 0)
-        {
+        if (Input.GetAxis("Vertical") < -0.1)
             playerMovement -= transform.forward;
-        }
+
         //Take input and use it to move the player in the world
         player.velocity = new Vector3((playerMovement.x * speed * 1000 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
     }
