@@ -8,19 +8,26 @@
     Revision History:   
         -> Transfered this code from CameraController
         -> modified the code added to work in this script and removed the start
+        -> Added more comments
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This class updates the player rotation on the y-axis equal to the y rotation of the camera so that WASD movement keys are updated accordingly.
+/// </summary>
 public class UpdatePlayerRotation : MonoBehaviour
 {
+    //Reference to the player camera
     public GameObject cam;
 
     // Update is called once per frame
     void Update()
     {
+        //New Quanterion that is updated to match the camera's Y and the players current other values as we do not want to update those
         Quaternion playerNewRotationX = new Quaternion(this.transform.rotation.x, cam.transform.rotation.y, this.transform.rotation.z, cam.transform.rotation.w);
         //this was used for help on solving quaternion only on y
         //sets the X rotaion of the player to the same as the camera so the the movement controls match. Time.deltaTime * 1000 controls the interpolation speed

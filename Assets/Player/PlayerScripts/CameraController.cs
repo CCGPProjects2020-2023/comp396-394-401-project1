@@ -54,9 +54,8 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //sets the cursor to the center and makes the cursor not visible
+        //Locks the cursor to the center
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
 
@@ -67,6 +66,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //sets the cursor to always visible
+        Cursor.visible = true;
         //updates the X and Y Camera movement positions
         cameraPitch += cameraSpeedX * Input.GetAxis("Mouse X");
         //this one substracts or the up and dowwn movement is inverted for the controls

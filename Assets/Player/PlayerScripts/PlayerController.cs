@@ -13,7 +13,9 @@
         -> Addedplayer movement code that uses player inout to move the player
         -> Added links to references used to help learn how to make the input always know where the front and right are based on rotation.
         -> Added Debug.Log to shoot method to test that it was being called 
-        -> Added small logic fix to GetAxises
+        -> Added small logic fix to GetAxises to always know where forward and right are based on the player rotation.
+        -> Added more comments
+        
  */
 
 using OpenCover.Framework.Model;
@@ -28,10 +30,11 @@ using UnityEngine.XR;
 
 //make documentation for every class and function (just description. What does this function/class)
 /// <summary>
-/// 
+/// This class controls the player movement and shooting.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    //reference to the player and player speed.
     public Rigidbody player;
     public float speed = 16;
 
@@ -69,13 +72,19 @@ public class PlayerController : MonoBehaviour
         //set playerMovement to 0, Vector3.zero is shorthand for 0
         Vector3 playerMovement = Vector3.zero;
 
-        //if the movement is horizontal set movement to 
+
+        //**These inputs increment the direction of the player movement in parallel to the player rotation**
+
+        //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
         if (Input.GetAxis("Horizontal") > 0.1) 
             playerMovement += transform.right;
-        if(Input.GetAxis("Horizontal") < -0.1)
-            playerMovement -= transform.right;       
+        //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
+        if (Input.GetAxis("Horizontal") < -0.1)
+            playerMovement -= transform.right;
+        //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
         if (Input.GetAxis("Vertical") > 0.1)
             playerMovement += transform.forward;
+        //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
         if (Input.GetAxis("Vertical") < -0.1)
             playerMovement -= transform.forward;
 
