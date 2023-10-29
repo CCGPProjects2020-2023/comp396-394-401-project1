@@ -1,21 +1,25 @@
-/*  Script Name:    SoundManager.cs
- *  Author:         Marcus Ngooi
- *  Creation Date:  October 23, 2023
- *  Modified Date:  October 24, 2023
- *  Description:    Manages sound --> Plays sounds and changes volume.
+/*  Author's Name:          Marcus Ngooi
+ *  Last Modified By:       October 23, 2023
+ *  Date Last Modified:     October 24, 2023
+ *  Program Description:    Manages sound --> Plays sounds and changes volume.
+ *  Revision History:       October 23, 2023: Initial SoundManager script.
+ *                          October 24, 2023: Added documentation, adjusted PlayerPref usage.
  */
 
 using UnityEngine;
 using UnityEngine.Audio;
 
+/// <summary>
+/// A global manager for game sounds
+/// </summary>
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioSource sfxAudioSource;
 
-    [Header("Audio Clips")]
-    [SerializeField] private AudioClip menuButtonClickAudioClip;
+    [Header("SFX Audio Clips")]
+    [SerializeField] AudioClip buttonClick;
 
     [Header("Debug")]
     [SerializeField] private float musicVolume = 1f;
@@ -50,15 +54,34 @@ public class SoundManager : Singleton<SoundManager>
             SetVolume(PlayerPrefs.GetFloat(sfxParameter), SoundType.SFX);
         }
     }
+    /// <summary>
+    /// A function to change the background music.
+    /// </summary>
+    /// <param name="clip">The audio clip to be the new background music to play</param>
     public void ChangeMusic(AudioClip clip)
     {
         if (!musicAudioSource.clip.name.Equals(clip.name)) musicAudioSource.clip = clip;
         musicAudioSource.Play();
     }
-    public void PlaySfx(AudioClip clip)
+    /// <summary>
+    /// A function to play a sound effect.
+    /// </summary>
+    /// <param name="sfxEvent">The audio event to trigger the appropriate sound effect</param>
+    public void PlaySfx(SfxEvent sfxEvent)
     {
-        sfxAudioSource.PlayOneShot(clip);
+        switch (sfxEvent)
+        {
+            case SfxEvent.ButtonClick:
+                sfxAudioSource.PlayOneShot(buttonClick);
+                break;
+        }
+
     }
+    /// <summary>
+    /// A function to change the volume.
+    /// </summary>
+    /// <param name="value">How much to change the volume by.</param>
+    /// <param name="type">The type of sound</param>
     public void SetVolume(float value, SoundType type)
     {
         float newValue = Mathf.Log10(value) * setVolumeMultiplier;
@@ -73,10 +96,12 @@ public class SoundManager : Singleton<SoundManager>
             case SoundType.MUSIC:
                 musicVolume = value;
                 audioMixer.SetFloat(musicParameter, newValue);
+                PlayerPrefs.SetFloat(musicParameter, value);
                 break;
             case SoundType.SFX:
                 sfxVolume = value;
                 audioMixer.SetFloat(sfxParameter, newValue);
+                PlayerPrefs.SetFloat(sfxParameter, value);
                 break;
             default:
                 Debug.LogError("Please assign the sound type before setting volume");
