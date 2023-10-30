@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 610714504}
   - component: {fileID: 610714503}
   - component: {fileID: 610714502}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -791,7 +791,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1481838366}
-  speed: 4
+  speed: 1
+  jumpPower: 8
+  isGrounded: 0
 --- !u!114 &1481838368
 MonoBehaviour:
   m_ObjectHideFlags: 0
