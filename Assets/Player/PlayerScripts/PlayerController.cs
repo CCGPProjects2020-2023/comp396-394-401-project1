@@ -14,8 +14,11 @@
         -> Added links to references used to help learn how to make the input always know where the front and right are based on rotation.
         -> Added Debug.Log to shoot method to test that it was being called 
         -> Added small logic fix to GetAxises to always know where forward and right are based on the player rotation.
-        -> Added more comments
-        
+        -> Added more comments  
+    -October 30, 2023
+        ->Added code//implementation for Jumping.
+        ->Added some comments
+        ->Refactored movement code
  */
 
 using OpenCover.Framework.Model;
@@ -39,15 +42,27 @@ public class PlayerController : MonoBehaviour
     public float speed = 16;
 
 
+    //Jumping code variables
+    public float jumpPower = 8.0f;
+    public bool isGrounded = false;
+
+
+
     void Update()
     {
         //this code is not controller by the playerStateMachine. It is player derived purely from player inputs so it is independant 
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
+        
         MovePlayer();
 
         //if key is pressed call the shoot method.
         if (Input.GetKey(KeyCode.Mouse0))
             Shoot();
+
+        //isGrounded = GroundCheck();
+
+        if (isGrounded && Input.GetKeyUp(KeyCode.Space))
+            Jump();
     }
 
     /// <summary>
@@ -74,21 +89,82 @@ public class PlayerController : MonoBehaviour
 
 
         //**These inputs increment the direction of the player movement in parallel to the player rotation**
-
         //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
-        if (Input.GetAxis("Horizontal") > 0.1) 
-            playerMovement += transform.right;
-        //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
-        if (Input.GetAxis("Horizontal") < -0.1)
-            playerMovement -= transform.right;
-        //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
-        if (Input.GetAxis("Vertical") > 0.1)
-            playerMovement += transform.forward;
-        //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
-        if (Input.GetAxis("Vertical") < -0.1)
-            playerMovement -= transform.forward;
+       
+        //Switch statement for the Horizontal movement (only one horizontal axis direction can be true at once)
+        switch (Input.GetAxis("Horizontal")) 
+        {
 
-        //Take input and use it to move the player in the world
-        player.velocity = new Vector3((playerMovement.x * speed * 1000 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
+            //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
+            case > 0.1f:
+                playerMovement += transform.right;
+                break;
+            //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
+            case < -0.1f:
+                playerMovement -= transform.right;
+                break;
+        }
+
+
+        //Switch statement for the vertical movement (only one vertical axis direction can be true at once)
+        switch (Input.GetAxis("Vertical"))
+        {
+            //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
+            case > 0.1f:
+                playerMovement += transform.forward;
+                break;
+            //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
+            case < -0.1f:
+                playerMovement -= transform.forward;
+                break;
+        }
+
+        //if the player is grounded, player can move normally
+        if(isGrounded)
+            //Take input and use it to move the player in the world
+            player.velocity = new Vector3((playerMovement.x * speed * 1000 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
+
+
+        //if player is not grounded, player has reduced movement in the air
+        if (!isGrounded)
+            //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 1/10 or 100
+            player.velocity = new Vector3((playerMovement.x * speed * 100 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
+    }
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Jump()
+    {
+        player.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
+    private void OnCollisionStay(Collision other)
+    {
+        //layer == 3 is "Ground" layer
+        if(other.gameObject.layer == 3)
+        {
+            isGrounded = true;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
+    private void OnCollisionExit(Collision other)
+    {
+        //layer == 3 is "Ground" layer
+        if (other.gameObject.layer == 3)
+        {
+            isGrounded = false;
+        }
     }
 }
