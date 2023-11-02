@@ -19,6 +19,10 @@
         ->Added code//implementation for Jumping.
         ->Added some comments
         ->Refactored movement code
+    -November 01, 2023
+        -> Updated the jump from GetKeyUp to GetKey
+        -> Fixed error in if(!Grounded logic for the player jump)
+        -> udpated case values from 0.01 and -0.01 to 0.1 and -0.1 for player switch case movement in the player horizontal and vertical player movement
  */
 
 using OpenCover.Framework.Model;
@@ -48,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    void Update()
+    void FixedUpdate()
     {
         //this code is not controller by the playerStateMachine. It is player derived purely from player inputs so it is independant 
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         //isGrounded = GroundCheck();
 
-        if (isGrounded && Input.GetKeyUp(KeyCode.Space))
+        if (isGrounded && Input.GetKey(KeyCode.Space))
             Jump();
     }
 
@@ -127,8 +131,8 @@ public class PlayerController : MonoBehaviour
 
         //if player is not grounded, player has reduced movement in the air
         if (!isGrounded)
-            //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 1/10 or 100
-            player.velocity = new Vector3((playerMovement.x * speed * 100 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
+            //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 2/10 or 200 for forward/backward and side to side movement while the player is in the air
+            player.velocity = new Vector3((playerMovement.x * speed * 200 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 200 * Time.deltaTime));
     }
 
 

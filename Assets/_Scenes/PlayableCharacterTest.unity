@@ -791,8 +791,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1481838366}
-  speed: 1
-  jumpPower: 8
+  speed: 0.5
+  jumpPower: 4
   isGrounded: 0
 --- !u!114 &1481838368
 MonoBehaviour:

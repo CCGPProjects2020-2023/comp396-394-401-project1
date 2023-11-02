@@ -60,11 +60,11 @@ public class CameraController : MonoBehaviour
 
 
     /// <summary>
-    /// The code in the update sets the camera rotation based on the MOuse X and Y inputs. 
+    /// The code in the update sets the camera rotation based on the Mouse X and Y inputs. 
     /// It also sets the X rotaion of the player to the same as the camera so the the movement controls match.
     /// </summary>
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //sets the cursor to always visible
         Cursor.visible = true;
