@@ -20,7 +20,7 @@ public static class Utils
     /// <returns>
     ///     True if the other object is within the specified distance.
     /// </returns>
-    public static bool OtherCloseEnough(float distance, GameObject obj, GameObject other) {
+    public static bool OtherCloseEnough(float distance, GameObject obj, GameObject other) {        
         return Vector3.Distance(obj.transform.position, other.transform.position) <= distance;
     }
 

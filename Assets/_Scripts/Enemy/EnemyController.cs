@@ -5,6 +5,8 @@
     Last Date Modified:     October 28, 2023
     Program Description:    Abstract class used as a base for the different types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
+                            November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
+                                              Added the anim property.
  */
 
 using UnityEngine;
@@ -12,14 +14,15 @@ using UnityEngine;
 public abstract class EnemyController : MonoBehaviour {
 
     protected StateMachine stateMachine;
+    protected internal Animator anim; 
 
     public GameObject player;
 
     [Header("Internal Properties")]
     public float EnemyFOV = 89f;
     protected internal float cosEnemyFOVover2InRAD;
-    public float closeEnoughEngageCutoff = 10f;
-    public float closeEnoughSenseCutoff = 15f;
+    public float closeEnoughEngageCutoff = 30f;
+    public float closeEnoughSenseCutoff = 45f;
 
     [Header("Game Properties")]
     protected internal float _start_health;
@@ -31,7 +34,7 @@ public abstract class EnemyController : MonoBehaviour {
     public Weapon weapon;
 
     [Header("Path")]
-    public Transform[] waypoints;
+    public GameObject path;
     public int nextWayPointIndex = 0;
 
     /// <summary>
@@ -39,6 +42,11 @@ public abstract class EnemyController : MonoBehaviour {
     /// </summary>
     private void Awake() {
         stateMachine = StateMachine.Instance;
+    }
+
+    public void Start() { //
+        cosEnemyFOVover2InRAD = Mathf.Cos(EnemyFOV / 2f * Mathf.Deg2Rad);
+        _start_health = health;      
     }
 
     /// <summary>
@@ -60,7 +68,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// Sets the movement of the controller.
     /// </summary>
     /// <param name="isFollowing"></param>
-    protected internal void SetMovement(bool isFollowing) {
+    protected internal void SetMovement(bool isFollowing) {        
         Utils.Movement(isFollowing, gameObject, player, out Vector3 newPos, speed);
         this.transform.position = newPos;
     }

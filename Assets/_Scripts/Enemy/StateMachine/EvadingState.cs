@@ -7,6 +7,7 @@
                             evading behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
+                            November 1, 2023: Added the animation for this state.
  */
 
 using UnityEngine;
@@ -52,7 +53,8 @@ public class EvadingState : StateMachine.State {
     /// <summary>
     /// Sets the movement of this controller when evading.
     /// </summary>
-    private void DoEvading() {
+    private void DoEvading() {        
         controller.SetMovement(false);
+        this.controller.anim.SetInteger("state", (int)AnimState.WALKING);
     }
 }

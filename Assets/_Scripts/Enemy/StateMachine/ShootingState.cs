@@ -7,11 +7,15 @@
                             shooting behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
+                            November 1, 2023: Added the Rotate() and the animation for this state.
  */
 
 using UnityEngine;
 
 public class ShootingState : StateMachine.State {
+
+    private bool hasRotated = false;
+
     /// <summary>
     /// Initializes the action and controller.
     /// </summary>
@@ -53,12 +57,30 @@ public class ShootingState : StateMachine.State {
     /// <summary>
     /// Delegates to the OnExit action of this state.
     /// </summary>
-    public override void OnExit() { }
+    public override void OnExit() { hasRotated = false; }
 
     /// <summary>
     /// Calls the shoot method of the weapon of this controller.
     /// </summary>
     private void DoShooting() {
-        controller.weapon.Shoot();
+        controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
+        if(!hasRotated )
+            Rotate();
+        
+        controller.weapon.Shoot();        
+    }
+     
+    /// <summary>
+    /// Rotates this controller to face the player.
+    /// </summary>
+    private void Rotate() {
+        Vector3 controllerVec = controller.transform.position;
+        Vector3 weaponTipVec = controller.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).transform.position;
+
+        float a = Vector3.Angle(controllerVec, weaponTipVec);
+        Vector3 newRotation = new(controller.transform.rotation.x, controller.transform.rotation.y + a, controller.transform.rotation.z);
+        controller.transform.Rotate(newRotation);
+        
+        hasRotated = true;
     }
 }

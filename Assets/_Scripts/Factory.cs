@@ -1,6 +1,6 @@
 /*
  * 
-    Author's Name:          Audrey Bernier Larose
+    Author's Name:          Audrey Bernier Larose based on this tutorial: https://www.patrykgalach.com/2019/03/28/implementing-factory-design-pattern-in-unity/
     Last Modified By:       Audrey Bernier Larose
     Last Date Modified:     October 28, 2023
     Program Description:    Generic factory class used as a base class for other factories.

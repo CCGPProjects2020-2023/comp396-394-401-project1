@@ -7,6 +7,8 @@
                             chasing behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
+                            November 1, 2023: Adjusted the transition to the shooting state.
+                                              Added the animation for this state.
  */
 
 using UnityEngine;
@@ -36,15 +38,15 @@ public class ChasingState : StateMachine.State {
     /// </summary>
     public override void OnFrame() {
         Debug.Log("Chasing state - On Frame");
-        controller.SetMovement(true);
-
+        DoChasing();
+        
         if (this.controller.health <= 0)
             stateMachine.ChangeState(StateMachine.StateEnum.DyingState);
 
         if (!controller.SensePlayer())
             stateMachine.ChangeState(StateMachine.StateEnum.RoamingState);
 
-        else if (controller.SensePlayer() && controller.WithinRange())
+        else if (controller.WithinRange())
             stateMachine.ChangeState(StateMachine.StateEnum.ShootingState);
     }
 
@@ -52,4 +54,9 @@ public class ChasingState : StateMachine.State {
     /// Delegates to the OnExit action of this state.
     /// </summary>
     public override void OnExit() { }
+
+    private void DoChasing() {        
+        controller.SetMovement(true);
+        this.controller.anim.SetInteger("state", (int)AnimState.WALKING);
+    }
 }

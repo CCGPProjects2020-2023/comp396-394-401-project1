@@ -6,6 +6,7 @@
     Program Description:    Subclass that specifies specific types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the dying state.
+                            November 1, 2023: Initialized the anim property.
  */
 
 using UnityEngine;
@@ -15,9 +16,9 @@ public class ShooterController : EnemyController {
     /// Start method called by Unity. It initializes the states
     /// and properties of this controller.
     /// </summary>
-    void Start() {
-        cosEnemyFOVover2InRAD = Mathf.Cos(EnemyFOV / 2f * Mathf.Deg2Rad);
-        _start_health = health;
+    new void Start() {
+        base.Start();
+        anim = GetComponent<Animator>();
 
         stateMachine.AddState(new RoamingState(this));
         stateMachine.AddState(new LoadingState(this));
@@ -37,5 +38,5 @@ public class ShooterController : EnemyController {
         weapon.isLoaded = weapon.numbAmmo > 0;
 
         return weapon.isLoaded;
-    }
+    }   
 }

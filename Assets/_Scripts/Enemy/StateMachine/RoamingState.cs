@@ -7,6 +7,8 @@
                             roaming behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
+                            November 1, 2023: Accomodated the changes made in the EnemyController on November 1, 2023.
+                                              Added the animation for this state.
  */
 
 using UnityEngine;
@@ -36,13 +38,13 @@ public class RoamingState : StateMachine.State {
     /// the state transitions from this state.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Roaming state - On Frame");
+        Debug.Log("Roaming state - On Frame");        
         DoRoaming();
 
         if (this.controller.health <= 0)
             stateMachine.ChangeState(StateMachine.StateEnum.DyingState);
 
-        if (this.controller.SensePlayer() && !Utils.IsBelowThreshold(this.controller._start_health / 2, this.controller.health))
+        if (this.controller.SensePlayer() && !Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
         {
             if (!this.controller.IsWeaponReady())
                 stateMachine.ChangeState(StateMachine.StateEnum.LoadingState);
@@ -55,16 +57,17 @@ public class RoamingState : StateMachine.State {
     /// Specifies the roaming behavior of this controller based on a predetermined path.
     /// </summary>
     /// <exception cref="Exception"></exception>
-    void DoRoaming() {
-        if (this.controller.waypoints.Length == 0) throw new Exception("Insert waypoints");
+    void DoRoaming() {        
+        if (controller.path.transform.childCount == 0) throw new Exception("Insert waypoints");
+        
+        if (Vector3.Distance(controller.transform.position, controller.path.transform.GetChild(controller.nextWayPointIndex).position) < float.Epsilon)
+            controller.nextWayPointIndex = (controller.nextWayPointIndex + 1) % controller.path.transform.childCount;
 
-        if (Vector3.Distance(this.controller.transform.position, this.controller.waypoints[this.controller.nextWayPointIndex].position) < float.Epsilon)
-            this.controller.nextWayPointIndex = (this.controller.nextWayPointIndex + 1) % this.controller.waypoints.Length;
-
-        Vector3 target = this.controller.waypoints[this.controller.nextWayPointIndex].position;
-        Vector3 movement = Vector3.MoveTowards(this.controller.transform.position, target, this.controller.speed * Time.deltaTime);
-        this.controller.transform.position = movement;
-        this.controller.transform.LookAt(target);
+        Vector3 target = controller.path.transform.GetChild(controller.nextWayPointIndex).position;
+        Vector3 movement = Vector3.MoveTowards(controller.transform.position, target, controller.speed * Time.deltaTime);
+        controller.transform.position = movement;
+        controller.transform.LookAt(target);        
+        this.controller.anim.SetInteger("state", (int)AnimState.WALKING);
     }
 
     /// <summary>

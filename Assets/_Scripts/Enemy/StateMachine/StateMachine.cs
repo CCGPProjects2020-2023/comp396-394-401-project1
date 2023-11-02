@@ -5,6 +5,7 @@
     Last Date Modified:     October 28, 2023
     Program Description:    State machine class that manages and updates the states.
     Revision History:       October 28, 2023: Initial script and documentation.
+                            November 1, 2023: Added the AnimState enum.
  */
 
 using System;
@@ -107,4 +108,11 @@ public sealed class StateMachine: Singleton<StateMachine> {
 
         ChangeState(states[newStateEnum.ToString()]);
     }
+}
+
+public enum AnimState {
+    WALKING = 1,
+    LOADING= 2,
+    SHOOTING=3,
+    DYING= 4
 }

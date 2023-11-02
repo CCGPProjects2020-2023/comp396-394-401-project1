@@ -7,6 +7,7 @@
                             loading behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
+                            November 1, 2023: Added the animation for this state.
  */ 
 
 using UnityEngine;
@@ -34,7 +35,7 @@ public class LoadingState : StateMachine.State {
     /// state transitions.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Loading state - On Frame");
+        Debug.Log("Loading state - On Frame");        
         DoLoading();
 
         if (this.controller.health <= 0)
@@ -56,7 +57,9 @@ public class LoadingState : StateMachine.State {
     /// Checks if the weapon of this controller is ready. If not, loads it.
     /// </summary>
     private void DoLoading() {
-        if (!controller.IsWeaponReady())
+        if (!controller.IsWeaponReady()) {
+            this.controller.anim.SetInteger("state", (int)AnimState.LOADING);
             this.controller.weapon.Load_Weapon();
+        }            
     }
 }
