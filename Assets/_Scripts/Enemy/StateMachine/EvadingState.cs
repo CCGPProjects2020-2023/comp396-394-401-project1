@@ -12,7 +12,7 @@
 
 using UnityEngine;
 
-public class EvadingState : StateMachine.State {
+public class EvadingState : EnemyStateMachine.State {
     /// <summary>
     /// Initializes the action and controller.
     /// </summary>
@@ -39,10 +39,10 @@ public class EvadingState : StateMachine.State {
         DoEvading();
 
         if (this.controller.health <= 0)
-            stateMachine.ChangeState(StateMachine.StateEnum.DyingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
 
         if (!controller.SensePlayer())
-            stateMachine.ChangeState(StateMachine.StateEnum.RoamingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
     }
 
     /// <summary>

@@ -11,7 +11,7 @@
 
 using UnityEngine;
 
-public class DyingState : StateMachine.State
+public class DyingState : EnemyStateMachine.State
 {
     /// <summary>
     /// Initializes the action and controller.

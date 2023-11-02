@@ -51,15 +51,15 @@ public class PlayerAbilities : MonoBehaviour
 
 
     //player states declared
-    private StateMachine playerAbilitesStateMachine;
-    private StateMachine.State abilitiesReady, phase, teleport, cooldown;
+    private EStateMachine playerAbilitesStateMachine;
+    private EStateMachine.State abilitiesReady, phase, teleport, cooldown;
 
     // Start is called before the first frame update
     void Start()
     {
 
         //new instance of StateMachine
-        playerAbilitesStateMachine = new StateMachine();
+        playerAbilitesStateMachine = new EStateMachine();
 
         //Use factory pattern
         //abilitiesReady state onEnter, onExit and onFrame calls

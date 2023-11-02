@@ -382,7 +382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5ffc518c0f012e940b19eb0eb15b6537, type: 2}
+  - {fileID: 2100000, guid: a8d8c97c68167cc4883b55f9c8723b90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -637,15 +637,15 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751676741}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1288303373 stripped
+--- !u!114 &1288303377 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2677292292003121069, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5763508131186398051, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
   m_PrefabInstance: {fileID: 5057176174641428555}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6249411d9563eea40affb596bd08c58f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4defd8d528160744b8ef51a5c28231f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1372921360
@@ -995,8 +995,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2099936416859817629, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.575
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099936416859817629, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.427
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099936416859817629, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.471
+      value: 1.197
       objectReference: {fileID: 0}
     - target: {fileID: 3586151045251804358, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
       propertyPath: m_Controller
@@ -1134,6 +1142,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5763508131186398051, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
+      propertyPath: spawnRatePerMinute
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6700403221393812936, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
       propertyPath: path
       value: 
@@ -1149,7 +1161,7 @@ PrefabInstance:
     - target: {fileID: 6700403221393812936, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: 1288303373}
+      objectReference: {fileID: 1288303377}
     - target: {fileID: 6700403221393812936, guid: 14a73698bf7dbba4682a62055218f9e8, type: 3}
       propertyPath: closeEnoughSenseCutoff
       value: 45

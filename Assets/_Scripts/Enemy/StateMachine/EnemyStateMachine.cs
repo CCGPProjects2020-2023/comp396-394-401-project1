@@ -12,12 +12,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class StateMachine: Singleton<StateMachine> {
-
+public class EnemyStateMachine : Singleton<EnemyStateMachine>
+{
     /// <summary>
     /// Enumarates the possible states of a controller.
     /// </summary>
-    public enum StateEnum {
+    public enum StateEnum
+    {
         RoamingState,
         LoadingState,
         ChasingState,
@@ -29,9 +30,10 @@ public sealed class StateMachine: Singleton<StateMachine> {
     /// <summary>
     /// Abstract state class that defines the actions of a state.
     /// </summary>
-    public abstract class State {
+    public abstract class State
+    {
         protected internal EnemyController controller;
-        protected readonly StateMachine stateMachine = Instance;
+        protected readonly EnemyStateMachine stateMachine = Instance;
 
         public string Name;
         public Action onFrame;
@@ -43,11 +45,11 @@ public sealed class StateMachine: Singleton<StateMachine> {
         /// </summary>
         /// <returns></returns>
         public override string ToString() { return Name; }
-        
+
         public abstract void OnEnter();
         public abstract void OnFrame();
         public abstract void OnExit();
-    } 
+    }
 
     private Dictionary<string, State> states = new();
 
@@ -60,7 +62,8 @@ public sealed class StateMachine: Singleton<StateMachine> {
     /// </summary>
     /// <param name="state"></param>
     /// <returns></returns>
-    public State AddState(State state) {
+    public State AddState(State state)
+    {
         state.Name = state.GetType().Name;
 
         if (states.Count == 0) initialState = state;
@@ -74,7 +77,8 @@ public sealed class StateMachine: Singleton<StateMachine> {
     /// Updates the state to the state that the controller needs to change to.
     /// </summary>
     /// <exception cref="Exception"></exception>
-    public void Update() {
+    public void Update()
+    {
         if (states.Count == 0) throw new Exception("*** State machine has no states! ***");
 
         if (currentState == null) ChangeState(initialState);
@@ -87,7 +91,8 @@ public sealed class StateMachine: Singleton<StateMachine> {
     /// </summary>
     /// <param name="newState"></param>
     /// <exception cref="Exception"></exception>
-    public void ChangeState(State newState) {
+    public void ChangeState(State newState)
+    {
         if (newState == null) throw new Exception("*** Cannot change to a null state ***");
 
         if (currentState != null && currentState.onExit != null) currentState.onExit();
@@ -103,16 +108,18 @@ public sealed class StateMachine: Singleton<StateMachine> {
     /// </summary>
     /// <param name="newStateEnum"></param>
     /// <exception cref="Exception"></exception>
-    public void ChangeState(StateEnum newStateEnum) {
+    public void ChangeState(StateEnum newStateEnum)
+    {
         if (!states.ContainsKey(newStateEnum.ToString())) throw new Exception($"*** State machine does not have the state {newStateEnum} ***");
 
         ChangeState(states[newStateEnum.ToString()]);
     }
 }
 
-public enum AnimState {
+public enum AnimState
+{
     WALKING = 1,
-    LOADING= 2,
-    SHOOTING=3,
-    DYING= 4
+    LOADING = 2,
+    SHOOTING = 3,
+    DYING = 4
 }

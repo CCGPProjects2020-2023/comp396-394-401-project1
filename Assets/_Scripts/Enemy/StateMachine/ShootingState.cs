@@ -12,7 +12,7 @@
 
 using UnityEngine;
 
-public class ShootingState : StateMachine.State {
+public class ShootingState : EnemyStateMachine.State {
 
     private bool hasRotated = false;
 
@@ -42,16 +42,16 @@ public class ShootingState : StateMachine.State {
         DoShooting();
 
         if (!controller.SensePlayer())
-            stateMachine.ChangeState(StateMachine.StateEnum.RoamingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
 
         else if (!controller.IsWeaponReady())
-            stateMachine.ChangeState(StateMachine.StateEnum.LoadingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.LoadingState);
 
         else if (!controller.WithinRange() && controller.SensePlayer())
-            stateMachine.ChangeState(StateMachine.StateEnum.ChasingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
 
         else if (Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
-            stateMachine.ChangeState(StateMachine.StateEnum.EvadingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.EvadingState);
     }
 
     /// <summary>

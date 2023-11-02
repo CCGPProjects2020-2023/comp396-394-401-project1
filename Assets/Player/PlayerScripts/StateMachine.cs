@@ -18,7 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine
+public class EStateMachine
 {
     /// <summary>
     /// public State class that has a name for the states,\

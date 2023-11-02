@@ -14,7 +14,7 @@
 using UnityEngine;
 using System;
 
-public class RoamingState : StateMachine.State {
+public class RoamingState : EnemyStateMachine.State {
 
     /// <summary>
     /// Initializes the action and controller.
@@ -42,14 +42,14 @@ public class RoamingState : StateMachine.State {
         DoRoaming();
 
         if (this.controller.health <= 0)
-            stateMachine.ChangeState(StateMachine.StateEnum.DyingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
 
         if (this.controller.SensePlayer() && !Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
         {
             if (!this.controller.IsWeaponReady())
-                stateMachine.ChangeState(StateMachine.StateEnum.LoadingState);
+                stateMachine.ChangeState(EnemyStateMachine.StateEnum.LoadingState);
             else
-                stateMachine.ChangeState(StateMachine.StateEnum.ChasingState);
+                stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
         }
     }
 

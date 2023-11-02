@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 5254883921250889226}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.559, y: 2.431, z: 0.415}
+  m_LocalPosition: {x: -0.1675, y: 2.435, z: 0.503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,31 +256,16 @@ PrefabInstance:
       addedObject: {fileID: 6700403221393812936}
     - targetCorrespondingSourceObject: {fileID: 100118, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2677292292003121069}
+      addedObject: {fileID: 7366099669697139360}
     - targetCorrespondingSourceObject: {fileID: 100118, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7366099669697139360}
+      addedObject: {fileID: 5763508131186398051}
   m_SourcePrefab: {fileID: 100100000, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
 --- !u!1 &3586151045261188784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100118, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
   m_PrefabInstance: {fileID: 3586151045261285798}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2677292292003121069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3586151045261188784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6249411d9563eea40affb596bd08c58f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfAmmoPerRound: 20
-  spawnRatePerMinute: 90
-  loadingTime: 2
 --- !u!114 &7366099669697139360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +278,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7877552daf8d14aaaebda8bf71fe59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4652481683582883154, guid: 3372e9497f7280d429f1aaa909e3cd7d, type: 3}
+  prefab: {fileID: 1213525244252445953, guid: d367d39c577f46b42bcf8cfa8f842db3, type: 3}
+--- !u!114 &5763508131186398051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586151045261188784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4defd8d528160744b8ef51a5c28231f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfAmmoPerRound: 20
+  spawnRatePerMinute: 30
+  loadingTime: 2
 --- !u!1 &3586151045261188868 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
@@ -318,7 +318,7 @@ MonoBehaviour:
   health: 100
   speed: 1.5
   strenght: 90
-  weapon: {fileID: 2677292292003121069}
+  weapon: {fileID: 0}
   path: {fileID: 0}
   nextWayPointIndex: 0
 --- !u!4 &3586151045261673296 stripped

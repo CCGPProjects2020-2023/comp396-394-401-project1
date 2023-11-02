@@ -13,7 +13,7 @@
 
 using UnityEngine;
 
-public class ChasingState : StateMachine.State {
+public class ChasingState : EnemyStateMachine.State {
 
     /// <summary>
     /// Initializes the action and controller.
@@ -41,13 +41,13 @@ public class ChasingState : StateMachine.State {
         DoChasing();
         
         if (this.controller.health <= 0)
-            stateMachine.ChangeState(StateMachine.StateEnum.DyingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
 
         if (!controller.SensePlayer())
-            stateMachine.ChangeState(StateMachine.StateEnum.RoamingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
 
         else if (controller.WithinRange())
-            stateMachine.ChangeState(StateMachine.StateEnum.ShootingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.ShootingState);
     }
 
     /// <summary>

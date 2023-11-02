@@ -13,7 +13,7 @@ using UnityEngine;
 
 public abstract class EnemyController : MonoBehaviour {
 
-    protected StateMachine stateMachine;
+    protected EnemyStateMachine stateMachine;
     protected internal Animator anim; 
 
     public GameObject player;
@@ -41,7 +41,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// Awake method called by Unity. It initiates the Singleton instance of the state machine.
     /// </summary>
     private void Awake() {
-        stateMachine = StateMachine.Instance;
+        stateMachine = EnemyStateMachine.Instance;
     }
 
     public void Start() { //
