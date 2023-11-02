@@ -5,13 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Phaseable
-  - Enemy
-  - Waypoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
