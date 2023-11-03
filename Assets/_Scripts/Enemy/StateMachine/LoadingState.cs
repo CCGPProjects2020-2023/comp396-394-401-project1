@@ -8,6 +8,7 @@
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Added the animation for this state.
+                            November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
  */ 
 
 using UnityEngine;
@@ -17,8 +18,9 @@ public class LoadingState : EnemyStateMachine.State {
     /// Initializes the action and controller.
     /// </summary>
     /// <param name="controller"></param>
-    public LoadingState(EnemyController controller) {
+    public LoadingState(EnemyController controller, EnemyStateMachine stateMachine) {
         this.controller = controller;
+        this.stateMachine = stateMachine;
 
         onEnter = OnEnter;
         onFrame = OnFrame;
@@ -58,8 +60,8 @@ public class LoadingState : EnemyStateMachine.State {
     /// </summary>
     private void DoLoading() {
         if (!controller.IsWeaponReady()) {
-            this.controller.anim.SetInteger("state", (int)AnimState.LOADING);
-            this.controller.weapon.Load_Weapon();
+            controller.anim.SetInteger("state", (int)AnimState.LOADING);
+            controller.weapon.Load_Weapon();
         }            
     }
 }

@@ -7,6 +7,7 @@
                             dying behavior.
     Revision History:       October 29, 2023: Initial script and documentation.
                             November 1, 2023: Added the animation for this state.
+                            November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
  */
 
 using UnityEngine;
@@ -17,9 +18,10 @@ public class DyingState : EnemyStateMachine.State
     /// Initializes the action and controller.
     /// </summary>
     /// <param name="controller"></param>
-    public DyingState(EnemyController controller)
+    public DyingState(EnemyController controller, EnemyStateMachine stateMachine)
     {
         this.controller = controller;
+        this.stateMachine = stateMachine;
 
         onEnter = OnEnter;
         onFrame = OnFrame;
@@ -52,7 +54,6 @@ public class DyingState : EnemyStateMachine.State
     /// Handles the dying behavior of this controller.
     /// </summary>
     private void DoDying() {
-        //Replace this with correct behavior
-        this.controller.anim.SetInteger("state", (int)AnimState.DYING);
+        controller.anim.SetInteger("state", (int)AnimState.DYING);
     }
 }

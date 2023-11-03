@@ -9,19 +9,20 @@
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Accomodated the changes made in the EnemyController on November 1, 2023.
                                               Added the animation for this state.
+                            November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
  */
 
 using UnityEngine;
 using System;
 
 public class RoamingState : EnemyStateMachine.State {
-
     /// <summary>
     /// Initializes the action and controller.
     /// </summary>
     /// <param name="controller"></param>
-    public RoamingState(EnemyController controller) {
+    public RoamingState(EnemyController controller, EnemyStateMachine stateMachine) {
         this.controller = controller;
+        this.stateMachine = stateMachine;
 
         onEnter = OnEnter;
         onFrame = OnFrame;
@@ -59,15 +60,15 @@ public class RoamingState : EnemyStateMachine.State {
     /// <exception cref="Exception"></exception>
     void DoRoaming() {        
         if (controller.path.transform.childCount == 0) throw new Exception("Insert waypoints");
-        
-        if (Vector3.Distance(controller.transform.position, controller.path.transform.GetChild(controller.nextWayPointIndex).position) < float.Epsilon)
+
+        if (Vector3.Distance(controller.transform.position, controller.path.transform.GetChild(controller.nextWayPointIndex).position) < 0.1f)
             controller.nextWayPointIndex = (controller.nextWayPointIndex + 1) % controller.path.transform.childCount;
 
         Vector3 target = controller.path.transform.GetChild(controller.nextWayPointIndex).position;
         Vector3 movement = Vector3.MoveTowards(controller.transform.position, target, controller.speed * Time.deltaTime);
         controller.transform.position = movement;
         controller.transform.LookAt(target);        
-        this.controller.anim.SetInteger("state", (int)AnimState.WALKING);
+        controller.anim.SetInteger("state", (int)AnimState.WALKING);
     }
 
     /// <summary>

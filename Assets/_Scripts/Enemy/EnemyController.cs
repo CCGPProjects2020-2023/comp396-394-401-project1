@@ -7,13 +7,14 @@
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
                                               Added the anim property.
+                            November 2, 2023: Removed the singleton instance of the EnemyStateMachine and used the new() operator instead.
  */
 
 using UnityEngine;
 
 public abstract class EnemyController : MonoBehaviour {
 
-    protected EnemyStateMachine stateMachine;
+    protected internal EnemyStateMachine stateMachine;
     protected internal Animator anim; 
 
     public GameObject player;
@@ -41,7 +42,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// Awake method called by Unity. It initiates the Singleton instance of the state machine.
     /// </summary>
     private void Awake() {
-        stateMachine = EnemyStateMachine.Instance;
+        stateMachine = new();
     }
 
     public void Start() { //

@@ -6,13 +6,14 @@
     Program Description:    State machine class that manages and updates the states.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Added the AnimState enum.
+                            November 2, 2023: Removed the singleton pattern from the state machine.
  */
 
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : Singleton<EnemyStateMachine>
+public class EnemyStateMachine
 {
     /// <summary>
     /// Enumarates the possible states of a controller.
@@ -33,7 +34,7 @@ public class EnemyStateMachine : Singleton<EnemyStateMachine>
     public abstract class State
     {
         protected internal EnemyController controller;
-        protected readonly EnemyStateMachine stateMachine = Instance;
+        protected internal EnemyStateMachine stateMachine;
 
         public string Name;
         public Action onFrame;
@@ -116,6 +117,9 @@ public class EnemyStateMachine : Singleton<EnemyStateMachine>
     }
 }
 
+/// <summary>
+/// Animation states used in the unity animator.
+/// </summary>
 public enum AnimState
 {
     WALKING = 1,

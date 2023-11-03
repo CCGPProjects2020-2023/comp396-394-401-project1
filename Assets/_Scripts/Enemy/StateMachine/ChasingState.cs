@@ -9,18 +9,19 @@
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Adjusted the transition to the shooting state.
                                               Added the animation for this state.
+                            November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
  */
 
 using UnityEngine;
 
 public class ChasingState : EnemyStateMachine.State {
-
     /// <summary>
     /// Initializes the action and controller.
     /// </summary>
     /// <param name="controller"></param>
-    public ChasingState(EnemyController controller) {
+    public ChasingState(EnemyController controller, EnemyStateMachine stateMachine) {
         this.controller = controller;
+        this.stateMachine = stateMachine;
 
         onEnter = OnEnter;
         onFrame = OnFrame;
@@ -57,6 +58,6 @@ public class ChasingState : EnemyStateMachine.State {
 
     private void DoChasing() {        
         controller.SetMovement(true);
-        this.controller.anim.SetInteger("state", (int)AnimState.WALKING);
+        controller.anim.SetInteger("state", (int)AnimState.WALKING);
     }
 }
