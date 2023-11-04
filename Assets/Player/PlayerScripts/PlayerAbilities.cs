@@ -4,9 +4,10 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 24, 2023
-    Program Description: This is the simple player controller using state machine implementation and movement code. 
-    There are state checks, handlers for each state and respective states that are called depenmding on what conditions are true.
+    Last Modified Date: November 3, 2023
+    Program Description: This is script manages the PlayerAbilities using the StateMachine script implementation. 
+    Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
+    There are state checks, handlers for each state and respective states that are called depending on what conditions are true and what input is pressed.
     
     Revision History:
     -October 23, 2023 
@@ -30,6 +31,11 @@
     
     -October 26, 2023
         -> Moved all player movement and playerShoot contents from this script to the playerController script and renamed this script to PlayerAbilities
+    -November 3, 2023
+        -> Added functionality for the phase ability
+        -> Organized code better
+        -> Added more/better comments for the whole file
+        ->Disabled teleport for now
  */
 
 using System.Collections;
@@ -43,23 +49,37 @@ using UnityEngine;
 /// </summary>
 public class PlayerAbilities : MonoBehaviour
 {
-    //player variables -> not part of the player ability state states
-    public float health = 100;
-    public float cooldownLength = 3.0f;
-    public float currentCooldownTime = 0.0f;
+
+    [Header("General Player Ability Attributes")]
+    //this denotes the currentTime since phase 
+    [SerializeField] private float timeSinceAbilityUsed = 0.0f;
+    //time to cooldown after ability is done
+    public float cooldownAfterABilities = 3.0f;
+    //checks if abilities can be used again
     public bool abilitiesReadyCheck = true;
 
 
-    //player states declared
-    private EStateMachine playerAbilitesStateMachine;
-    private EStateMachine.State abilitiesReady, phase, teleport, cooldown;
 
+    [Header("Phase Specific Attributes")]
+    //duration of the player phase ability
+    public float phaseDuration = 3.0f;
+    //to check if phase is active
+    public bool canPhase = false;
+
+
+    //player states declared **NOTE: teleport state is disabled for now
+    private StateMachine playerAbilitesStateMachine;
+    private StateMachine.State abilitiesReady, phase, cooldown; //teleport not here for now
+
+
+
+    //Start creates the inistances of the State Machine and player states
     // Start is called before the first frame update
     void Start()
     {
 
         //new instance of StateMachine
-        playerAbilitesStateMachine = new EStateMachine();
+        playerAbilitesStateMachine = new StateMachine();
 
         //Use factory pattern
         //abilitiesReady state onEnter, onExit and onFrame calls
@@ -74,11 +94,14 @@ public class PlayerAbilities : MonoBehaviour
         phase.onExit = delegate { Debug.Log("Phase.onExit"); };
         phase.onFrame = PhaseOnFrame;
 
-        //teleport state onEnter, onExit and onFrame calls
-        teleport = playerAbilitesStateMachine.CreateState("Teleport");
-        teleport.onEnter = delegate { Debug.Log("Teleport.onEnter"); };
-        teleport.onExit = delegate { Debug.Log("Teleport.onExit"); };
-        teleport.onFrame = TeleportOnFrame;
+
+        //**Not active for now
+
+        ////teleport state onEnter, onExit and onFrame calls
+        //teleport = playerAbilitesStateMachine.CreateState("Teleport");
+        //teleport.onEnter = delegate { Debug.Log("Teleport.onEnter"); };
+        //teleport.onExit = delegate { Debug.Log("Teleport.onExit"); };
+        //teleport.onFrame = TeleportOnFrame;
 
         //cooldown state onEnter, onExit and onFrame calls
         cooldown = playerAbilitesStateMachine.CreateState("Cooldown");
@@ -87,9 +110,10 @@ public class PlayerAbilities : MonoBehaviour
         cooldown.onFrame = CooldownOnFrame;
     }
 
+
     /// <summary>
     /// Update calls the playerStateMachine.Update() every frame.
-    /// Update also well as the plaeyr controls for movement, jumping and shooting.
+    /// Also Updates the timer since phase
     /// </summary>
     // Update is called once per frame
     void Update()
@@ -97,46 +121,51 @@ public class PlayerAbilities : MonoBehaviour
         //playerAbilitesStateMachine.Update is called from this update instance
         playerAbilitesStateMachine.Update();
 
-        //timer code here:
-        currentCooldownTime += 1 * Time.deltaTime;
+        //timer for cooldown time (amount of time before the player can use the next ability) code here:
+        timeSinceAbilityUsed += 1 * Time.deltaTime;
     }
 
     /// <summary>
-    /// 
+    /// This is the OnFrame for the abilities. 
+    /// It doesn't do anything except for wait for an ability to get used. Then it will call the proper State Change.
     /// </summary>
     private void AbilitiesReadyOnFrame()
     {
         //transitions to other states
         if (Input.GetKeyDown(KeyCode.E))
             playerAbilitesStateMachine.ChangeState(phase);
-        if (Input.GetKeyDown(KeyCode.F))
-            playerAbilitesStateMachine.ChangeState(teleport);
+        
+        //**NOTE: Disabled for now
+        //if (Input.GetKeyDown(KeyCode.F))
+            //playerAbilitesStateMachine.ChangeState(teleport);
     }
 
     /// <summary>
-    /// 
+    /// This is the Cooldown OnFrame and handles the Cooldown after an ability is used.
     /// </summary>
     private void CooldownOnFrame()
     {
-        //Debug.Log("Cooldown.onFrame");
+        Debug.Log("Cooldown.onFrame");
+        //call to cooldown functionality
         Cooldown();
+
+        //if the cooldown time is complete call the abilitesReady state
         if (abilitiesReadyCheck == true)
             playerAbilitesStateMachine.ChangeState(abilitiesReady);
     }
 
     /// <summary>
-    /// 
+    /// This is the OnFrame for the phase ability. This calls the functionality for phase and 
+    /// then sets the abilitiesReadyCheck to false and timer to 0 again so no other abilities can be used until the cooldown is complete
     /// </summary>
     void PhaseOnFrame()
     {
-        //Debug.Log("Phase.onFrame");
+        Debug.Log("Phase.onFrame");
         //Call phase(happens once before the exit condition is called)
         Phase();
 
-        //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after phase is done once automatically.
-        abilitiesReadyCheck = false;
-        currentCooldownTime = 0;
-
+        
+        //instantly calls the cooldown state as the cooldown state handles the ability ending.
         playerAbilitesStateMachine.ChangeState(cooldown);
     }
 
@@ -145,39 +174,72 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     private void Phase()
     {
-        Debug.Log("Just phased");
-    }
+        Debug.Log("Phase used");
 
-    /// <summary>
-    /// OnFrame for the Hunt state
-    /// </summary>
-    void TeleportOnFrame()
-    {
-        //Debug.Log("Teleport.onFrame");
-        // Call teleport(happens once before the exit condition is called)
-        Teleport();
-
-
-        //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after teleport is done once automatically.
+        //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after phase is done once automatically.
         abilitiesReadyCheck = false;
-        currentCooldownTime = 0;
-        playerAbilitesStateMachine.ChangeState(cooldown);
-    }
+        timeSinceAbilityUsed = 0;
+        canPhase = true;
 
-    /// <summary>
-    /// Teleport method (functionality)
-    /// </summary>
-    private void Teleport()
-    {
-        Debug.Log("Player just teleported");
+
+        Physics.IgnoreLayerCollision(7, 6, true);
     }
 
 
-    //timer to be used for ability cooldown
+
+
+
+    //**ALL TELEPORT CODE IS NOT ACTIVE FOR NOW
+
+    ///// <summary>
+    ///// OnFrame for the Hunt state
+    ///// </summary>
+    //void TeleportOnFrame()
+    //{
+    //    //Debug.Log("Teleport.onFrame");
+    //    // Call teleport(happens once before the exit condition is called)
+    //    Teleport();
+
+    //    //instantly calls the cooldown state as the cooldown state handles the ability ending.
+    //    playerAbilitesStateMachine.ChangeState(cooldown);
+    //}
+
+    ///// <summary>
+    ///// Teleport method (functionality). NO FUNCTIONALITY FOR NOW
+    ///// </summary>
+    //private void Teleport()
+    //{
+    //    Debug.Log("Player just teleported");
+
+    //    //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after teleport is done once automatically.
+    //    abilitiesReadyCheck = false;
+    //    timeSinceAbilityUsed = 0;
+    //}
+
+
+    //timer to be used for both ability cooldowns and phase ending
     private void Cooldown()
     {
         Debug.Log("Ability is cooling down");
-        if (currentCooldownTime >= cooldownLength)
+
+
+        //checks if the timeSince an ability was used is > or = to the phase duration set. 
+        if(timeSinceAbilityUsed >= phaseDuration)
+        {
+            //If true the player and 'Phaseable' layer (for certain walls and such) not ingnore each other anymore.
+            Physics.IgnoreLayerCollision(7, 6, false);
+            canPhase = false;
+        }
+
+
+        //checks if the time since an ability was used is greater than the cooldownAfterAbilities + phaseDuration.
+        //This denotes that full duration of the phase has ability occured and that there is buffer time for the cooldown afterward
+        if ((timeSinceAbilityUsed >= cooldownAfterABilities + phaseDuration))
+        {
+            //set this to false to reflect that the player can't pahse anymore in the editor.
+            canPhase = false;
+            //sets the ability check to true to denote that the player ability cooldown is over. This is necessary for the change in state from cooldown to abilitiesReady
             abilitiesReadyCheck = true;
+        }
     }
 }

@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 26, 2023
+    Last Modified Date: November 3, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -23,6 +23,8 @@
         -> Updated the jump from GetKeyUp to GetKey
         -> Fixed error in if(!Grounded logic for the player jump)
         -> udpated case values from 0.01 and -0.01 to 0.1 and -0.1 for player switch case movement in the player horizontal and vertical player movement
+    -November 03, 2023
+        ->Added player health and comments
  */
 
 using OpenCover.Framework.Model;
@@ -41,6 +43,12 @@ using UnityEngine.XR;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+
+    //Player variables
+    //[Header("General Player Attributes")]
+    //player variables -> not part of the player ability state states
+    //[SerializeField] private float health = 100;
+
     //reference to the player and player speed.
     public Rigidbody player;
     public float speed = 16;
@@ -138,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
-    /// 
+    /// Method for Jump here. It just calls AddFore for the player on Impulse to send the player upward when called
     /// </summary>
     private void Jump()
     {
@@ -147,27 +155,31 @@ public class PlayerController : MonoBehaviour
 
 
     /// <summary>
-    /// 
+    /// This is called when the player collider is colliding with the grounds collider. If this method is called then the groundCheck is set to true
     /// </summary>
     /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
     private void OnCollisionStay(Collision other)
     {
         //layer == 3 is "Ground" layer
+        //if player is touching a gameobject with tag == "Ground"
         if(other.gameObject.layer == 3)
         {
+            //set isGrouded to true
             isGrounded = true;
         }
     }
 
     /// <summary>
-    /// 
+    /// This is called when the player collider leaves the ground collider. If this method is called then the groundCheck is set to false
     /// </summary>
     /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
     private void OnCollisionExit(Collision other)
     {
         //layer == 3 is "Ground" layer
+        //if player is not touching a gameobject with tag == "Ground"
         if (other.gameObject.layer == 3)
         {
+            //set isGrouded to false
             isGrounded = false;
         }
     }
