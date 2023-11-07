@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 26, 2023
+    Last Modified Date: November 6, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -19,6 +19,16 @@
         ->Added code//implementation for Jumping.
         ->Added some comments
         ->Refactored movement code
+    -November 01, 2023
+        -> Updated the jump from GetKeyUp to GetKey
+        -> Fixed error in if(!Grounded logic for the player jump)
+        -> udpated case values from 0.01 and -0.01 to 0.1 and -0.1 for player switch case movement in the player horizontal and vertical player movement
+    -November 03, 2023
+        ->Added player health and comments
+        ->Started simple player shooting
+    -November 03, 2023
+        -> Added shooting delay to the script
+        -> Included more comments 
  */
 
 using OpenCover.Framework.Model;
@@ -33,22 +43,39 @@ using UnityEngine.XR;
 
 //make documentation for every class and function (just description. What does this function/class)
 /// <summary>
-/// This class controls the player movement and shooting.
+/// This class controls the player movement, jumping and shooting.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+
+    //Player variables
+    //[Header("General Player Attributes")]
+    //player variables -> not part of the player ability state states
+    //[SerializeField] private float health = 100;
+
     //reference to the player and player speed.
     public Rigidbody player;
     public float speed = 16;
 
+    //bullet prefab
+    public GameObject bullet;
+    public Transform bulletRotation;
+    //camera object
+    public Transform cameraPosition;
 
     //Jumping code variables
     public float jumpPower = 8.0f;
     public bool isGrounded = false;
 
 
+    //Delay for shooting variables
+    public float shootingDelay = 0.5f;
+    public float currentTime = 0.0f;
 
-    void Update()
+
+
+
+    void FixedUpdate()
     {
         //this code is not controller by the playerStateMachine. It is player derived purely from player inputs so it is independant 
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
@@ -61,8 +88,12 @@ public class PlayerController : MonoBehaviour
 
         //isGrounded = GroundCheck();
 
-        if (isGrounded && Input.GetKeyUp(KeyCode.Space))
+        if (isGrounded && Input.GetKey(KeyCode.Space))
             Jump();
+
+
+        //timer for shooting delay
+        currentTime += 1 * Time.deltaTime; 
     }
 
     /// <summary>
@@ -72,6 +103,13 @@ public class PlayerController : MonoBehaviour
     {
         //shooting code here -> for now just Debug.Log message.
         Debug.Log("Player is shooting");
+
+        if(currentTime >= shootingDelay)
+        {
+            //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
+            Instantiate(bullet, Camera.main.ScreenToWorldPoint(Input.mousePosition), cameraPosition.rotation);
+            currentTime = 0;
+        }
     }
 
 
@@ -105,7 +143,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-
         //Switch statement for the vertical movement (only one vertical axis direction can be true at once)
         switch (Input.GetAxis("Vertical"))
         {
@@ -127,43 +164,44 @@ public class PlayerController : MonoBehaviour
 
         //if player is not grounded, player has reduced movement in the air
         if (!isGrounded)
-            //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 1/10 or 100
-            player.velocity = new Vector3((playerMovement.x * speed * 100 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
+            //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 2/10 or 200 for forward/backward and side to side movement while the player is in the air
+            player.velocity = new Vector3((playerMovement.x * speed * 200 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 200 * Time.deltaTime));
     }
 
-
-
     /// <summary>
-    /// 
+    /// Method for Jump here. It just calls AddFore for the player on Impulse to send the player upward when called
     /// </summary>
     private void Jump()
     {
         player.AddForce(transform.up * jumpPower, ForceMode.Impulse);
     }
 
-
     /// <summary>
-    /// 
+    /// This is called when the player collider is colliding with the grounds collider. If this method is called then the groundCheck is set to true
     /// </summary>
     /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
     private void OnCollisionStay(Collision other)
     {
         //layer == 3 is "Ground" layer
+        //if player is touching a gameobject with tag == "Ground"
         if(other.gameObject.layer == 3)
         {
+            //set isGrouded to true
             isGrounded = true;
         }
     }
 
     /// <summary>
-    /// 
+    /// This is called when the player collider leaves the ground collider. If this method is called then the groundCheck is set to false
     /// </summary>
     /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
     private void OnCollisionExit(Collision other)
     {
         //layer == 3 is "Ground" layer
+        //if player is not touching a gameobject with tag == "Ground"
         if (other.gameObject.layer == 3)
         {
+            //set isGrouded to false
             isGrounded = false;
         }
     }

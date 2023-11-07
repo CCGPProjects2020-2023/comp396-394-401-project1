@@ -6,13 +6,12 @@
     Last Modified By: Alexander Maynard
     Last Modified Date: October 24, 2023
     Program Description: This is the simple player state machine for the handling of the player ability states onEnter, onFrame and onExit
-    
-
-
 
     Revision History: 
-    -October 23, 2023 -> Created the simple state machine pattern with all methods and functions from the in class example
-    -October 24, 2023 -> Added comment header, inline comments and descriptions for the functions
+    -October 23, 2023 
+        -> Created the simple state machine pattern with all methods and functions from the in class example
+    -October 24, 2023 
+        -> Added comment header, inline comments and descriptions for the functions
  */
 using System.Collections;
 using System.Collections.Generic;
