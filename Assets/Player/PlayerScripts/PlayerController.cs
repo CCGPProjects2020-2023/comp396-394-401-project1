@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 3, 2023
+    Last Modified Date: November 6, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -26,6 +26,9 @@
     -November 03, 2023
         ->Added player health and comments
         ->Started simple player shooting
+    -November 03, 2023
+        -> Added shooting delay to the script
+        -> Included more comments 
  */
 
 using OpenCover.Framework.Model;
@@ -65,6 +68,12 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = false;
 
 
+    //Delay for shooting variables
+    public float shootingDelay = 0.5f;
+    public float currentTime = 0.0f;
+
+
+
 
     void FixedUpdate()
     {
@@ -81,6 +90,10 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded && Input.GetKey(KeyCode.Space))
             Jump();
+
+
+        //timer for shooting delay
+        currentTime += 1 * Time.deltaTime; 
     }
 
     /// <summary>
@@ -91,8 +104,12 @@ public class PlayerController : MonoBehaviour
         //shooting code here -> for now just Debug.Log message.
         Debug.Log("Player is shooting");
 
-        //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
-        Instantiate(bullet, Camera.main.ScreenToWorldPoint(Input.mousePosition), cameraPosition.rotation);
+        if(currentTime >= shootingDelay)
+        {
+            //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
+            Instantiate(bullet, Camera.main.ScreenToWorldPoint(Input.mousePosition), cameraPosition.rotation);
+            currentTime = 0;
+        }
     }
 
 
