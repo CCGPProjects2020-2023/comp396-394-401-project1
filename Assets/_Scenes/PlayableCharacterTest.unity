@@ -744,7 +744,7 @@ Transform:
   m_GameObject: {fileID: 1481838361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.98, z: -4.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -792,6 +792,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1481838366}
   speed: 0.5
+  bullet: {fileID: 2168224650231722223, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
+  bulletRotation: {fileID: 8760065528875937627, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
+  cameraPosition: {fileID: 1609174760}
   jumpPower: 4
   isGrounded: 0
 --- !u!114 &1481838368

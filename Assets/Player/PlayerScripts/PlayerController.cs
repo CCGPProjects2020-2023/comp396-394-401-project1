@@ -25,6 +25,7 @@
         -> udpated case values from 0.01 and -0.01 to 0.1 and -0.1 for player switch case movement in the player horizontal and vertical player movement
     -November 03, 2023
         ->Added player health and comments
+        ->Started simple player shooting
  */
 
 using OpenCover.Framework.Model;
@@ -39,7 +40,7 @@ using UnityEngine.XR;
 
 //make documentation for every class and function (just description. What does this function/class)
 /// <summary>
-/// This class controls the player movement and shooting.
+/// This class controls the player movement, jumping and shooting.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -53,6 +54,11 @@ public class PlayerController : MonoBehaviour
     public Rigidbody player;
     public float speed = 16;
 
+    //bullet prefab
+    public GameObject bullet;
+    public Transform bulletRotation;
+    //camera object
+    public Transform cameraPosition;
 
     //Jumping code variables
     public float jumpPower = 8.0f;
@@ -84,6 +90,9 @@ public class PlayerController : MonoBehaviour
     {
         //shooting code here -> for now just Debug.Log message.
         Debug.Log("Player is shooting");
+
+        //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
+        Instantiate(bullet, Camera.main.ScreenToWorldPoint(Input.mousePosition), cameraPosition.rotation);
     }
 
 
@@ -117,7 +126,6 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-
         //Switch statement for the vertical movement (only one vertical axis direction can be true at once)
         switch (Input.GetAxis("Vertical"))
         {
@@ -143,8 +151,6 @@ public class PlayerController : MonoBehaviour
             player.velocity = new Vector3((playerMovement.x * speed * 200 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 200 * Time.deltaTime));
     }
 
-
-
     /// <summary>
     /// Method for Jump here. It just calls AddFore for the player on Impulse to send the player upward when called
     /// </summary>
@@ -152,7 +158,6 @@ public class PlayerController : MonoBehaviour
     {
         player.AddForce(transform.up * jumpPower, ForceMode.Impulse);
     }
-
 
     /// <summary>
     /// This is called when the player collider is colliding with the grounds collider. If this method is called then the groundCheck is set to true
