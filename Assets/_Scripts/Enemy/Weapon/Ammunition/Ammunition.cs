@@ -2,10 +2,11 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Abstract class used as a base to other ammunition types. 
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Changed the visibility of the start method from private to protected internal.
+                            November 8, 2023: Added the OnTriggerEnter() method here, so that all derived classes can access it.
  */
 
 using UnityEngine;
@@ -31,5 +32,18 @@ public class Ammunition : MonoBehaviour
         objHeading.Normalize();
 
         movement = speed * Time.deltaTime * objHeading;
+    }
+
+    /// <summary>
+    /// Trigger function called by unity when this object's collider
+    /// enter's another object.
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("OUCHHH");
+        }
     }
 }

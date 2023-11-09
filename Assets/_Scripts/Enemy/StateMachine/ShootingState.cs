@@ -2,13 +2,14 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Shooting state of a controller; specifies the
                             shooting behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Added the Rotate() and the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            November 8, 2023: Added differentiation for the specific controllers.
  */
 
 using UnityEngine;
@@ -46,7 +47,7 @@ public class ShootingState : EnemyStateMachine.State {
         if (!controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
 
-        else if (!controller.IsWeaponReady())
+        else if (controller is ShooterController && !(controller as ShooterController).IsWeaponReady())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.LoadingState);
 
         else if (!controller.WithinRange() && controller.SensePlayer())
@@ -69,7 +70,7 @@ public class ShootingState : EnemyStateMachine.State {
         if(!hasRotated )
             Rotate();
         
-        controller.weapon.Shoot();        
+        controller.weapon.Activate();        
     }
      
     /// <summary>

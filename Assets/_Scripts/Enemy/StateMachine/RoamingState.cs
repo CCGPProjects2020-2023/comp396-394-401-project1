@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 28, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Roaming state of a controller; specifies the path and 
                             roaming behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -10,6 +10,7 @@
                             November 1, 2023: Accomodated the changes made in the EnemyController on November 1, 2023.
                                               Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            November 8, 2023: Added differentiation for the specific controllers.
  */
 
 using UnityEngine;
@@ -42,12 +43,12 @@ public class RoamingState : EnemyStateMachine.State {
         Debug.Log("Roaming state - On Frame");        
         DoRoaming();
 
-        if (this.controller.health <= 0)
+        if (controller.health <= 0)
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
 
-        if (this.controller.SensePlayer() && !Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
+        if (controller.SensePlayer() && !Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
         {
-            if (!this.controller.IsWeaponReady())
+            if (controller is ShooterController && !(controller as ShooterController).IsWeaponReady()) 
                 stateMachine.ChangeState(EnemyStateMachine.StateEnum.LoadingState);
             else
                 stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
