@@ -42,6 +42,9 @@ public class AttackingState : EnemyStateMachine.State
         Debug.Log("Attacking State - On Frame");
         DoAttacking();
 
+        if (controller.health <= 0)
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
+
         if (!controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);       
 
