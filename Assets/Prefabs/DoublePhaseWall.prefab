@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7391779788624535010}
   - component: {fileID: 1381387927037721793}
   - component: {fileID: 8163234775632199297}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_Empty_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6940961098661686313}
   - component: {fileID: 5861024380750729063}
   - component: {fileID: 8312897867423292279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_Empty_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2038233769200791534}
   - component: {fileID: 4398613179589550347}
   - component: {fileID: 2288080539005730153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_Empty_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 5760945330093824449}
   - component: {fileID: 717397709839352014}
   - component: {fileID: 5901892880210577826}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_Empty_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4832453648475985784}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoublePhaseWall
   m_TagString: Phaseable
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8753797711201414307}
   - component: {fileID: 8379800139314040112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightPhasingWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 594908053143232055}
   - component: {fileID: 5417348080173142604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'LeftPhasingWall '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
