@@ -5228,6 +5228,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5417348080173142604, guid: 33864cecf23a16343a5aadfcfa2c691c, type: 3}
+      propertyPath: m_Size.x
+      value: 3.807444
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417348080173142604, guid: 33864cecf23a16343a5aadfcfa2c691c, type: 3}
+      propertyPath: m_Size.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417348080173142604, guid: 33864cecf23a16343a5aadfcfa2c691c, type: 3}
+      propertyPath: m_Center.x
+      value: -0.017157316
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417348080173142604, guid: 33864cecf23a16343a5aadfcfa2c691c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.04320532
+      objectReference: {fileID: 0}
     - target: {fileID: 7290565064786862633, guid: 33864cecf23a16343a5aadfcfa2c691c, type: 3}
       propertyPath: m_Name
       value: DoublePhaseWall (7)

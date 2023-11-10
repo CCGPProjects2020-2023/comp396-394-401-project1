@@ -353,6 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4832453648475985784}
+  - component: {fileID: 1642875597272060301}
   m_Layer: 6
   m_Name: DoublePhaseWall
   m_TagString: Phaseable
@@ -377,6 +378,27 @@ Transform:
   - {fileID: 594908053143232055}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1642875597272060301
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290565064786862633}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.994876, y: 4.4254313, z: 1}
+  m_Center: {x: -1.9858875, y: 2.2933826, z: -2.0054352e-16}
 --- !u!1 &7567119126032652003
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +408,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8753797711201414307}
-  - component: {fileID: 8379800139314040112}
   m_Layer: 6
   m_Name: RightPhasingWall
   m_TagString: Untagged
@@ -411,27 +432,6 @@ Transform:
   - {fileID: 2038233769200791534}
   m_Father: {fileID: 4832453648475985784}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8379800139314040112
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567119126032652003}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.042238206, y: 0.0112038115, z: 0.044216726}
-  m_Center: {x: 0.000000014901161, y: 0.0020190114, z: 0.021096952}
 --- !u!1 &8267084690330447108
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +441,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 594908053143232055}
-  - component: {fileID: 5417348080173142604}
   m_Layer: 6
   m_Name: 'LeftPhasingWall '
   m_TagString: Untagged
@@ -466,24 +465,3 @@ Transform:
   - {fileID: 6940961098661686313}
   m_Father: {fileID: 4832453648475985784}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5417348080173142604
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8267084690330447108}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.042238206, y: 0.0112038115, z: 0.044216726}
-  m_Center: {x: 0.000000014901161, y: 0.0020190114, z: 0.021096952}
