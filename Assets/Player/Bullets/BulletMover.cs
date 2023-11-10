@@ -2,7 +2,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: November 3, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 6, 2023
+    Last Modified Date: November 10, 2023
     Program Description: This script controls layer collision for the bullet, bullet velocity and destruction of the bullet.
 
     Revision History: 
