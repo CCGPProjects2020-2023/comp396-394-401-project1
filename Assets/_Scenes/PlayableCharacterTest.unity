@@ -791,6 +791,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8145819922642516241, guid: 8bbc22ab09aafa2408d8e8c329c29b98, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145819922642516241, guid: 8bbc22ab09aafa2408d8e8c329c29b98, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145819922642516241, guid: 8bbc22ab09aafa2408d8e8c329c29b98, type: 3}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8523447807727712486, guid: 8bbc22ab09aafa2408d8e8c329c29b98, type: 3}
       propertyPath: m_Name
       value: Player

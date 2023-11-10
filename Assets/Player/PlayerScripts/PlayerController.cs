@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 6, 2023
+    Last Modified Date: November 10, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -29,6 +29,8 @@
     -November 03, 2023
         -> Added shooting delay to the script
         -> Included more comments 
+    -November 10, 2023
+        -> Fixed shoot not from center bug
  */
 
 using OpenCover.Framework.Model;
@@ -83,7 +85,7 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
 
         //if key is pressed call the shoot method.
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && currentTime >=shootingDelay)
             Shoot();
 
         //isGrounded = GroundCheck();
@@ -101,15 +103,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
+        //NOTE: This ressource was used as a research point to figure out how to get center of the screen: https://forum.unity.com/threads/how-to-get-a-world-position-from-the-center-of-the-screen.524573/
+
+        //Gets the middle of the screen rather than the mouse position
+        Vector3 cameraShootPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0));
+
         //shooting code here -> for now just Debug.Log message.
         Debug.Log("Player is shooting");
-
-        if(currentTime >= shootingDelay)
-        {
-            //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
-            Instantiate(bullet, Camera.main.ScreenToWorldPoint(Input.mousePosition), cameraPosition.rotation);
-            currentTime = 0;
-        }
+        //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
+        Instantiate(bullet, cameraShootPoint, cameraPosition.rotation);
+        currentTime = 0;
     }
 
 
