@@ -17,6 +17,9 @@
     -October 27, 2023 
         -> Added more fixes to the player rotation matching only the camera on the x axis.
         ->transfered the player rotations adjustments to a new script named UpdatePlayerRotation
+    -November 10, 2023 
+        -> Added player camera seperate from the player so added code here for the camera to follow the player instead of the camera being a parent. This removed some negative behaviours
+        ->Added comments to reflect this
  */
 
 using System.Collections;
@@ -79,5 +82,9 @@ public class CameraController : MonoBehaviour
 
         //this set the camera transform to the new Vecto3 (cameram positions that get updated). Euluer angles is for 3D rotation
         this.transform.eulerAngles = new Vector3(cameraYaw, cameraPitch, 0);
+
+
+        //code for the camera to follow the player.This removed some negative behaviours when it came to rotations and positioning
+        this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + .75f, player.transform.position.z);
     }
 }

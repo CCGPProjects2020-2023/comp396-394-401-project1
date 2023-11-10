@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
 
         //if key is pressed call the shoot method.
-        if (Input.GetKey(KeyCode.Mouse0) && currentTime >=shootingDelay)
+        if (Input.GetKey(KeyCode.Mouse0) && currentTime >= shootingDelay)
             Shoot();
 
         //isGrounded = GroundCheck();
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraShootPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0));
 
         //shooting code here -> for now just Debug.Log message.
-        Debug.Log("Player is shooting");
+        Debug.Log("Player is shooting at: " + cameraShootPoint + "and rotation: " + cameraPosition.rotation);
         //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
         Instantiate(bullet, cameraShootPoint, cameraPosition.rotation);
         currentTime = 0;
