@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     November 11, 2023
     Program Description:    Shooting state of a controller; specifies the
                             shooting behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -10,6 +10,7 @@
                             November 1, 2023: Added the Rotate() and the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation for the specific controllers.
+                            November 11, 2023: Removed the Rotate() function.
  */
 
 using UnityEngine;
@@ -67,23 +68,8 @@ public class ShootingState : EnemyStateMachine.State {
     /// </summary>
     private void DoShooting() {
         controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
-        if(!hasRotated )
-            Rotate();
+        controller.transform.LookAt(controller.player.transform.position);
         
         controller.weapon.Activate();        
-    }
-     
-    /// <summary>
-    /// Rotates this controller to face the player.
-    /// </summary>
-    private void Rotate() {
-        Vector3 controllerVec = controller.transform.position;
-        Vector3 weaponTipVec = controller.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).transform.position;
-
-        float a = Vector3.Angle(controllerVec, weaponTipVec);
-        Vector3 newRotation = new(controller.transform.rotation.x, controller.transform.rotation.y + a, controller.transform.rotation.z);
-        controller.transform.Rotate(newRotation);
-        
-        hasRotated = true;
     }
 }

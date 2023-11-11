@@ -13,6 +13,15 @@ public class Target : MonoBehaviour
 {
     public TargetType type = TargetType.NONE;
     public int multiplier = 1;
+    private ScoreManager scoreManager;
+
+    /// <summary>
+    /// Unity's start function initializing the scoreManager field.
+    /// </summary>
+    private void Start()
+    {
+        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
+    }
 
     /// <summary>
     /// Checks whether the other object is a bullet coming from the player.
@@ -22,8 +31,8 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("PlayerBullet")) {
-            if(multiplier > 0)  ScoreManager.Add((int)type * multiplier);
-            else  ScoreManager.Add((int)type);
+            if(multiplier > 0) scoreManager.Add((int)type * multiplier);
+            else  scoreManager.Add((int)type);
 
             gameObject.transform.root.gameObject.GetComponent<EnemyController>().health -= (int)type;
         }

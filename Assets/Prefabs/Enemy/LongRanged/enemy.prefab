@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4435529952927484713}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.575, y: 2.427, z: 1.197}
+  m_LocalPosition: {x: 0.268, y: 2.315, z: 1.265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65,15 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalPosition.x
@@ -277,11 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400126, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.97992474
       objectReference: {fileID: 0}
     - target: {fileID: 400126, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.19936788
       objectReference: {fileID: 0}
     - target: {fileID: 400126, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalRotation.z
@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400126, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: a50ee16e5e671594fbea5a846e42de75, type: 3}
       propertyPath: m_Controller
@@ -551,7 +551,7 @@ MonoBehaviour:
   closeEnoughEngageCutoff: 30
   closeEnoughSenseCutoff: 45
   health: 100
-  speed: 5
+  speed: 2
   strenght: 90
   weapon: {fileID: 2231933007281442022}
   path: {fileID: 0}
