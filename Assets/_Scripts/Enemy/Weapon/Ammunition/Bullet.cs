@@ -2,11 +2,12 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Subclass of the Ammunition abstract class; this is to specify
                             properties and methods of the bullet object instantiated by a weapon.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the start and destroy method to remove unused bullets.
+                            November 8, 2023: Removed the OnTrigger() method and moved it to its super class.
  */
 
 
@@ -43,19 +44,6 @@ public class Bullet : Ammunition
     private void SetMovement(Vector3 movement)
     {
         transform.position += movement;
-    }
-
-    /// <summary>
-    /// Trigger function called by unity when this object's collider
-    /// enter's another object.
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("OUCHHH");
-        }
     }
 
     /// <summary>

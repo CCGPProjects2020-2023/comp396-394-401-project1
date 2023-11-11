@@ -2,9 +2,10 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 28, 2023
+    Last Date Modified:     November 10, 2023
     Program Description:    Static utility class containing reusable methods.
     Revision History:       October 28, 2023: Initial script and documentation.
+                            November 10, 2023: Adjusted the y-position of the obj in Movement()
  */
 using UnityEngine;
 
@@ -83,7 +84,8 @@ public static class Utils
         Vector3 movement = speed * Time.deltaTime * objHeading;
         Vector3.ClampMagnitude(movement, objDistance);
 
-        pos = isFollowing ? obj.transform.position + movement : obj.transform.position - movement;
+        Vector3 newPos = new Vector3(movement.x, 0, movement.z);
+        pos = isFollowing ? obj.transform.position + newPos : obj.transform.position - newPos;
         obj.transform.LookAt(other.transform.position);
     }
 }

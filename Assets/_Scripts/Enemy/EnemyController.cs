@@ -8,6 +8,7 @@
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
                                               Added the anim property.
                             November 2, 2023: Removed the singleton instance of the EnemyStateMachine and used the new() operator instead.
+                            November 8, 2023: Removed the IsWeaponReady() method since it is specific to the ShooterController.
  */
 
 using UnityEngine;
@@ -71,7 +72,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// <param name="isFollowing"></param>
     protected internal void SetMovement(bool isFollowing) {        
         Utils.Movement(isFollowing, gameObject, player, out Vector3 newPos, speed);
-        this.transform.position = newPos;
+        transform.position = newPos;
     }
 
     /// <summary>
@@ -81,10 +82,4 @@ public abstract class EnemyController : MonoBehaviour {
     protected internal bool WithinRange() {
         return Utils.OtherCloseEnough(closeEnoughEngageCutoff, gameObject, player);
     }
-
-    /// <summary>
-    /// Abstract method that is meant to check if the weapon is ready to be fired.
-    /// </summary>
-    /// <returns></returns>
-    protected internal abstract bool IsWeaponReady();
 }

@@ -43,8 +43,6 @@ GameObject:
   - component: {fileID: 3142732165844226863}
   - component: {fileID: 6612569207007615303}
   - component: {fileID: 7993169952390846689}
-  - component: {fileID: 2786482057774959896}
-  - component: {fileID: 1137402192167935564}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -139,34 +137,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2786482057774959896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7660397598058581264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6249411d9563eea40affb596bd08c58f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfAmmoPerRound: 20
-  spawnRatePerMinute: 100
-  loadingTime: 2
---- !u!114 &1137402192167935564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7660397598058581264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7877552daf8d14aaaebda8bf71fe59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 4652481683582883154, guid: 3372e9497f7280d429f1aaa909e3cd7d, type: 3}
 --- !u!1 &8220605352324693518
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +149,7 @@ GameObject:
   - component: {fileID: 47456255444523939}
   - component: {fileID: 5321978900639644444}
   - component: {fileID: 3934647801132302631}
-  - component: {fileID: 339656682631909221}
+  - component: {fileID: 3555401042191020966}
   m_Layer: 0
   m_Name: EnemyShooter
   m_TagString: Enemy
@@ -231,7 +201,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: edbfe44f0c9647d43af39e626da539c5, type: 2}
+  - {fileID: 2100000, guid: a8d8c97c68167cc4883b55f9c8723b90, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -276,25 +246,25 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &339656682631909221
+--- !u!114 &3555401042191020966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8220605352324693518}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e1d1036a76d6845bff970a37ef3ef9, type: 3}
+  m_Script: {fileID: 11500000, guid: 46a52fe3b0061d248b4c3774a1f76f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   EnemyFOV: 89
-  closeEnoughEngageCutoff: 10
-  closeEnoughSenseCutoff: 15
+  closeEnoughEngageCutoff: 30
+  closeEnoughSenseCutoff: 45
   health: 100
   speed: 2
   strenght: 90
-  weapon: {fileID: 2786482057774959896}
+  weapon: {fileID: 0}
   path: {fileID: 0}
   nextWayPointIndex: 0
