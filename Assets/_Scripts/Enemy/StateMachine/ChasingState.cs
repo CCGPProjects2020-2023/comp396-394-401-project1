@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Chasing state of a controller; specifies the
                             chasing behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -10,6 +10,7 @@
                             November 1, 2023: Adjusted the transition to the shooting state.
                                               Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            November 8, 2023: Added differentiation between specific controllers.
  */
 
 using UnityEngine;
@@ -41,14 +42,17 @@ public class ChasingState : EnemyStateMachine.State {
         Debug.Log("Chasing state - On Frame");
         DoChasing();
         
-        if (this.controller.health <= 0)
+        if (controller.health <= 0)
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
 
         if (!controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
 
-        else if (controller.WithinRange())
+        else if (controller is ShooterController && controller.WithinRange())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.ShootingState);
+
+        else if (controller is CloseRangedController && controller.WithinRange())
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.AttackingState);
     }
 
     /// <summary>

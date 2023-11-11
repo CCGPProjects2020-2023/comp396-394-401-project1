@@ -2,13 +2,14 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 8, 2023
     Program Description:    Loading state of a controller; specifies the
                             loading behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            November 8, 2023: Added differentiation for the specific controllers.
  */ 
 
 using UnityEngine;
@@ -46,7 +47,7 @@ public class LoadingState : EnemyStateMachine.State {
         if (!controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
 
-        else if (controller.IsWeaponReady() && controller.SensePlayer())
+        else if (controller is ShooterController && (controller as ShooterController).IsWeaponReady() && controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
     }
 
@@ -59,7 +60,7 @@ public class LoadingState : EnemyStateMachine.State {
     /// Checks if the weapon of this controller is ready. If not, loads it.
     /// </summary>
     private void DoLoading() {
-        if (!controller.IsWeaponReady()) {
+        if (controller is ShooterController && !(controller as ShooterController).IsWeaponReady()) {
             controller.anim.SetInteger("state", (int)AnimState.LOADING);
             controller.weapon.Load_Weapon();
         }            

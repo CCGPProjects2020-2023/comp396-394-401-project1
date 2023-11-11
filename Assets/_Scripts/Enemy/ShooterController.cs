@@ -8,6 +8,7 @@
                             October 29, 2023: Added the dying state.
                             November 1, 2023: Initialized the anim property.
                             November 2, 2023: Added the statemachine variable to the states' constructors.
+                            November 8, 2023: Removed the override modifier from the IsWeaponReady() method.
  */
 
 using UnityEngine;
@@ -35,7 +36,7 @@ public class ShooterController : EnemyController {
     /// <returns>
     ///     True if the weapon is ready.
     /// </returns>
-    protected internal override bool IsWeaponReady() {
+    protected internal bool IsWeaponReady() {
         weapon.isLoaded = weapon.numbAmmo > 0;
 
         return weapon.isLoaded;
