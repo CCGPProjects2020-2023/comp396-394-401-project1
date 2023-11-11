@@ -30,7 +30,8 @@
         -> Added shooting delay to the script
         -> Included more comments 
     -November 10, 2023
-        -> Fixed shoot not from center bug
+        -> Fixed shooting not from center bug
+        -> Refactored code and added headers
  */
 
 using OpenCover.Framework.Model;
@@ -56,32 +57,38 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private float health = 100;
 
     //reference to the player and player speed.
-    public Rigidbody player;
+    [Header("General Player Attributes")]
     public float speed = 16;
-
-    //bullet prefab
-    public GameObject bullet;
-    public Transform bulletRotation;
-    //camera object
-    public Transform cameraPosition;
-
     //Jumping code variables
     public float jumpPower = 8.0f;
     public bool isGrounded = false;
 
-
+    [Header("Shooting Attributes")]
     //Delay for shooting variables
     public float shootingDelay = 0.5f;
     public float currentTime = 0.0f;
 
 
+    //Player Riogidbody reference
+    //[Header("Reference to player Rigidbody")]
+    private Rigidbody player;
+
+    [Header("GameObject References")]
+    //bullet object
+    public GameObject bullet;
+    //camera object
+    public GameObject playerCamera;
+
+    private void Start()
+    {
+        player = this.gameObject.GetComponent<Rigidbody>();
+    }
 
 
     void FixedUpdate()
     {
         //this code is not controller by the playerStateMachine. It is player derived purely from player inputs so it is independant 
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
-        
         MovePlayer();
 
         //if key is pressed call the shoot method.
@@ -92,7 +99,6 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded && Input.GetKey(KeyCode.Space))
             Jump();
-
 
         //timer for shooting delay
         currentTime += 1 * Time.deltaTime; 
@@ -109,9 +115,9 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraShootPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0));
 
         //shooting code here -> for now just Debug.Log message.
-        Debug.Log("Player is shooting at: " + cameraShootPoint + "and rotation: " + cameraPosition.rotation);
+        Debug.Log("Player is shooting at: " + cameraShootPoint + "and rotation: " + playerCamera.transform.position);
         //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
-        Instantiate(bullet, cameraShootPoint, cameraPosition.rotation);
+        Instantiate(bullet, cameraShootPoint, playerCamera.transform.rotation);
         currentTime = 0;
     }
 

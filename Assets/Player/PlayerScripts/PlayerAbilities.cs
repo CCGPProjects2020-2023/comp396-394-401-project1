@@ -54,7 +54,7 @@ public class PlayerAbilities : MonoBehaviour
     //this denotes the currentTime since phase 
     [SerializeField] private float timeSinceAbilityUsed = 0.0f;
     //time to cooldown after ability is done
-    public float cooldownAfterABilities = 3.0f;
+    public float cooldownAfterAbilities = 3.0f;
     //checks if abilities can be used again
     public bool abilitiesReadyCheck = true;
 
@@ -234,7 +234,7 @@ public class PlayerAbilities : MonoBehaviour
 
         //checks if the time since an ability was used is greater than the cooldownAfterAbilities + phaseDuration.
         //This denotes that full duration of the phase has ability occured and that there is buffer time for the cooldown afterward
-        if ((timeSinceAbilityUsed >= cooldownAfterABilities + phaseDuration))
+        if ((timeSinceAbilityUsed >= cooldownAfterAbilities + phaseDuration))
         {
             //set this to false to reflect that the player can't pahse anymore in the editor.
             canPhase = false;
