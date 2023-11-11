@@ -7,15 +7,13 @@
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Changed the visibility of the start method from private to protected internal.
                             November 8, 2023: Added the OnTriggerEnter() method here, so that all derived classes can access it.
-                            November 11, 2023: Added a scoreManager field to update the player score.
+                            November 11, 2023: Added a reference to the player's scoreManager to update the player score.
  */
 
 using UnityEngine;
 
 public class Ammunition : MonoBehaviour
 {
-    ScoreManager scoreManager;
-
     [Header("Ammunition Properties")]
     public float speed = 10f;
 
@@ -29,7 +27,6 @@ public class Ammunition : MonoBehaviour
     /// </summary>
     protected internal void Start()
     {
-        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         other = GameObject.FindGameObjectWithTag("Player");
 
         Vector3 objHeading = other.transform.position - transform.position;
@@ -45,8 +42,7 @@ public class Ammunition : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))        
-            scoreManager.Remove(5);
-        
+        if (other.gameObject.CompareTag("Player"))
+            other.gameObject.GetComponent<PlayerController>().scoreManager.GetComponent<ScoreManager>().Remove(5);        
     }
 }

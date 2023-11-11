@@ -3,8 +3,8 @@
 
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
-    Last Modified By: Alexander Maynard
-    Last Modified Date: November 10, 2023
+    Last Modified By: Audrey Bernier Larose
+    Last Modified Date: November 11, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -32,6 +32,8 @@
     -November 10, 2023
         -> Fixed shooting not from center bug
         -> Refactored code and added headers
+        -> Added a reference to a score manager object.
+    -November 11, 2023
  */
 
 using OpenCover.Framework.Model;
@@ -50,6 +52,7 @@ using UnityEngine.XR;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    
 
     //Player variables
     //[Header("General Player Attributes")]
@@ -78,6 +81,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     //camera object
     public GameObject playerCamera;
+    //score manager object
+    public GameObject scoreManager;
 
     private void Start()
     {
