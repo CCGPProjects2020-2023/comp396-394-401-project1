@@ -2,9 +2,10 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     November 11, 2023
     Program Description:    Subclass that specifies specific types of enemies.
     Revision History:       November 8, 2023: Initial script and documentation.
+                            November 11, 2023: Changed the modifier of the Start function and added a check to see if controller is dead.
  */
 
 using UnityEngine;
@@ -25,5 +26,11 @@ public class CloseRangedController : EnemyController
         stateMachine.AddState(new AttackingState(this, stateMachine));
         stateMachine.AddState(new EvadingState(this, stateMachine));
         stateMachine.AddState(new DyingState(this, stateMachine));
+    }
+
+    new void Update() {
+        base.Update();
+        if (is_dead)
+            Destroy(gameObject, 5);
     }
 }

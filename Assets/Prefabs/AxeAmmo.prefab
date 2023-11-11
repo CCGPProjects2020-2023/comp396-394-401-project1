@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2612803266052952361}
   - component: {fileID: 7140231400293444625}
   - component: {fileID: 8373310339316332181}
-  - component: {fileID: 853040870386261353}
   - component: {fileID: 94674151495335298}
   - component: {fileID: 7523769587146584672}
+  - component: {fileID: 427620305235541500}
   m_Layer: 0
   m_Name: AxeAmmo
   m_TagString: Untagged
@@ -86,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &853040870386261353
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4106938462770532085}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &94674151495335298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,3 +126,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!136 &427620305235541500
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106938462770532085}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.22442152
+  m_Height: 1.1035637
+  m_Direction: 0
+  m_Center: {x: 0.23077454, y: -0.15498626, z: -0.00000016904407}

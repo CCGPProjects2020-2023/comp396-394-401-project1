@@ -2,12 +2,13 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     November 11, 2023
     Program Description:    Dying state of a controller; specifies the
                             dying behavior.
     Revision History:       October 29, 2023: Initial script and documentation.
                             November 1, 2023: Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            November 11, 2023: Added a is_dead re-assigment to the DoDying function.
  */
 
 using UnityEngine;
@@ -55,5 +56,6 @@ public class DyingState : EnemyStateMachine.State
     /// </summary>
     private void DoDying() {
         controller.anim.SetInteger("state", (int)AnimState.DYING);
+        controller.is_dead = true;
     }
 }

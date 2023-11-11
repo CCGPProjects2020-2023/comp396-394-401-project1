@@ -2,13 +2,14 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 28, 2023
+    Last Date Modified:     November 11, 2023
     Program Description:    Abstract class used as a base for the different types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
                                               Added the anim property.
                             November 2, 2023: Removed the singleton instance of the EnemyStateMachine and used the new() operator instead.
                             November 8, 2023: Removed the IsWeaponReady() method since it is specific to the ShooterController.
+                            November 11, 2023: Changed the modifier of the start function and added a comment to it. 
  */
 
 using UnityEngine;
@@ -25,6 +26,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected internal float cosEnemyFOVover2InRAD;
     public float closeEnoughEngageCutoff = 30f;
     public float closeEnoughSenseCutoff = 45f;
+    protected internal bool is_dead = false;
 
     [Header("Game Properties")]
     protected internal float _start_health;
@@ -46,6 +48,9 @@ public abstract class EnemyController : MonoBehaviour {
         stateMachine = new();
     }
 
+    /// <summary>
+    /// Start function called by Unity. It sets values for private variables.
+    /// </summary>
     public void Start() { //
         cosEnemyFOVover2InRAD = Mathf.Cos(EnemyFOV / 2f * Mathf.Deg2Rad);
         _start_health = health;      
@@ -54,7 +59,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// <summary>
     /// Update method called by Unity. It calles the update method of the state machine.
     /// </summary>
-    private void Update() {
+    public void Update() {
         stateMachine.Update();
     }
 

@@ -66,6 +66,6 @@ public class AttackingState : EnemyStateMachine.State
     private void DoAttacking()
     {
         controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
-        controller.weapon.Activate();
+        controller.weapon.Activate();     
     }
 }
