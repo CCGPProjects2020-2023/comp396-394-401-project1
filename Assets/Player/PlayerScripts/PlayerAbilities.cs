@@ -36,16 +36,22 @@
         -> Organized code better
         -> Added more/better comments for the whole file
         ->Disabled teleport for now
+    -November 10, 2023
+        -> Tied Phase indicator UI element to the player phase ability and added relevant comments\
+        -> Tied AbilitiesStatusText element to the PlayerAbilities script to indicate what is going on to the player. 
+        -> Added relevant comments to the change above.
  */
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-
-//make documentation for every class and function (just description. What does this function/class)
 /// <summary>
-/// 
+/// This is the PLayerAbilities state machine implementation. 
+/// It controls the flow and implementation of the player abilities phase 
+/// and teleport (at a later date) abilities, as well as any relevant transition states.
 /// </summary>
 public class PlayerAbilities : MonoBehaviour
 {
@@ -65,6 +71,11 @@ public class PlayerAbilities : MonoBehaviour
     public float phaseDuration = 3.0f;
     //to check if phase is active
     public bool canPhase = false;
+    public GameObject phaseIndicator;
+
+
+    [Header("Abilities Status Text element")]
+    public TextMeshProUGUI abilitiesStatusText;
 
 
     //player states declared **NOTE: teleport state is disabled for now
@@ -131,6 +142,9 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     private void AbilitiesReadyOnFrame()
     {
+        //text to display to the user for the status of the abilites
+        abilitiesStatusText.text = "Abilties Status: Ready";
+
         //transitions to other states
         if (Input.GetKeyDown(KeyCode.E))
             playerAbilitesStateMachine.ChangeState(phase);
@@ -174,14 +188,20 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     private void Phase()
     {
+        //text to display to the user for the status of the abilites
+        abilitiesStatusText.text = "Abilties Status: Phase Active";
+
         Debug.Log("Phase used");
 
         //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after phase is done once automatically.
         abilitiesReadyCheck = false;
         timeSinceAbilityUsed = 0;
         canPhase = true;
+        
+        //sets the phase indicator as active (or visible)
+        phaseIndicator.SetActive(true);
 
-
+        //sets the Player and Phaseable layers as not being able to interact with each other or 'phase'
         Physics.IgnoreLayerCollision(7, 6, true);
     }
 
@@ -220,13 +240,19 @@ public class PlayerAbilities : MonoBehaviour
     //timer to be used for both ability cooldowns and phase ending
     private void Cooldown()
     {
+
         Debug.Log("Ability is cooling down");
 
 
         //checks if the timeSince an ability was used is > or = to the phase duration set. 
         if(timeSinceAbilityUsed >= phaseDuration)
         {
-            //If true the player and 'Phaseable' layer (for certain walls and such) not ingnore each other anymore.
+            //text to display to the user for the status of the abilites
+            abilitiesStatusText.text = "Abilties Status: Cooling down...";
+            //sets the phase indicator as inactive (or not visible) after phase is over
+            phaseIndicator.SetActive(false);
+
+            //If true the player and 'Phaseable' layer (for certain walls and such) not ignore each other anymore.
             Physics.IgnoreLayerCollision(7, 6, false);
             canPhase = false;
         }
