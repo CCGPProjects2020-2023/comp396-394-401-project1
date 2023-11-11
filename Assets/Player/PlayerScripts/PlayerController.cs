@@ -32,7 +32,6 @@
     -November 10, 2023
         -> Fixed shooting not from center bug
         -> Refactored code and added headers
-        -> Added health variable ONLY for the player --> pending updates from the enemy progress.
  */
 
 using OpenCover.Framework.Model;
@@ -59,7 +58,6 @@ public class PlayerController : MonoBehaviour
 
     //reference to the player and player speed.
     [Header("General Player Attributes")]
-    public int health = 100;
     public float speed = 16;
     //Jumping code variables
     public float jumpPower = 8.0f;

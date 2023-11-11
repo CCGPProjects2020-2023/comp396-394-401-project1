@@ -7,6 +7,8 @@ TagManager:
   - Phaseable
   - Waypoint
   - PlayerBullet
+  - EnemyBullet
+  - doesDamage
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - Phaseable
   - Player
   - Bullet
-  - 
-  - 
+  - EnemyBullet
+  - doesDamage
   - 
   - 
   - 
