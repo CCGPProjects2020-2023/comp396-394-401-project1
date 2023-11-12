@@ -34,6 +34,12 @@ public class Bullet : Ammunition
         SetMovement(this.movement);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Phaseable"))
+            Destroy(gameObject);
+    }
+
     /// <summary>
     /// Sets the direction of the bullet when instantiated.
     /// </summary>

@@ -8365,10 +8365,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 329592873}
-    - target: {fileID: 6195347188865029390, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8399,7 +8395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &609737510
 Transform:
   m_ObjectHideFlags: 0
@@ -28439,9 +28435,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6498062332480296414, guid: cd8be839a85ab1942bf282572dab448c, type: 3}
-      propertyPath: speed
-      value: 0.5
-      objectReference: {fileID: 0}
+      propertyPath: scoreManager
+      value: 
+      objectReference: {fileID: 309658419}
     - target: {fileID: 6870091604037145997, guid: cd8be839a85ab1942bf282572dab448c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

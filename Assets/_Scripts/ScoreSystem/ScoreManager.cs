@@ -30,7 +30,7 @@ public class ScoreManager: MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        score_text.text = s_score + Score;
+        score_text.text = s_score + Score.ToString();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class ScoreManager: MonoBehaviour
         int temp = _score;
         temp += score;
         Score = temp;
-        score_text.text = s_score + Score;
+        score_text.text = s_score + Score.ToString();
     }
 
     /// <summary>
@@ -52,6 +52,6 @@ public class ScoreManager: MonoBehaviour
         int temp = _score;
         temp -= score;
         Score = temp;        
-        score_text.text = s_score + Score;
+        score_text.text = s_score + Score.ToString();
     }
 }
