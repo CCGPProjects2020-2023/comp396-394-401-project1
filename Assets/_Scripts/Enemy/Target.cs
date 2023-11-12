@@ -13,6 +13,7 @@ public class Target : MonoBehaviour
 {
     public TargetType type = TargetType.NONE;
     public int multiplier = 1;
+    public EnemyController controller;
 
     /// <summary>
     /// Checks whether the other object is a bullet coming from the player.
@@ -21,14 +22,14 @@ public class Target : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        EnemyController e = gameObject.transform.root.gameObject.GetComponent<EnemyController>();
+        PlayerController p = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         if (other.gameObject.CompareTag("PlayerBullet")) {
             if (multiplier > 0) {
-                e.player.GetComponent<PlayerController>().scoreManager.GetComponent<ScoreManager>().Add((int)type * multiplier);
+                p.scoreManager.GetComponent<ScoreManager>().Add((int)type * multiplier);
             } 
-            else e.player.GetComponent<PlayerController>().scoreManager.GetComponent<ScoreManager>().Add((int)type);
+            else p.scoreManager.GetComponent<ScoreManager>().Add((int)type);
 
-            e.health -= (int)type;
+            controller.health -= (int)type;
         }
     }
 }

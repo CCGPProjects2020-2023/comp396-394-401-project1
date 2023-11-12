@@ -34,15 +34,4 @@ public class Ammunition : MonoBehaviour
 
         movement = speed * Time.deltaTime * objHeading;
     }
-
-    /// <summary>
-    /// Trigger function called by unity when this object's collider
-    /// enter's another object.
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-            other.gameObject.GetComponent<PlayerController>().scoreManager.GetComponent<ScoreManager>().Remove(5);        
-    }
 }
