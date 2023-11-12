@@ -203,6 +203,9 @@ public class PlayerAbilities : MonoBehaviour
 
         //sets the Player and Phaseable layers as not being able to interact with each other or 'phase'
         Physics.IgnoreLayerCollision(7, 6, true);
+
+        //sets the Player and canDamage(from enemy ammo) layers as not being able to interact with each other or 'phase'
+        Physics.IgnoreLayerCollision(7, 10, true);
     }
 
 
@@ -254,6 +257,10 @@ public class PlayerAbilities : MonoBehaviour
 
             //If true the player and 'Phaseable' layer (for certain walls and such) not ignore each other anymore.
             Physics.IgnoreLayerCollision(7, 6, false);
+
+            //sets the Player and canDamage(from enemy ammo) layers as not being able to interact with each other or 'phase'
+            Physics.IgnoreLayerCollision(7, 10, false);
+
             canPhase = false;
         }
 
