@@ -13,7 +13,7 @@ public enum SceneName
     MainMenu,
     OptionsMenu,
     Instructions,
-    Level01,
+    LevelOne,
     Level02,
     Level03,
     GameOver
