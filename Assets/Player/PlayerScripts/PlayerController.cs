@@ -36,14 +36,7 @@
     -November 11, 2023
  */
 
-using OpenCover.Framework.Model;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
-using UnityEngine.XR;
 
 
 //make documentation for every class and function (just description. What does this function/class)
