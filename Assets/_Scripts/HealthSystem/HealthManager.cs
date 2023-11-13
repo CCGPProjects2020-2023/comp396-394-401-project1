@@ -89,7 +89,7 @@ public class HealthManager : MonoBehaviour
     private void PlayerDeathCall()
     {
         //call change of scene to gameover (main menu for now) upon player death.
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneName.GameOver.ToString());
     }
 
 
