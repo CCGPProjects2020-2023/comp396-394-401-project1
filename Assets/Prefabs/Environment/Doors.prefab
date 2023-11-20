@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6714999845034706576}
   - component: {fileID: 3941311399837837249}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,8 +83,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.772889, y: 4, z: 0.0952416}
-  m_Center: {x: -0.076182, y: 0.97046536, z: -0.054112162}
+  m_Size: {x: 2.772889, y: 4.255506, z: 0.0952416}
+  m_Center: {x: -0.076182045, y: 0.98448694, z: -0.054112162}
 --- !u!1 &5018747274952856505
 GameObject:
   m_ObjectHideFlags: 0
