@@ -2,10 +2,11 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     November 21, 2023
     Program Description:    Abstract class used as a base to other weapon types. 
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 8, 2023: Changed the Start() method modifier to protected internal
+`                           November 21, 2023: Changed the initial number of the currentCount from 0 to 20;
  */
 
 using System.Collections;
@@ -16,7 +17,7 @@ public abstract class Weapon : MonoBehaviour
     [Header("Ammunition Info")]
     public int numberOfAmmoPerRound = 20;
     protected internal Vector3 ammoSpawnLocation;
-    protected internal int currentCount = 0;
+    protected internal int currentCount = 20;
     protected internal int numbAmmo = 0;
     [SerializeField]
     protected internal float spawnRatePerMinute = 30;

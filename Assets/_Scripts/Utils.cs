@@ -2,10 +2,11 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 10, 2023
+    Last Date Modified:     November 21, 2023
     Program Description:    Static utility class containing reusable methods.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 10, 2023: Adjusted the y-position of the obj in Movement()
+                            November 21, 2023: Add an if statement in the Movement function
  */
 using UnityEngine;
 
@@ -86,6 +87,7 @@ public static class Utils
 
         Vector3 newPos = new Vector3(movement.x, 0, movement.z);
         pos = isFollowing ? obj.transform.position + newPos : obj.transform.position - newPos;
-        obj.transform.LookAt(other.transform.position);
+        if(isFollowing) 
+            obj.transform.LookAt(other.transform.position);
     }
 }

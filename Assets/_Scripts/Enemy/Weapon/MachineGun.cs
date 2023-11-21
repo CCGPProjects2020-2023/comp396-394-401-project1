@@ -24,6 +24,6 @@ public class MachineGun : Weapon
 
             currentCount++;
             numbAmmo--;
-        }
+        }        
     }
 }
