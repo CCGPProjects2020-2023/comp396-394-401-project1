@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Date Modified:     November 21, 2023
     Program Description:    Abstract class used as a base for the different types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
@@ -10,9 +10,11 @@
                             November 2, 2023: Removed the singleton instance of the EnemyStateMachine and used the new() operator instead.
                             November 8, 2023: Removed the IsWeaponReady() method since it is specific to the ShooterController.
                             November 11, 2023: Changed the modifier of the start function and added a comment to it. 
+                            November 21, 2023: Added the slider.
  */
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class EnemyController : MonoBehaviour {
 
@@ -20,6 +22,7 @@ public abstract class EnemyController : MonoBehaviour {
     protected internal Animator anim; 
 
     public GameObject player;
+    public Slider health_bar;
 
     [Header("Internal Properties")]
     public float EnemyFOV = 89f;
@@ -61,6 +64,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// </summary>
     public void Update() {
         stateMachine.Update();
+        health_bar.value = health;
     }
 
     /// <summary>

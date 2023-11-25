@@ -34,6 +34,7 @@
         -> Refactored code and added headers
         -> Added a reference to a score manager object.
     -November 11, 2023
+        
  */
 
 using UnityEngine;

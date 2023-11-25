@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 3, 2023
+    Last Modified Date: November 24, 2023
     Program Description: This is script manages the PlayerAbilities using the StateMachine script implementation. 
     Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
     There are state checks, handlers for each state and respective states that are called depending on what conditions are true and what input is pressed.
@@ -40,13 +40,18 @@
         -> Tied Phase indicator UI element to the player phase ability and added relevant comments\
         -> Tied AbilitiesStatusText element to the PlayerAbilities script to indicate what is going on to the player. 
         -> Added relevant comments to the change above.
+    -November 24, 2023
+        -> Uncommented code for teleport and finished it's implementation here
+        ->Tied the teleport implementation to the UI (Ui images and text)
  */
 
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// This is the PLayerAbilities state machine implementation. 
@@ -55,7 +60,6 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerAbilities : MonoBehaviour
 {
-
     [Header("General Player Ability Attributes")]
     //this denotes the currentTime since phase 
     [SerializeField] private float timeSinceAbilityUsed = 0.0f;
@@ -64,31 +68,33 @@ public class PlayerAbilities : MonoBehaviour
     //checks if abilities can be used again
     public bool abilitiesReadyCheck = true;
 
-
-
     [Header("Phase Specific Attributes")]
     //duration of the player phase ability
     public float phaseDuration = 3.0f;
     //to check if phase is active
     public bool canPhase = false;
-    public GameObject phaseIndicator;
+    public GameObject phaseIndicator; //image denoting phasing
 
+    [Header("Teleport Specific Attributes")]
+    //to check if phase is active
+    public bool teleported = false;
+    public GameObject teleportIndicator; //image denoting teleportation
 
     [Header("Abilities Status Text element")]
     public TextMeshProUGUI abilitiesStatusText;
 
+    [Header("Player Camera Reference")]
+    public Camera playerCam;
 
     //player states declared **NOTE: teleport state is disabled for now
     private StateMachine playerAbilitesStateMachine;
-    private StateMachine.State abilitiesReady, phase, cooldown; //teleport not here for now
-
+    private StateMachine.State abilitiesReady, phase, teleport, cooldown;
 
 
     //Start creates the inistances of the State Machine and player states
     // Start is called before the first frame update
     void Start()
     {
-
         //new instance of StateMachine
         playerAbilitesStateMachine = new StateMachine();
 
@@ -105,14 +111,11 @@ public class PlayerAbilities : MonoBehaviour
         phase.onExit = delegate { Debug.Log("Phase.onExit"); };
         phase.onFrame = PhaseOnFrame;
 
-
-        //**Not active for now
-
-        ////teleport state onEnter, onExit and onFrame calls
-        //teleport = playerAbilitesStateMachine.CreateState("Teleport");
-        //teleport.onEnter = delegate { Debug.Log("Teleport.onEnter"); };
-        //teleport.onExit = delegate { Debug.Log("Teleport.onExit"); };
-        //teleport.onFrame = TeleportOnFrame;
+        //teleport state onEnter, onExit and onFrame calls
+        teleport = playerAbilitesStateMachine.CreateState("Teleport");
+        teleport.onEnter = delegate { Debug.Log("Teleport.onEnter"); };
+        teleport.onExit = delegate { Debug.Log("Teleport.onExit"); };
+        teleport.onFrame = TeleportOnFrame;
 
         //cooldown state onEnter, onExit and onFrame calls
         cooldown = playerAbilitesStateMachine.CreateState("Cooldown");
@@ -131,7 +134,6 @@ public class PlayerAbilities : MonoBehaviour
     {
         //playerAbilitesStateMachine.Update is called from this update instance
         playerAbilitesStateMachine.Update();
-
         //timer for cooldown time (amount of time before the player can use the next ability) code here:
         timeSinceAbilityUsed += 1 * Time.deltaTime;
     }
@@ -149,9 +151,8 @@ public class PlayerAbilities : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             playerAbilitesStateMachine.ChangeState(phase);
         
-        //**NOTE: Disabled for now
-        //if (Input.GetKeyDown(KeyCode.F))
-            //playerAbilitesStateMachine.ChangeState(teleport);
+        if (Input.GetKeyDown(KeyCode.F))
+            playerAbilitesStateMachine.ChangeState(teleport);
     }
 
     /// <summary>
@@ -209,46 +210,85 @@ public class PlayerAbilities : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// OnFrame for the Hunt state
+    /// </summary>
+    void TeleportOnFrame()
+    {
+        Debug.Log("Teleport.onFrame");
+        
+        // Call teleport(happens once before the exit condition is called)
+        Teleport();
+
+        //instantly calls the cooldown state as the cooldown state handles the ability ending.
+        playerAbilitesStateMachine.ChangeState(cooldown);
+    }
+
+    /// <summary>
+    /// Teleport method (functionality). Here a ray will be cast to teleport the player where the player points the cursor.
+    /// The abilityStatus text, abilitiesReady and teleported checks will be set properly and the timeSinceAbilityUsed will be reset to 0
+    /// </summary>
+    private void Teleport()
+    {
+        //text to display to the user for the status of the abilites
+        abilitiesStatusText.text = "Abilties Status: Teleported!";
+
+        Debug.Log("Player just teleported");
+
+        //teleportation action here from ray
+        //point to be teleported to 
+        RaycastHit teleportPoint;
+
+        //ray to be cast from the center of the screen (where the mouse is)
+        Ray teleportRay = playerCam.ScreenPointToRay(Input.mousePosition);
 
 
+        //set the teleport point where the ray hits a collider
+        if (Physics.Raycast(teleportRay, out teleportPoint))
+        {
+            //set transform of the player to the teleport point
+            this.transform.position = teleportPoint.point;//objectHit.position;
+        }
 
-    //**ALL TELEPORT CODE IS NOT ACTIVE FOR NOW
+        //sets the teleport indicator as active (or visible)
+        teleportIndicator.SetActive(true);
 
-    ///// <summary>
-    ///// OnFrame for the Hunt state
-    ///// </summary>
-    //void TeleportOnFrame()
-    //{
-    //    //Debug.Log("Teleport.onFrame");
-    //    // Call teleport(happens once before the exit condition is called)
-    //    Teleport();
-
-    //    //instantly calls the cooldown state as the cooldown state handles the ability ending.
-    //    playerAbilitesStateMachine.ChangeState(cooldown);
-    //}
-
-    ///// <summary>
-    ///// Teleport method (functionality). NO FUNCTIONALITY FOR NOW
-    ///// </summary>
-    //private void Teleport()
-    //{
-    //    Debug.Log("Player just teleported");
-
-    //    //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after teleport is done once automatically.
-    //    abilitiesReadyCheck = false;
-    //    timeSinceAbilityUsed = 0;
-    //}
+        //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after teleport is done once automatically.
+        abilitiesReadyCheck = false;
+        timeSinceAbilityUsed = 0;
+        //checks teleport to true to denote that we teleported
+        teleported = true;
+    }
 
 
     //timer to be used for both ability cooldowns and phase ending
     private void Cooldown()
     {
-
         Debug.Log("Ability is cooling down");
 
+        //checks if the time of the ability used is greater than half the time for abilities cooldown and that ateleport was used (teleport == true).
+        //this is needed as we need time to display "Abilties Status: Teleported!" from the teleport implementation and the "Abilties Status: Cooling down..." in the cooldown implementation.
+        //also sets the indicator for teleportation as invisible again
+        if (timeSinceAbilityUsed >= cooldownAfterAbilities/2 && teleported == true)
+        {
+            //sets the teleport indicator as inactive (or invisible)
+            teleportIndicator.SetActive(false);
 
-        //checks if the timeSince an ability was used is > or = to the phase duration set. 
-        if(timeSinceAbilityUsed >= phaseDuration)
+            //text to display to the user for the status of the abilites
+            abilitiesStatusText.text = "Abilties Status: Cooling down...";
+        }
+
+        //checks if the time of the ability used is greater than the time for abilites cooldown and that teleport was used (teleport == true).
+        //if so we set the abilitesReadyCheck to true (to transition states) and set teleported back to false
+        if (timeSinceAbilityUsed >= cooldownAfterAbilities && teleported == true)
+        {
+            //sets the ability check to true to denote that the player ability cooldown is over. This is necessary for the change in state from cooldown to abilitiesReady
+            abilitiesReadyCheck = true;
+            teleported = false;
+        }
+
+        //checks if the timeSince an ability was used is > or = to the phase duration set
+        if (timeSinceAbilityUsed >= phaseDuration && teleported == false)
         {
             //text to display to the user for the status of the abilites
             abilitiesStatusText.text = "Abilties Status: Cooling down...";
@@ -261,13 +301,15 @@ public class PlayerAbilities : MonoBehaviour
             //sets the Player and canDamage(from enemy ammo) layers as not being able to interact with each other or 'phase'
             Physics.IgnoreLayerCollision(7, 10, false);
 
+            //can no longer phase
             canPhase = false;
         }
 
 
         //checks if the time since an ability was used is greater than the cooldownAfterAbilities + phaseDuration.
+        //It also checks whether teleport or phase activated by the 'teleported' bool.
         //This denotes that full duration of the phase has ability occured and that there is buffer time for the cooldown afterward
-        if ((timeSinceAbilityUsed >= cooldownAfterAbilities + phaseDuration))
+        if ((timeSinceAbilityUsed >= cooldownAfterAbilities + phaseDuration) && teleported == false)
         {
             //set this to false to reflect that the player can't pahse anymore in the editor.
             canPhase = false;
