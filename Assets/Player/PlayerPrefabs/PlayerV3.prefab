@@ -759,6 +759,7 @@ MonoBehaviour:
   isGrounded: 0
   shootingDelay: 0.5
   currentTime: 0
+  muzzleFlash: {fileID: 2229856363320621214, guid: 8a448457926801442906bbb44f6414bb, type: 3}
   bullet: {fileID: 2168224650231722223, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
   playerCamera: {fileID: 3195763531304047834}
   scoreManager: {fileID: 0}
@@ -813,7 +814,6 @@ MonoBehaviour:
   health: 100
   healthAtZero: {fileID: 1124970089826588886}
   damageToTake: 10
-  methodName: PlayerDeathCall
 --- !u!1 &4705678573790366199
 GameObject:
   m_ObjectHideFlags: 0

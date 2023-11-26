@@ -3,8 +3,8 @@
 
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
-    Last Modified By: Audrey Bernier Larose
-    Last Modified Date: November 11, 2023
+    Last Modified By: Alexander Maynard
+    Last Modified Date: November 25, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -33,10 +33,12 @@
         -> Fixed shooting not from center bug
         -> Refactored code and added headers
         -> Added a reference to a score manager object.
-    -November 11, 2023
-        
+    -November 25, 2023
+        -> Added player sounds and comments.
+        -> Changed jumping OnCollision type for the jump
  */
 
+using System;
 using UnityEngine;
 
 
@@ -64,7 +66,6 @@ public class PlayerController : MonoBehaviour
     //Delay for shooting variables
     public float shootingDelay = 0.5f;
     public float currentTime = 0.0f;
-
 
     //Player Riogidbody reference
     //[Header("Reference to player Rigidbody")]
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
             Jump();
 
         //timer for shooting delay
-        currentTime += 1 * Time.deltaTime; 
+        currentTime += 1 * Time.deltaTime;
     }
 
     /// <summary>
@@ -118,6 +119,9 @@ public class PlayerController : MonoBehaviour
         //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
         Instantiate(bullet, cameraShootPoint, playerCamera.transform.rotation);
         currentTime = 0;
+
+        //shooting sound from the SoundManager script
+        SoundManager.Instance.PlaySfx(SfxEvent.GunShot);
     }
 
 
@@ -165,7 +169,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //if the player is grounded, player can move normally
-        if(isGrounded)
+        if (isGrounded)
             //Take input and use it to move the player in the world
             player.velocity = new Vector3((playerMovement.x * speed * 1000 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
 
@@ -176,12 +180,28 @@ public class PlayerController : MonoBehaviour
             player.velocity = new Vector3((playerMovement.x * speed * 200 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 200 * Time.deltaTime));
     }
 
+
     /// <summary>
     /// Method for Jump here. It just calls AddFore for the player on Impulse to send the player upward when called
     /// </summary>
     private void Jump()
     {
         player.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// Checks if player hit the ground after jump. If so then call the jump land sound
+    /// </summary>
+    /// <param name="other">References the other object in the collision -> the method checks if this ground</param>
+    private void OnCollisionEnter(Collision other)
+    {
+        //layer == 3 is "Ground" layer
+        //if player is touching a gameobject with tag == "Ground"
+        if(other.gameObject.layer == 3)
+        {
+            //jump landing sound from the SoundManager script
+            SoundManager.Instance.PlaySfx(SfxEvent.JumpLanding);
+        }
     }
 
     /// <summary>
@@ -192,12 +212,13 @@ public class PlayerController : MonoBehaviour
     {
         //layer == 3 is "Ground" layer
         //if player is touching a gameobject with tag == "Ground"
-        if(other.gameObject.layer == 3)
+        if (other.gameObject.layer == 3)
         {
             //set isGrouded to true
             isGrounded = true;
         }
     }
+
 
     /// <summary>
     /// This is called when the player collider leaves the ground collider. If this method is called then the groundCheck is set to false

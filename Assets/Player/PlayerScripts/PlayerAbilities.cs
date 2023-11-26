@@ -46,6 +46,7 @@
     -November 25, 2023
         -> Refactored OnPhase, OnTeleport and comments.
         -> Also added initial comments to the cooldown method.
+        -> Added sounds for the player abilities in script and added sounds (done with minimal refactoring).
  */
 
 using JetBrains.Annotations;
@@ -214,6 +215,10 @@ public class PlayerAbilities : MonoBehaviour
 
         //sets the Player and canDamage(from enemy ammo) layers as not being able to interact with each other or 'phase'
         Physics.IgnoreLayerCollision(7, 10, true);
+
+
+        //phase sound from the SoundManager script
+        SoundManager.Instance.PlaySfx(SfxEvent.Phase);
     }
 
 
@@ -266,6 +271,9 @@ public class PlayerAbilities : MonoBehaviour
         timeSinceAbilityUsed = 0;
         //checks teleport to true to denote that we teleported
         teleported = true;
+
+        //teleport sound from the SoundManager script
+        SoundManager.Instance.PlaySfx(SfxEvent.Teleport);
     }
 
 
@@ -298,12 +306,13 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         //checks if the timeSince an ability was used is > or = to the phase duration set
-        if (timeSinceAbilityUsed >= phaseDuration && teleported == false)
+        if (timeSinceAbilityUsed >= phaseDuration && teleported == false && canPhase == true)
         {
             //text to display to the user for the status of the abilites
             abilitiesStatusText.text = "Abilties Status: Cooling down...";
             //sets the phase indicator as inactive (or not visible) after phase is over
             phaseIndicator.SetActive(false);
+
 
             //If true the player and 'Phaseable' layer (for certain walls and such) not ignore each other anymore.
             Physics.IgnoreLayerCollision(7, 6, false);
@@ -313,6 +322,10 @@ public class PlayerAbilities : MonoBehaviour
 
             //can no longer phase
             canPhase = false;
+
+
+            //phase sound from the SoundManager script
+            SoundManager.Instance.PlaySfx(SfxEvent.Phase);
         }
 
 
