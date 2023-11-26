@@ -11,6 +11,7 @@
         -> Added functionality for the slider to decrease upon the referenced object getting damaged.
         -> added player death and enemy death (empty) methods.
     -Novemebr 25, 2023
+        -> Added the Toggle_IsImmune and Add_Health methods.
         -> Added player hit and player death sounds
         -> Removed enemyDeath call method for now and refactored the health UI to only workk for player
  */
@@ -85,6 +86,9 @@ public class HealthManager : MonoBehaviour
         {
             //decrement health only if not immune
             if(!is_immune) health -= damageToTake;
+
+            //player damage sound from the sound manager script
+            SoundManager.Instance.PlaySfx(SfxEvent.PlayerDamage);
         }
     }
 
@@ -126,7 +130,7 @@ public class HealthManager : MonoBehaviour
     //private void EnemyDeathCall()
     //{
         //call enemy death call code
-    }
+    //}
 
     /// <summary>
     /// This method intercepts the addition of health to the player. It ensures that the maximum health remains equal to the start
