@@ -1,8 +1,8 @@
 /*
     Author's Name: Alexander  Maynard
     Creation Date: November 11, 2023
-    Last Modified By: Alexander Maynard
-    Last Modified Date: November 11, 2023
+    Last Modified By: Audrey Bernier Larose
+    Last Modified Date: November 25, 2023
     Program Description: This is the simple healthManager script that handles health for various enenmy or playertypes and calls the appropriate death method calls.
     
     Revision History: 
@@ -10,6 +10,7 @@
         -> Added health variables and other object references
         -> Added functionality for the slider to decrease upon the referenced object getting damaged.
         -> added player death and enemy death (empty) methods.
+        -> Added the Toggle_Is_Immune and Add_Health methods. 
  */
 
 using System.Collections;
@@ -28,6 +29,7 @@ public class HealthManager : MonoBehaviour
     //health value for object this scriIt is attached to.
     [Header("Health Attributes of referenced object")]
     public int health = 100;
+    protected internal int health_start = 0;
     public GameObject healthAtZero;
 
     //set the damage that the referenced object will take
@@ -38,12 +40,13 @@ public class HealthManager : MonoBehaviour
     [Header("Method to invoke on death")]
     public string methodName;
 
-
+    private bool is_immune = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        health_start = health;
         //set the health slider to the referenced object health amount for on start.
        healthSliderHandle.value = health;
     }
@@ -76,9 +79,26 @@ public class HealthManager : MonoBehaviour
         //So if layer is doesDamage and hits the referenced object then...
         if (other.gameObject.layer == 10)
         {
-            //decrement health
-            health -= damageToTake;
+            //decrement health only if not immune
+            if(!is_immune) health -= damageToTake;
         }
+    }
+
+    /// <summary>
+    /// Toggles the value is_immune to either on or off. 
+    /// </summary>
+    public void Toggle_Is_Immune() {
+        if (!is_immune)  StartCoroutine(Immunity_Coroutine());                
+    }
+
+    /// <summary>
+    /// Keeps the value is_immune to true for 30 seconds.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Immunity_Coroutine() { 
+        this.is_immune = true;
+        yield return new WaitForSeconds(15);
+        this.is_immune = false;
     }
 
 
@@ -100,5 +120,15 @@ public class HealthManager : MonoBehaviour
     private void EnemyDeathCall()
     {
         //call enemy death call code
+    }
+
+    /// <summary>
+    /// This method intercepts the addition of health to the player. It ensures that the maximum health remains equal to the start
+    /// health.
+    /// </summary>
+    /// <param name="h">Amount of health to add.</param>
+    protected internal void Add_Health(int h) {
+        int curr_health = health;
+        health = curr_health + h > health_start ? health_start : health + h;       
     }
 }
