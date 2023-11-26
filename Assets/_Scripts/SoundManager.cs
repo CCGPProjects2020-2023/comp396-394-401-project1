@@ -1,9 +1,10 @@
 /*  Author's Name:          Marcus Ngooi
- *  Last Modified By:       October 23, 2023
- *  Date Last Modified:     October 24, 2023
+ *  Last Modified By:       Alexander Maynard
+ *  Date Last Modified:     November 25, 2023
  *  Program Description:    Manages sound --> Plays sounds and changes volume.
  *  Revision History:       October 23, 2023: Initial SoundManager script.
  *                          October 24, 2023: Added documentation, adjusted PlayerPref usage.
+ *                          November 25, 2023: Added cases for the player sounds in the PlaySfx method switch.
  */
 
 using UnityEngine;
@@ -20,6 +21,13 @@ public class SoundManager : Singleton<SoundManager>
 
     [Header("SFX Audio Clips")]
     [SerializeField] AudioClip buttonClick;
+    [SerializeField] AudioClip playerDamage;
+    [SerializeField] AudioClip playerDeath;
+    [SerializeField] AudioClip phase;
+    [SerializeField] AudioClip teleport;
+    [SerializeField] AudioClip footstep;
+    [SerializeField] AudioClip gunShot;
+    [SerializeField] AudioClip jumpLanding;
 
     [Header("Debug")]
     [SerializeField] private float musicVolume = 1f;
@@ -73,6 +81,24 @@ public class SoundManager : Singleton<SoundManager>
         {
             case SfxEvent.ButtonClick:
                 sfxAudioSource.PlayOneShot(buttonClick);
+                break;
+            case SfxEvent.PlayerDamage:
+                sfxAudioSource.PlayOneShot(playerDamage);
+                break;
+            case SfxEvent.PlayerDeath:
+                sfxAudioSource?.PlayOneShot(playerDeath);
+                break;
+            case SfxEvent.Phase:
+                sfxAudioSource?.PlayOneShot(phase);
+                break;
+            case SfxEvent.Teleport:
+                sfxAudioSource.PlayOneShot(teleport);
+                break;
+            case SfxEvent.GunShot:
+                sfxAudioSource.PlayOneShot(gunShot);
+                break;
+            case SfxEvent.JumpLanding:
+                sfxAudioSource.PlayOneShot(jumpLanding);
                 break;
         }
 

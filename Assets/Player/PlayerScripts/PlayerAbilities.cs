@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 24, 2023
+    Last Modified Date: November 25, 2023
     Program Description: This is script manages the PlayerAbilities using the StateMachine script implementation. 
     Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
     There are state checks, handlers for each state and respective states that are called depending on what conditions are true and what input is pressed.
@@ -43,12 +43,19 @@
     -November 24, 2023
         -> Uncommented code for teleport and finished it's implementation here
         ->Tied the teleport implementation to the UI (Ui images and text)
+    -November 25, 2023
+        -> Refactored OnPhase, OnTeleport and comments.
+        -> Also added initial comments to the cooldown method.
+        -> Added sounds for the player abilities in script and added sounds (done with minimal refactoring).
  */
 
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Playables;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
@@ -180,8 +187,9 @@ public class PlayerAbilities : MonoBehaviour
         Phase();
 
         
-        //instantly calls the cooldown state as the cooldown state handles the ability ending.
-        playerAbilitesStateMachine.ChangeState(cooldown);
+        //if canPhase is true (phase is active) it calls the cooldown state as the cooldown state handles the ability ending.
+        if(canPhase == true)
+            playerAbilitesStateMachine.ChangeState(cooldown);
     }
 
     /// <summary>
@@ -207,6 +215,10 @@ public class PlayerAbilities : MonoBehaviour
 
         //sets the Player and canDamage(from enemy ammo) layers as not being able to interact with each other or 'phase'
         Physics.IgnoreLayerCollision(7, 10, true);
+
+
+        //phase sound from the SoundManager script
+        SoundManager.Instance.PlaySfx(SfxEvent.Phase);
     }
 
 
@@ -220,8 +232,9 @@ public class PlayerAbilities : MonoBehaviour
         // Call teleport(happens once before the exit condition is called)
         Teleport();
 
-        //instantly calls the cooldown state as the cooldown state handles the ability ending.
-        playerAbilitesStateMachine.ChangeState(cooldown);
+        //if teleported is true (player teleported) it calls the cooldown state as the cooldown state handles the ability ending.
+        if (teleported == true)
+            playerAbilitesStateMachine.ChangeState(cooldown);
     }
 
     /// <summary>
@@ -258,10 +271,15 @@ public class PlayerAbilities : MonoBehaviour
         timeSinceAbilityUsed = 0;
         //checks teleport to true to denote that we teleported
         teleported = true;
+
+        //teleport sound from the SoundManager script
+        SoundManager.Instance.PlaySfx(SfxEvent.Teleport);
     }
 
 
     //timer to be used for both ability cooldowns and phase ending
+    //cooldown state handles the abilities ending and decommissioning the abitiy changes to their previous states 
+    //depending on the timer.
     private void Cooldown()
     {
         Debug.Log("Ability is cooling down");
@@ -288,12 +306,13 @@ public class PlayerAbilities : MonoBehaviour
         }
 
         //checks if the timeSince an ability was used is > or = to the phase duration set
-        if (timeSinceAbilityUsed >= phaseDuration && teleported == false)
+        if (timeSinceAbilityUsed >= phaseDuration && teleported == false && canPhase == true)
         {
             //text to display to the user for the status of the abilites
             abilitiesStatusText.text = "Abilties Status: Cooling down...";
             //sets the phase indicator as inactive (or not visible) after phase is over
             phaseIndicator.SetActive(false);
+
 
             //If true the player and 'Phaseable' layer (for certain walls and such) not ignore each other anymore.
             Physics.IgnoreLayerCollision(7, 6, false);
@@ -303,6 +322,10 @@ public class PlayerAbilities : MonoBehaviour
 
             //can no longer phase
             canPhase = false;
+
+
+            //phase sound from the SoundManager script
+            SoundManager.Instance.PlaySfx(SfxEvent.Phase);
         }
 
 
