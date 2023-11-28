@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 10, 2023
+    Last Date Modified:     November 28, 2023
     Program Description:    Roaming state of a controller; specifies the path and 
                             roaming behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -12,6 +12,8 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation for the specific controllers.
                             November 10, 2023: Adjusted the y-position of the player in DoRoaming()
+                            November 28, 2023: Instead of using 0 on the y-axis of the controller.transform.position, it was changed to be using 
+                                               the nextPointIndex y position.
  */
 
 using UnityEngine;
@@ -69,7 +71,7 @@ public class RoamingState : EnemyStateMachine.State {
         Vector3 target = controller.path.transform.GetChild(controller.nextWayPointIndex).position;
         Vector3 movement = Vector3.MoveTowards(controller.transform.position, target, controller.speed * Time.deltaTime);
 
-        controller.transform.position = new Vector3(movement.x, 0, movement.z);//
+        controller.transform.position = new Vector3(movement.x, controller.path.transform.GetChild(controller.nextWayPointIndex).position.y, movement.z);//
         controller.transform.LookAt(target);        
         controller.anim.SetInteger("state", (int)AnimState.WALKING);
     }
