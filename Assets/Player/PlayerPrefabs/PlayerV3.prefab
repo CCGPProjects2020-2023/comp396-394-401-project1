@@ -759,10 +759,9 @@ MonoBehaviour:
   isGrounded: 0
   shootingDelay: 0.5
   currentTime: 0
-  muzzleFlash: {fileID: 2229856363320621214, guid: 8a448457926801442906bbb44f6414bb, type: 3}
   bullet: {fileID: 2168224650231722223, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
   playerCamera: {fileID: 3195763531304047834}
-  scoreManager: {fileID: 0}
+  scoreManager: {fileID: 6219174841914603363, guid: e2b467504893d03458c605cb504141a8, type: 3}
 --- !u!114 &566293005075927133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -778,6 +777,7 @@ MonoBehaviour:
   timeSinceAbilityUsed: 0
   cooldownAfterAbilities: 3
   abilitiesReadyCheck: 1
+  abilityParticles: {fileID: 5271967759129549154, guid: 9b822d513035dab49b9bf2903d618b1b, type: 3}
   phaseDuration: 3
   canPhase: 0
   phaseIndicator: {fileID: 3434489560002758884}
