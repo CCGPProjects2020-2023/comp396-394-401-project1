@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 25, 2023
+    Last Modified Date: November 28, 2023
     Program Description: This is script manages the PlayerAbilities using the StateMachine script implementation. 
     Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
     There are state checks, handlers for each state and respective states that are called depending on what conditions are true and what input is pressed.
@@ -47,6 +47,8 @@
         -> Refactored OnPhase, OnTeleport and comments.
         -> Also added initial comments to the cooldown method.
         -> Added sounds for the player abilities in script and added sounds (done with minimal refactoring).
+    -November 28, 2023
+        -> Added instantiation for particles when player teleports or phases
  */
 
 using JetBrains.Annotations;
@@ -74,6 +76,9 @@ public class PlayerAbilities : MonoBehaviour
     public float cooldownAfterAbilities = 3.0f;
     //checks if abilities can be used again
     public bool abilitiesReadyCheck = true;
+
+    [Header("Player Particles Reference")]
+    public GameObject abilityParticles;
 
     [Header("Phase Specific Attributes")]
     //duration of the player phase ability
@@ -200,6 +205,10 @@ public class PlayerAbilities : MonoBehaviour
         //text to display to the user for the status of the abilites
         abilitiesStatusText.text = "Abilties Status: Phase Active";
 
+        //instantiate particles once player teleports
+        Instantiate(abilityParticles, this.transform.position, this.transform.rotation);
+
+
         Debug.Log("Phase used");
 
         //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after phase is done once automatically.
@@ -261,6 +270,9 @@ public class PlayerAbilities : MonoBehaviour
         {
             //set transform of the player to the teleport point
             this.transform.position = teleportPoint.point;//objectHit.position;
+            
+            //instantiate particles once player teleports
+            Instantiate(abilityParticles, this.transform.position, this.transform.rotation);
         }
 
         //sets the teleport indicator as active (or visible)
@@ -326,6 +338,10 @@ public class PlayerAbilities : MonoBehaviour
 
             //phase sound from the SoundManager script
             SoundManager.Instance.PlaySfx(SfxEvent.Phase);
+
+
+            //instantiate particles once player teleports
+            Instantiate(abilityParticles, this.transform.position, this.transform.rotation);
         }
 
 
