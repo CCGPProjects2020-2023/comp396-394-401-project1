@@ -29,7 +29,7 @@ public class WinManager : MonoBehaviour
     /// </summary>
     public void Awake()
     {
-        InvokeRepeating("EnemyCheck", 0.0f, 0.5f * Time.deltaTime);
+        InvokeRepeating(nameof(EnemyCheck), 0.0f, 0.5f * Time.deltaTime);
     }
 
     /// <summary>
