@@ -90,6 +90,6 @@ public class CameraController : MonoBehaviour
 
         //code for the camera to follow the player.This removed some negative behaviours when it came to rotations and positioning
         //player.transform.position.y + 2f is for the camera to be adjusted to the player height
-        this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 8f, player.transform.position.z + 8f);
+        this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2f, player.transform.position.z);
     }
 }

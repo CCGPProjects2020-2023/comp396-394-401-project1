@@ -991,7 +991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392247505666928481, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
+      value: 3967
       objectReference: {fileID: 0}
     - target: {fileID: 4493262243441080364, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_AnchorMax.x
