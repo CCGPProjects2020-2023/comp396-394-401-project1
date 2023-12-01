@@ -2,7 +2,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 27, 2023
+    Last Modified Date: October 30, 2023
     Program Description: This script handles the camera movement of the player and rotation of the player 
     object as well (to make the camera and player X rotations the same).
     Revision History:   
@@ -20,6 +20,10 @@
     -November 10, 2023 
         -> Added player camera seperate from the player so added code here for the camera to follow the player instead of the camera being a parent. This removed some negative behaviours
         ->Added comments to reflect this
+    -November 30, 2023
+        -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player)
+    -December 1, 2023
+        -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player) again.
  */
 
 using System.Collections;
@@ -85,6 +89,7 @@ public class CameraController : MonoBehaviour
 
 
         //code for the camera to follow the player.This removed some negative behaviours when it came to rotations and positioning
-        this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + .75f, player.transform.position.z);
+        //player.transform.position.y + 2f is for the camera to be adjusted to the player height
+        this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2f, player.transform.position.z);
     }
 }

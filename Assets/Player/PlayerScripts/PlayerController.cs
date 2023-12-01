@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 25, 2023
+    Last Modified Date: December 1, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -36,6 +36,11 @@
     -November 25, 2023
         -> Added player sounds and comments.
         -> Changed jumping OnCollision type for the jump
+     -November 30, 2023
+        -> Added anims and other changes to the script so that it fits the soldier asset purchased from the Unity Asset store. 
+    -December 1, 2023
+        -> Continued work on anims and other changes to the script so that it fits the soldier asset purchased from the Unity Asset store. 
+        -> Reworked the movement code for the anims to work better.
  */
 
 using System;
@@ -79,6 +84,11 @@ public class PlayerController : MonoBehaviour
     //score manager object
     public GameObject scoreManager;
 
+
+    [Header("Player Animator")]
+    public Animator playerAnimator;
+
+
     private void Start()
     {
         player = this.gameObject.GetComponent<Rigidbody>();
@@ -98,7 +108,11 @@ public class PlayerController : MonoBehaviour
         //isGrounded = GroundCheck();
 
         if (isGrounded && Input.GetKey(KeyCode.Space))
+        {
             Jump();
+            //call anim trigger for jump
+            playerAnimator.SetTrigger("jumpPressed");
+        }
 
         //timer for shooting delay
         currentTime += 1 * Time.deltaTime;
@@ -142,31 +156,70 @@ public class PlayerController : MonoBehaviour
         //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
        
         //Switch statement for the Horizontal movement (only one horizontal axis direction can be true at once)
-        switch (Input.GetAxis("Horizontal")) 
-        {
+        //switch (Input.GetAxis("Horizontal")) 
+        //{
+        //    //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
+        //    case > 0.1f:
+        //        playerMovement += transform.right;
+        //        break;
+        //    //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
+        //    case < -0.1f:
+        //        playerMovement -= transform.right;
+        //        break;
+        //}
 
-            //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
-            case > 0.1f:
-                playerMovement += transform.right;
-                break;
-            //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
-            case < -0.1f:
-                playerMovement -= transform.right;
-                break;
+        ////Switch statement for the vertical movement (only one vertical axis direction can be true at once)
+        //switch (Input.GetAxis("Vertical"))
+        //{
+        //    //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
+        //    case > 0.1f:
+        //        playerMovement += transform.forward;
+        //        break;
+        //    //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
+        //    case < -0.1f:
+        //        playerMovement -= transform.forward;
+        //        break;
+        //}
+
+
+        if(Input.GetAxis("Horizontal") > 0.1f)
+        {
+            playerMovement += transform.right;
+        } 
+        if (Input.GetAxis("Horizontal") < -0.1f)
+        {
+            playerMovement -= transform.right;
+        }
+        if (Input.GetAxis("Vertical") > 0.1f)
+        {
+            playerMovement += transform.forward;
+        }
+        if (Input.GetAxis("Vertical") < -0.1f)
+        {
+            playerMovement -= transform.forward;
         }
 
-        //Switch statement for the vertical movement (only one vertical axis direction can be true at once)
-        switch (Input.GetAxis("Vertical"))
+
+        //for animations
+        if ((Input.GetAxis("Vertical") < 0.1f && (Input.GetAxis("Vertical") > -0.1f) || (Input.GetAxis("Horizontal") < 0.1f && (Input.GetAxis("Horizontal") > -0.1f))))
         {
-            //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
-            case > 0.1f:
-                playerMovement += transform.forward;
-                break;
-            //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
-            case < -0.1f:
-                playerMovement -= transform.forward;
-                break;
+            //set animations to no movement
+            playerAnimator.SetBool("twoAxisMovement", false);
         }
+        else
+        {
+            //set animations for corner cases (such as left & right or back & left movement at the same time for example) that there is movement (might not be used)
+            playerAnimator.SetBool("twoAxisMovement", true);
+        }
+
+
+
+        //animator for float for transitioning between movement
+        //for the x axis
+        playerAnimator.SetFloat("xVelocity", Input.GetAxis("Horizontal"));
+
+        //for the z axis
+        playerAnimator.SetFloat("zVelocity", Input.GetAxis("Vertical"));
 
         //if the player is grounded, player can move normally
         if (isGrounded)
@@ -199,6 +252,8 @@ public class PlayerController : MonoBehaviour
         //if player is touching a gameobject with tag == "Ground"
         if(other.gameObject.layer == 3)
         {
+
+            playerAnimator.SetBool("jumping", false);
             //jump landing sound from the SoundManager script
             SoundManager.Instance.PlaySfx(SfxEvent.JumpLanding);
         }
@@ -216,6 +271,7 @@ public class PlayerController : MonoBehaviour
         {
             //set isGrouded to true
             isGrounded = true;
+            playerAnimator.SetBool("jumping", false);
         }
     }
 
@@ -232,6 +288,7 @@ public class PlayerController : MonoBehaviour
         {
             //set isGrouded to false
             isGrounded = false;
+            playerAnimator.SetBool("jumping", true);
         }
     }
 }
