@@ -14,6 +14,8 @@
         -> Added the Toggle_IsImmune and Add_Health methods.
         -> Added player hit and player death sounds
         -> Removed enemyDeath call method for now and refactored the health UI to only workk for player
+    -December 1, 2023
+        -> Added player animator to call the player death anim in the playerController
  */
 
 using System.Collections;
@@ -39,6 +41,9 @@ public class HealthManager : MonoBehaviour
     [Header("How much damage to take")]
     public int damageToTake = 10;
 
+    [Header("Player animator for the player death")]
+    private Animator playerAnimator;
+
     //set the method call name for invoke dependant on which object reference this script is placed on.
     //[Header("Method to invoke on death")]
     //public string methodName; //not used for now
@@ -46,12 +51,25 @@ public class HealthManager : MonoBehaviour
     private bool is_immune = false;
 
 
+    //references to all playerscripts (except for camera controller script
+    PlayerController playerController;
+    UpdatePlayerRotation updatePlayerRotation;
+    PlayerAbilities PlayerAbilities;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        //get reference to the player scripts
+        playerController = GetComponent<PlayerController>();
+        updatePlayerRotation = GetComponent<UpdatePlayerRotation>();
+        PlayerAbilities = GetComponent<PlayerAbilities>();
+
+
+        playerAnimator = GetComponent<Animator>();
         health_start = health;
         //set the health slider to the referenced object health amount for on start.
-       healthSliderHandle.value = health;
+        healthSliderHandle.value = health;
     }
 
 
@@ -70,10 +88,21 @@ public class HealthManager : MonoBehaviour
             //if 0 then...
             //sets the fill area to not active at 0 -> slider value at 0 always has a bit left but we need 0 fill at 0 health.
             healthAtZero.SetActive(false);
+
+            //set animation to dead anim
+            playerAnimator.SetBool("dead", true);
+
+            //disable all player actions
+            playerController.enabled = false;
+            updatePlayerRotation.enabled = false;
+            PlayerAbilities.enabled = false;
+
+
+
             //proper method call for referenced object
             //Invoke(methodName, 0.5f); //removed for now
 
-            Invoke("PlayerDeathCall", 0.5f);
+            Invoke(nameof(PlayerDeathCall), 3f);
         }
     }
 
@@ -117,9 +146,10 @@ public class HealthManager : MonoBehaviour
     private void PlayerDeathCall()
     {
         //player death sound from the SoundManager script
-        SoundManager.Instance.PlaySfx(SfxEvent.PlayerDeath);
+        //already have the hit noise so don't need this right now
+        //SoundManager.Instance.PlaySfx(SfxEvent.PlayerDeath);
         //call change of scene to gameover (main menu for now) upon player death.
-        SceneManager.LoadScene(SceneName.GameOver.ToString());
+        //SceneManager.LoadScene(SceneName.GameOver.ToString());
     }
 
 

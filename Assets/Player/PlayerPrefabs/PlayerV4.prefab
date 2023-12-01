@@ -1584,6 +1584,7 @@ MonoBehaviour:
   health: 100
   healthAtZero: {fileID: 3957009348894874271}
   damageToTake: 10
+  playerAnimator: {fileID: 8605391425848796179}
 --- !u!54 &349599036243514488
 Rigidbody:
   m_ObjectHideFlags: 0

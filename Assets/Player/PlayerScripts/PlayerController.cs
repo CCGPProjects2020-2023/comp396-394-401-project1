@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
         MovePlayer();
 
-        //if key is pressed call the shoot method.
+        //if key is pressed call the shoot method
         if (Input.GetKey(KeyCode.Mouse0) && currentTime >= shootingDelay)
             Shoot();
 
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             //call anim trigger for jump
             playerAnimator.SetTrigger("jumpPressed");
         }
-
+        
         //timer for shooting delay
         currentTime += 1 * Time.deltaTime;
     }
