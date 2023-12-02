@@ -1529,7 +1529,7 @@ MonoBehaviour:
   shootingDelay: 0.5
   currentTime: 0
   bullet: {fileID: 2168224650231722223, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
-  playerCamera: {fileID: 4218320444844207844}
+  playerCamera: {fileID: 4392247505666928481}
   scoreManager: {fileID: 6219174841914603363, guid: e2b467504893d03458c605cb504141a8, type: 3}
   playerAnimator: {fileID: 8605391425848796179}
 --- !u!114 &3401630729536335352
@@ -1584,7 +1584,6 @@ MonoBehaviour:
   health: 100
   healthAtZero: {fileID: 3957009348894874271}
   damageToTake: 10
-  playerAnimator: {fileID: 8605391425848796179}
 --- !u!54 &349599036243514488
 Rigidbody:
   m_ObjectHideFlags: 0

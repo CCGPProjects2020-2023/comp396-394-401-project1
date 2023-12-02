@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 28, 2023
+    Last Modified Date: December 1, 2023
     Program Description: This is script manages the PlayerAbilities using the StateMachine script implementation. 
     Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
     There are state checks, handlers for each state and respective states that are called depending on what conditions are true and what input is pressed.
@@ -49,6 +49,8 @@
         -> Added sounds for the player abilities in script and added sounds (done with minimal refactoring).
     -November 28, 2023
         -> Added instantiation for particles when player teleports or phases
+    -December 1, 2023
+        -> Commented out all Debug.Log() -> they are no longer needed.   
  */
 
 using JetBrains.Annotations;
@@ -172,7 +174,7 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     private void CooldownOnFrame()
     {
-        Debug.Log("Cooldown.onFrame");
+        //Debug.Log("Cooldown.onFrame");
         //call to cooldown functionality
         Cooldown();
 
@@ -187,7 +189,7 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     void PhaseOnFrame()
     {
-        Debug.Log("Phase.onFrame");
+        //Debug.Log("Phase.onFrame");
         //Call phase(happens once before the exit condition is called)
         Phase();
 
@@ -209,7 +211,7 @@ public class PlayerAbilities : MonoBehaviour
         Instantiate(abilityParticles, this.transform.position, this.transform.rotation);
 
 
-        Debug.Log("Phase used");
+        //Debug.Log("Phase used");
 
         //Reset currentCooldownTime and set abilitiesReadyCheck to false, transitions to other state can only go to coolown after phase is done once automatically.
         abilitiesReadyCheck = false;
@@ -236,7 +238,7 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     void TeleportOnFrame()
     {
-        Debug.Log("Teleport.onFrame");
+        //Debug.Log("Teleport.onFrame");
         
         // Call teleport(happens once before the exit condition is called)
         Teleport();
@@ -255,7 +257,7 @@ public class PlayerAbilities : MonoBehaviour
         //text to display to the user for the status of the abilites
         abilitiesStatusText.text = "Abilties Status: Teleported!";
 
-        Debug.Log("Player just teleported");
+        //Debug.Log("Player just teleported");
 
         //teleportation action here from ray
         //point to be teleported to 
@@ -294,7 +296,7 @@ public class PlayerAbilities : MonoBehaviour
     //depending on the timer.
     private void Cooldown()
     {
-        Debug.Log("Ability is cooling down");
+        //Debug.Log("Ability is cooling down");
 
         //checks if the time of the ability used is greater than half the time for abilities cooldown and that ateleport was used (teleport == true).
         //this is needed as we need time to display "Abilties Status: Teleported!" from the teleport implementation and the "Abilties Status: Cooling down..." in the cooldown implementation.

@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 23, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: October 24, 2023
+    Last Modified Date: December 1, 2023
     Program Description: This is the simple player state machine for the handling of the player ability states onEnter, onFrame and onExit
 
     Revision History: 
@@ -12,6 +12,8 @@
         -> Created the simple state machine pattern with all methods and functions from the in class example
     -October 24, 2023 
         -> Added comment header, inline comments and descriptions for the functions
+    -December 1, 2023
+        -> Commented out the Debug.Logs -> no longer needed.
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -72,7 +74,7 @@ public class StateMachine
         //If no states Log the error with use of the debug
         if (states.Count == 0)
         {
-            Debug.LogError("*** State machine has no states! ***");
+            //Debug.LogError("*** State machine has no states! ***");
             return;
         }
 
@@ -95,7 +97,7 @@ public class StateMachine
         //catch if newState is null, if so log it to the debugger with the appropriate message
         if (newState == null)
         {
-            Debug.LogError("*** Can't change to a null state! ***");
+            //Debug.LogError("*** Can't change to a null state! ***");
             return;
         }
         //If the current state is no null and the state isn't exiting either do onExit of current state
@@ -105,7 +107,7 @@ public class StateMachine
         }
 
         //Log the proper message is the debugger and then change to the newState
-        Debug.LogFormat($"*** Changing from state {currentState} to state {newState} ***");
+        //Debug.LogFormat($"*** Changing from state {currentState} to state {newState} ***");
         currentState = newState;
 
         //If the onEnter for a state is not null then do onEnter for the currentState
@@ -125,7 +127,7 @@ public class StateMachine
         else
         //if it doesn't contain the statename the send the appropriate message to the debugger
         {
-            Debug.LogErrorFormat($"*** State machine doesn't have the state {newStateName} ***");
+            //Debug.LogErrorFormat($"*** State machine doesn't have the state {newStateName} ***");
             return;
         }
     }

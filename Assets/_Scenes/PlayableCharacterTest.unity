@@ -440,13 +440,13 @@ GameObject:
   - component: {fileID: 1064407475}
   - component: {fileID: 1064407474}
   - component: {fileID: 1064407473}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1064407473
 BoxCollider:
   m_ObjectHideFlags: 0

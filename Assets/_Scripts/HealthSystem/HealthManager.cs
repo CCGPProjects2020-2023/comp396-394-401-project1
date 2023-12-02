@@ -2,7 +2,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: November 11, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: November 25, 2023
+    Last Modified Date: December 2, 2023
     Program Description: This is the simple healthManager script that handles health for various enenmy or playertypes and calls the appropriate death method calls.
     
     Revision History: 
@@ -107,6 +107,7 @@ public class HealthManager : MonoBehaviour
     }
 
 
+
     //checks for OnTriggerEnter collision with another object.
     private void OnTriggerEnter(Collider other)
     {
@@ -120,6 +121,7 @@ public class HealthManager : MonoBehaviour
             SoundManager.Instance.PlaySfx(SfxEvent.PlayerDamage);
         }
     }
+
 
     /// <summary>
     /// Toggles the value is_immune to either on or off. 

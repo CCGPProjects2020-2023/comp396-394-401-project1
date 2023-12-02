@@ -41,9 +41,13 @@
     -December 1, 2023
         -> Continued work on anims and other changes to the script so that it fits the soldier asset purchased from the Unity Asset store. 
         -> Reworked the movement code for the anims to work better.
+    -December 2, 2023
+        -> Refactored the shoot() code a change from instantiation to rays for shooting.
+        -> Delete unused code and refactored a bit.
  */
 
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
@@ -53,14 +57,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    
-
-    //Player variables
-    //[Header("General Player Attributes")]
-    //player variables -> not part of the player ability state states
-    //[SerializeField] private float health = 100;
-
-    //reference to the player and player speed.
+    //reference to the player variables
     [Header("General Player Attributes")]
     public float speed = 16;
     //Jumping code variables
@@ -80,7 +77,7 @@ public class PlayerController : MonoBehaviour
     //bullet object
     public GameObject bullet;
     //camera object
-    public GameObject playerCamera;
+    public Camera playerCamera; //used to be GamObject
     //score manager object
     public GameObject scoreManager;
 
@@ -123,19 +120,24 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        //NOTE: This ressource was used as a research point to figure out how to get center of the screen: https://forum.unity.com/threads/how-to-get-a-world-position-from-the-center-of-the-screen.524573/
+        //bit wise shift for layerMask to only hit enemy layer
+        int layerMask = 1 << 11;
 
-        //Gets the middle of the screen rather than the mouse position
-        Vector3 cameraShootPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0));
-
-        //shooting code here -> for now just Debug.Log message.
-        Debug.Log("Player is shooting at: " + cameraShootPoint + "and rotation: " + playerCamera.transform.position);
-        //Instantiates the bullet prefab where the player camera x=0, y=0, z=0 is and with it's rotation 
-        Instantiate(bullet, cameraShootPoint, playerCamera.transform.rotation);
+        //reset the time
         currentTime = 0;
 
         //shooting sound from the SoundManager script
         SoundManager.Instance.PlaySfx(SfxEvent.GunShot);
+
+        //Raycast only on the "Enemy" layer and then call the HitEnemy (through SendMessage()) function in Target.cs to damage the enemy and set the score.
+        RaycastHit shootPoint;
+
+        //set the shootPoint point where the ray hits a collider
+        if (Physics.Raycast(playerCamera.ScreenPointToRay(Input.mousePosition), out shootPoint, Mathf.Infinity, layerMask))
+        {
+            //Debug.Log("hit" + shootPoint.transform.gameObject);
+            shootPoint.collider.SendMessage("HitEnemy");
+        }
     }
 
 
@@ -148,59 +150,33 @@ public class PlayerController : MonoBehaviour
         //used this to learn how to get forward position of the object for movement in relation to the object rotation:
         // https://stackoverflow.com/questions/62140867/get-wasd-keys-to-follow-camera-rotation-in-unity
 
-        //set playerMovement to 0, Vector3.zero is shorthand for 0
+        //set playerMovement to 0, Vector3.zero is shorthand for 0 -> this should happen every call to update to regualte the execution of playerMovement
         Vector3 playerMovement = Vector3.zero;
 
-
-        //**These inputs increment the direction of the player movement in parallel to the player rotation**
-        //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
-       
-        //Switch statement for the Horizontal movement (only one horizontal axis direction can be true at once)
-        //switch (Input.GetAxis("Horizontal")) 
-        //{
-        //    //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
-        //    case > 0.1f:
-        //        playerMovement += transform.right;
-        //        break;
-        //    //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
-        //    case < -0.1f:
-        //        playerMovement -= transform.right;
-        //        break;
-        //}
-
-        ////Switch statement for the vertical movement (only one vertical axis direction can be true at once)
-        //switch (Input.GetAxis("Vertical"))
-        //{
-        //    //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
-        //    case > 0.1f:
-        //        playerMovement += transform.forward;
-        //        break;
-        //    //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
-        //    case < -0.1f:
-        //        playerMovement -= transform.forward;
-        //        break;
-        //}
-
-
-        if(Input.GetAxis("Horizontal") > 0.1f)
+        //**These inputs increment the direction of the player movement in parallel to the player rotation** --> using .forward and .right
+        if (Input.GetAxis("Horizontal") > 0.1f)
         {
+            //if the horizontal movement is in the positive direction, increment the playerMovement equal the player's red rotation axis (right)
             playerMovement += transform.right;
         } 
         if (Input.GetAxis("Horizontal") < -0.1f)
         {
+            //if the horizontal movement is in the negative direction, increment the playerMovement equal the opposite of the player's red rotation axis (right)
             playerMovement -= transform.right;
         }
         if (Input.GetAxis("Vertical") > 0.1f)
         {
+            //if the vertical movement is in the positive direction, increment the playerMovement equal the player's blue rotation axis (forward)
             playerMovement += transform.forward;
         }
         if (Input.GetAxis("Vertical") < -0.1f)
         {
+            //if the vertical movement is in the negative direction, increment the playerMovement equal the opposite of the player's blue rotation axis (forward)
             playerMovement -= transform.forward;
         }
 
 
-        //for animations
+        //for animations when to axis movement is true --> for example: right and forward are both true.
         if ((Input.GetAxis("Vertical") < 0.1f && (Input.GetAxis("Vertical") > -0.1f) || (Input.GetAxis("Horizontal") < 0.1f && (Input.GetAxis("Horizontal") > -0.1f))))
         {
             //set animations to no movement
@@ -214,23 +190,26 @@ public class PlayerController : MonoBehaviour
 
 
 
-        //animator for float for transitioning between movement
+        //animator for float for transitioning between movement forward, backward, left and right
         //for the x axis
         playerAnimator.SetFloat("xVelocity", Input.GetAxis("Horizontal"));
-
         //for the z axis
         playerAnimator.SetFloat("zVelocity", Input.GetAxis("Vertical"));
 
+
         //if the player is grounded, player can move normally
         if (isGrounded)
+        {
             //Take input and use it to move the player in the world
             player.velocity = new Vector3((playerMovement.x * speed * 1000 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 1000 * Time.deltaTime));
-
-
+        }
+            
         //if player is not grounded, player has reduced movement in the air
         if (!isGrounded)
+        {
             //Take input and use it to move the player in the world -> speed multiplier (i.e. speed * (1000)) is reduced to 2/10 or 200 for forward/backward and side to side movement while the player is in the air
             player.velocity = new Vector3((playerMovement.x * speed * 200 * Time.deltaTime), player.velocity.y, (playerMovement.z * speed * 200 * Time.deltaTime));
+        }
     }
 
 

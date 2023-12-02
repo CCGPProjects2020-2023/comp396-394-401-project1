@@ -1018,6 +1018,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4392247505666928481, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 3967
+      objectReference: {fileID: 0}
     - target: {fileID: 4493262243441080364, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1065,6 +1069,10 @@ PrefabInstance:
     - target: {fileID: 5687555798775533668, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316088468630907359, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1158,6 +1166,10 @@ PrefabInstance:
     - target: {fileID: 7066168321847157486, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581504778685541962, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1743,6 +1755,10 @@ PrefabInstance:
     - target: {fileID: 7066168321847157486, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581504778685541962, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3498,6 +3514,10 @@ PrefabInstance:
     - target: {fileID: 5164528025297786456, guid: 0f7edc8e592e74a4c83b1fc7e0a7e3ff, type: 3}
       propertyPath: m_Name
       value: enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6212137271860302591, guid: 0f7edc8e592e74a4c83b1fc7e0a7e3ff, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6905,6 +6925,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: phase
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f3bf1bfb5f1b4146a6071315e129f5a, type: 3}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: gunShot
+      value: 
+      objectReference: {fileID: 8300000, guid: 45e5c8f1f5ff435459f1c63f3dc1e07d, type: 3}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: teleport
+      value: 
+      objectReference: {fileID: 8300000, guid: f97d441b5a7d471428a4a4d9e05ad405, type: 3}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: jumpLanding
+      value: 
+      objectReference: {fileID: 8300000, guid: 393f6019aeabc364e96b5b8b5ee6b01c, type: 3}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: playerDeath
+      value: 
+      objectReference: {fileID: 8300000, guid: b12bd9360a411964984921aeb3dad175, type: 3}
+    - target: {fileID: 5641508340256194830, guid: 2bfdb86fb20d6dd49a4fba5a11f3b2fe, type: 3}
+      propertyPath: playerDamage
+      value: 
+      objectReference: {fileID: 8300000, guid: 91c61987e41a15b418965fa382b8df3f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
