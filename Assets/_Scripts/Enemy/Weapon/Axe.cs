@@ -10,4 +10,6 @@
 public class Axe : Weapon
 {
     public override void Activate() { }
+
+    public override void Deactivate() { }
 }

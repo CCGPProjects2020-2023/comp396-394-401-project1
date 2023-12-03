@@ -31,8 +31,8 @@ public class ShooterController : EnemyController {
         stateMachine.AddState(new DyingState(this, stateMachine));
     }
 
-    new void Update() {
-        base.Update();
+    new void FixedUpdate() {
+        base.FixedUpdate();
         if(is_dead)        
             Destroy(gameObject, 5);        
     }

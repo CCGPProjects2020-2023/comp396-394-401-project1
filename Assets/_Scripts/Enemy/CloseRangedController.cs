@@ -12,6 +12,7 @@ using UnityEngine;
 
 public class CloseRangedController : EnemyController
 {
+    public new AudioSource audio;
     /// <summary>
     /// Start method called by Unity. It initializes the states
     /// and properties of this controller.
@@ -19,6 +20,7 @@ public class CloseRangedController : EnemyController
     new void Start()
     {
         base.Start();
+        audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
 
         stateMachine.AddState(new RoamingState(this, stateMachine));       
@@ -28,8 +30,8 @@ public class CloseRangedController : EnemyController
         stateMachine.AddState(new DyingState(this, stateMachine));
     }
 
-    new void Update() {
-        base.Update();
+    new void FixedUpdate() {
+        base.FixedUpdate();
         if (is_dead)
             Destroy(gameObject, 5);
     }

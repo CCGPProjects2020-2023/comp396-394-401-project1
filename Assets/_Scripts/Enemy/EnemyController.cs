@@ -62,7 +62,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// <summary>
     /// Update method called by Unity. It calles the update method of the state machine.
     /// </summary>
-    public void Update() {
+    public void FixedUpdate() {
         stateMachine.Update();
         health_bar.value = health;
     }

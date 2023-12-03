@@ -12,18 +12,34 @@ using UnityEngine;
 
 public class MachineGun : Weapon
 {
+    private ParticleSystem particle;
+
+    private new void Start()
+    {
+        base.Start();
+        particle = transform.GetChild(1).GetComponent<ParticleSystem>();       
+    }
+
     /// <summary>
     /// This method uses the factory class to instantiate and shoot ammunitions.
     /// </summary>
     public override void Activate()
     {
-        var targetCount = Time.time * (spawnRatePerMinute / 60);
-        while (targetCount > currentCount && numbAmmo > 0)
-        {
-            factory.GetNewInstance(gameObject.transform.GetChild(0).transform.position);
+        InvokeRepeating("to_be_performed", 0f, 0.5f);
+        isActivated = true;
+    }
 
-            currentCount++;
-            numbAmmo--;
-        }        
+    public override void Deactivate() {
+        CancelInvoke("to_be_performed");
+        isActivated= false;
+    }
+
+    private void to_be_performed() {
+        factory.GetNewInstance(gameObject.transform.GetChild(0).transform.position);
+        audio.PlayOneShot(audio.clip);
+        if (!particle.isPlaying) particle.Play();
+
+        currentCount++;
+        numbAmmo--;
     }
 }
