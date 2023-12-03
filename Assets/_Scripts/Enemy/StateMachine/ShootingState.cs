@@ -61,7 +61,10 @@ public class ShootingState : EnemyStateMachine.State {
     /// <summary>
     /// Delegates to the OnExit action of this state.
     /// </summary>
-    public override void OnExit() { hasRotated = false; }
+    public override void OnExit() { 
+        hasRotated = false;
+        controller.weapon.Deactivate();
+    }
 
     /// <summary>
     /// Calls the shoot method of the weapon of this controller.
@@ -70,6 +73,7 @@ public class ShootingState : EnemyStateMachine.State {
         controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
         controller.transform.LookAt(controller.player.transform.position);
         
-        controller.weapon.Activate();        
+        if(!controller.weapon.isActivated)
+            controller.weapon.Activate();        
     }
 }
