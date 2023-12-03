@@ -7,7 +7,8 @@
                             attacking behavior.
     Revision History:       November 8, 2023: Initial script and documentation.
                             December 02, 2023: Playing and stopping the controller's audio clip and removed Debug.Logs
-                            December 03, 2023: Added access to the clips list and playing the appropriate sound when attacking state.
+                            December 03, 2023: Added access to the clips list and playing the appropriate sound when attacking state 
+                            and multiplied the threshold to transition to evading state by 1/2
  */
 
 using UnityEngine;
