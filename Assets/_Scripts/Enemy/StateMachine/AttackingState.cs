@@ -6,7 +6,7 @@
     Program Description:    Attacking state of a controller; specifies the
                             attacking behavior.
     Revision History:       November 8, 2023: Initial script and documentation.
-                            December 02, 2023: Playing and stopping the controller's audio clip
+                            December 02, 2023: Playing and stopping the controller's audio clip and removed Debug.Logs
  */
 
 using UnityEngine;
@@ -38,7 +38,6 @@ public class AttackingState : EnemyStateMachine.State
     /// </summary>
     public override void OnFrame()
     {
-        Debug.Log("Attacking State - On Frame");
         DoAttacking();
 
         if (controller.health <= 0)

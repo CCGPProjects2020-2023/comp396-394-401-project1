@@ -2,13 +2,14 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Evading state of a controller; specifies the
                             evading behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            December 02, 2023: Removed Debug.Logs
  */
 
 using UnityEngine;
@@ -37,7 +38,6 @@ public class EvadingState : EnemyStateMachine.State {
     /// state transitions.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Evading state - On Frame");
         DoEvading();
 
         if (this.controller.health <= 0)

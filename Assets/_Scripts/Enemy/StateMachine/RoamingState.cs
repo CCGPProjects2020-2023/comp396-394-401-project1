@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 28, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Roaming state of a controller; specifies the path and 
                             roaming behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -14,6 +14,7 @@
                             November 10, 2023: Adjusted the y-position of the player in DoRoaming()
                             November 28, 2023: Instead of using 0 on the y-axis of the controller.transform.position, it was changed to be using 
                                                the nextPointIndex y position.
+                            December 02, 2023: Removed Debug.Logs
  */
 
 using UnityEngine;
@@ -42,8 +43,7 @@ public class RoamingState : EnemyStateMachine.State {
     /// Delegates to the OnFrame action of this state - it specifies the roaming behavior and
     /// the state transitions from this state.
     /// </summary>
-    public override void OnFrame() {
-        Debug.Log("Roaming state - On Frame");        
+    public override void OnFrame() {    
         DoRoaming();
 
         if (controller.health <= 0)

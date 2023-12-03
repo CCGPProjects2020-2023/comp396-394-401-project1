@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Chasing state of a controller; specifies the
                             chasing behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -11,6 +11,7 @@
                                               Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation between specific controllers.
+                            December 02, 2023: Removed Debug.Logs
  */
 
 using UnityEngine;
@@ -39,7 +40,6 @@ public class ChasingState : EnemyStateMachine.State {
     /// the state transitions.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Chasing state - On Frame");
         DoChasing();
         
         if (controller.health <= 0)

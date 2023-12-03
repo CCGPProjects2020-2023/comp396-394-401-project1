@@ -2,12 +2,13 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    State machine class that manages and updates the states.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Added the AnimState enum.
                             November 2, 2023: Removed the singleton pattern from the state machine.
                             November 8, 2023: Added the AttackingState to the StateEnum
+                            December 02, 2023: Removed Debug.Logs
  */
 
 using System;
@@ -100,7 +101,6 @@ public class EnemyStateMachine
 
         if (currentState != null && currentState.onExit != null) currentState.onExit();
 
-        Debug.LogFormat("Changing from state {0} to {1}", currentState, newState);
         currentState = newState;
 
         currentState.onEnter?.Invoke();

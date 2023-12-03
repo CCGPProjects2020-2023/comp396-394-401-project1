@@ -11,7 +11,7 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation for the specific controllers.
                             November 11, 2023: Removed the Rotate() function.
-                            December 02, 2023: Changed the way the weapon is being activated and deactivated
+                            December 02, 2023: Changed the way the weapon is being activated and deactivated and removed Debug.Logs
  */
 
 using UnityEngine;
@@ -43,7 +43,6 @@ public class ShootingState : EnemyStateMachine.State {
     /// state transitions from this state.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Shooting State - On Frame");
         DoShooting();
 
         if (!controller.SensePlayer())
