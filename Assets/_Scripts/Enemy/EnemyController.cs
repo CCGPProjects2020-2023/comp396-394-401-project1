@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     December 02, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Abstract class used as a base for the different types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
@@ -12,12 +12,17 @@
                             November 11, 2023: Changed the modifier of the start function and added a comment to it. 
                             November 21, 2023: Added the slider.
                             December 02, 2023: Changed to FixedUpdate()
+                            December 03, 2023: Added a list of clips and an audio component
  */
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class EnemyController : MonoBehaviour {
+
+    public List<AudioClip> clips;
+    protected internal AudioSource audio; 
 
     protected internal EnemyStateMachine stateMachine;
     protected internal Animator anim; 
@@ -57,7 +62,8 @@ public abstract class EnemyController : MonoBehaviour {
     /// </summary>
     public void Start() { //
         cosEnemyFOVover2InRAD = Mathf.Cos(EnemyFOV / 2f * Mathf.Deg2Rad);
-        _start_health = health;      
+        _start_health = health;    
+        audio = GetComponent<AudioSource>();
     }
 
     /// <summary>

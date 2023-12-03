@@ -1454,6 +1454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a52fe3b0061d248b4c3774a1f76f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: b12bd9360a411964984921aeb3dad175, type: 3}
+  - {fileID: 8300000, guid: 91c61987e41a15b418965fa382b8df3f, type: 3}
+  - {fileID: 8300000, guid: 3791dcf2ce3e7fb4aa942b5ce6c682b8, type: 3}
   player: {fileID: 0}
   health_bar: {fileID: 4176762598584411073}
   EnemyFOV: 89
@@ -1465,7 +1469,6 @@ MonoBehaviour:
   weapon: {fileID: 4098595291850732891}
   path: {fileID: 0}
   nextWayPointIndex: 0
-  audio: {fileID: 0}
 --- !u!54 &2547368385687429883
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1550,7 +1553,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3791dcf2ce3e7fb4aa942b5ce6c682b8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0

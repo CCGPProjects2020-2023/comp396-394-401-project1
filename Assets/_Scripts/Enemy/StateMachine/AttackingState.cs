@@ -2,11 +2,12 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     Decmeber 02, 2023
+    Last Date Modified:     Decmeber 03, 2023
     Program Description:    Attacking state of a controller; specifies the
                             attacking behavior.
     Revision History:       November 8, 2023: Initial script and documentation.
                             December 02, 2023: Playing and stopping the controller's audio clip and removed Debug.Logs
+                            December 03, 2023: Added access to the clips list and playing the appropriate sound when attacking state.
  */
 
 using UnityEngine;
@@ -67,7 +68,7 @@ public class AttackingState : EnemyStateMachine.State
         controller.weapon.Activate();
 
         if (controller.anim.GetCurrentAnimatorStateInfo(0).IsName("super punch") && !(controller as CloseRangedController).audio.isPlaying) {
-            (controller as CloseRangedController).audio.PlayOneShot((controller as CloseRangedController).audio.clip);
+            (controller as CloseRangedController).audio.PlayOneShot((controller as CloseRangedController).clips[2]);
         }                
     }
 }

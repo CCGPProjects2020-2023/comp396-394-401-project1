@@ -8178,6 +8178,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 363363830}
+    - target: {fileID: 542271616323327449, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
+      propertyPath: clips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 542271616323327449, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 91c61987e41a15b418965fa382b8df3f, type: 3}
     - target: {fileID: 7066168321847157486, guid: b2fcf39fd1a680245a8081d5395df0cc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

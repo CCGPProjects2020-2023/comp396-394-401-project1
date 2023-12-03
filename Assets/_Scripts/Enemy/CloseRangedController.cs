@@ -2,18 +2,18 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     December 02, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Subclass that specifies specific types of enemies.
     Revision History:       November 8, 2023: Initial script and documentation.
                             November 11, 2023: Changed the modifier of the Start function and added a check to see if controller is dead.
                             December 02, 2023: Changed to FixedUpdate() and added an audio component
+                            December 03, 2023: Removed the audio component and moved it to parent.
  */
 
 using UnityEngine;
 
 public class CloseRangedController : EnemyController
 {
-    public new AudioSource audio;
     /// <summary>
     /// Start method called by Unity. It initializes the states
     /// and properties of this controller.
@@ -21,7 +21,6 @@ public class CloseRangedController : EnemyController
     new void Start()
     {
         base.Start();
-        audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
 
         stateMachine.AddState(new RoamingState(this, stateMachine));       

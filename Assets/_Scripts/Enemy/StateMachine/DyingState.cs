@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     December 02, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Dying state of a controller; specifies the
                             dying behavior.
     Revision History:       October 29, 2023: Initial script and documentation.
@@ -10,6 +10,7 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 11, 2023: Added a is_dead and controller position re-assigments to the DoDying function.
                             December 02, 2023: Removed Debug.Logs
+                            December 03, 2023: Added a way to play a death sound by accessing the appropriate clip in the clips list.
  */
 
 using UnityEngine;
@@ -34,6 +35,7 @@ public class DyingState : EnemyStateMachine.State
     /// Delegates to the OnEnter action of this state.
     /// </summary>
     public override void OnEnter() {
+        controller.audio.PlayOneShot(controller.clips[0]);
 
     }
 
@@ -55,7 +57,7 @@ public class DyingState : EnemyStateMachine.State
     /// Handles the dying behavior of this controller.
     /// </summary>
     private void DoDying() {
-        controller.anim.SetInteger("state", (int)AnimState.DYING);
+        controller.anim.SetInteger("state", (int)AnimState.DYING);        
         controller.transform.position = new(controller.transform.position.x, 0.1f, controller.transform.position.z);
         controller.is_dead = true;
     }

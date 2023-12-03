@@ -1,11 +1,12 @@
 /*
  * 
     Author's Name:          Audrey Bernier Larose
-    Last Modified By:       Alexander Maynard
+    Last Modified By:       Audrey Bernier Larose
     Last Date Modified:     December 2, 2023
     Program Description:    Sets the type of target to the object.
     Revision History:       November 11, 2023: Initial script and documentation.  
                             December 2, 2023: Changed OnTriggerEnter to a public function to work with raycast.
+                            December 03, 2023: Added a way to access the clips' list and playing the appropriate clip on hit.
  */
 
 using UnityEngine;
@@ -34,6 +35,7 @@ public class Target : MonoBehaviour
         else p.scoreManager.GetComponent<ScoreManager>().Add((int)type);
 
         controller.health -= (int)type;
+        controller.audio.PlayOneShot(controller.clips[1]);
     }
 }
 
