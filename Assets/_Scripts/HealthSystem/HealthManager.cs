@@ -84,8 +84,8 @@ public class HealthManager : MonoBehaviour
         healthSliderHandle.value = health;
 
 
-        //checks if health for referenced object is 0...
-        if(health == 0)
+        //checks if health for referenced object is less or equal to 0...
+        if(health <= 0)
         {
             //if 0 then...
             //sets the fill area to not active at 0 -> slider value at 0 always has a bit left but we need 0 fill at 0 health.
