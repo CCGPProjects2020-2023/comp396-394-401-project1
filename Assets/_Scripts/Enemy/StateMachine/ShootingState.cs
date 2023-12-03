@@ -18,7 +18,6 @@ using UnityEngine;
 
 public class ShootingState : EnemyStateMachine.State {
 
-    private bool hasRotated = false;
 
     /// <summary>
     /// Initializes the action and controller.
@@ -62,7 +61,6 @@ public class ShootingState : EnemyStateMachine.State {
     /// Delegates to the OnExit action of this state.
     /// </summary>
     public override void OnExit() { 
-        hasRotated = false;
         controller.weapon.Deactivate();
     }
 
