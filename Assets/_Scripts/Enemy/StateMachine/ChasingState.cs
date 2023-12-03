@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     December 02, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Chasing state of a controller; specifies the
                             chasing behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -12,9 +12,8 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation between specific controllers.
                             December 02, 2023: Removed Debug.Logs
+                            December 03, 2023: Added the controller.is_attacking in the Enter() function
  */
-
-using UnityEngine;
 
 public class ChasingState : EnemyStateMachine.State {
     /// <summary>
@@ -33,7 +32,9 @@ public class ChasingState : EnemyStateMachine.State {
     /// <summary>
     /// Delegates to the OnEnter action of this state.
     /// </summary>
-    public override void OnEnter() { }
+    public override void OnEnter() {
+        controller.is_attacking = false;
+    }
 
     /// <summary>
     /// Delegates to the OnFrame action of this state - it specifies the chasing behavior and
