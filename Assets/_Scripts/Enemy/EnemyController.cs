@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 21, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Abstract class used as a base for the different types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Changed the waypoints Transform[] property to a GameObject path property   
@@ -11,6 +11,7 @@
                             November 8, 2023: Removed the IsWeaponReady() method since it is specific to the ShooterController.
                             November 11, 2023: Changed the modifier of the start function and added a comment to it. 
                             November 21, 2023: Added the slider.
+                            December 02, 2023: Changed to FixedUpdate()
  */
 
 using UnityEngine;

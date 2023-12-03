@@ -2,10 +2,11 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 8, 2023
+    Last Date Modified:     Decmeber 02, 2023
     Program Description:    Attacking state of a controller; specifies the
                             attacking behavior.
     Revision History:       November 8, 2023: Initial script and documentation.
+                            December 02, 2023: Playing and stopping the controller's audio clip
  */
 
 using UnityEngine;

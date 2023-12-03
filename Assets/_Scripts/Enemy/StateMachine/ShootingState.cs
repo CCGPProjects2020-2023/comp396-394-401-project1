@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Shooting state of a controller; specifies the
                             shooting behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -11,6 +11,7 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation for the specific controllers.
                             November 11, 2023: Removed the Rotate() function.
+                            December 02, 2023: Changed the way the weapon is being activated and deactivated
  */
 
 using UnityEngine;
