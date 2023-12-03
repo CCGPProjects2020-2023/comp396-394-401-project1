@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
     /// It also sets the X rotaion of the player to the same as the camera so the the movement controls match.
     /// </summary>
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //sets the cursor to always visible
         Cursor.visible = true;
