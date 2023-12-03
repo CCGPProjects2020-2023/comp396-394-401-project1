@@ -50,7 +50,7 @@ public class AttackingState : EnemyStateMachine.State
         else if (!controller.WithinRange() && controller.SensePlayer())
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
 
-        else if (Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
+        else if (Utils.IsBelowThreshold(controller._start_health / 4, controller.health))
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.EvadingState);
     }
 
