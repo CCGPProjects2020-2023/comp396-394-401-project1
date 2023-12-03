@@ -4,7 +4,7 @@
     Author's Name: Alexander  Maynard
     Creation Date: October 26, 2023
     Last Modified By: Alexander Maynard
-    Last Modified Date: December 1, 2023
+    Last Modified Date: December 2, 2023
     Program Description: This is the simple playerController that handles player movement and shooting as well as any other player controls
     
     Revision History: 
@@ -44,6 +44,7 @@
     -December 2, 2023
         -> Refactored the shoot() code a change from instantiation to rays for shooting.
         -> Delete unused code and refactored a bit.
+        -> Tied muzzle flash particle system to shoot.
  */
 
 using System;
@@ -84,6 +85,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Animator")]
     public Animator playerAnimator;
+
+    [Header("Muzzle-Flash Particle System Variables")]
+    public GameObject muzzleFlash;
+    [SerializeField] private bool muzzleToggle = false; //starts false
 
 
     private void Start()
@@ -126,6 +131,11 @@ public class PlayerController : MonoBehaviour
         //reset the time
         currentTime = 0;
 
+        //calls muzzlFlashToggle to toggle the muzzle-flash
+        MuzzleFlashToggle();
+        //call muzzleFlashToggle again after 0.25 seconds
+        Invoke(nameof(MuzzleFlashToggle), 0.1f);
+
         //shooting sound from the SoundManager script
         SoundManager.Instance.PlaySfx(SfxEvent.GunShot);
 
@@ -139,6 +149,14 @@ public class PlayerController : MonoBehaviour
             shootPoint.collider.SendMessage("HitEnemy");
         }
     }
+
+
+    public void MuzzleFlashToggle()
+    {
+        muzzleToggle = !muzzleToggle;
+        muzzleFlash.SetActive(muzzleToggle);
+    }
+
 
 
     /// <summary>

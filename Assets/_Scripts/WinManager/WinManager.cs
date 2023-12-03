@@ -8,6 +8,8 @@
     Revision History: 
     -November 30, 2023 
         -> Added first iteration of the WinManager script with basic functionality
+    -December 2, 2023:
+        -> Fixed bug where Load Scene gets called too early.
  */
 
 using System.Collections.Generic;
@@ -48,8 +50,8 @@ public class WinManager : MonoBehaviour
                 // ...then just return
                 return;
             }
-            // if all enemies all destoyed (aka null), the players wins, so call the next scene (level)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+        // if all enemies all destoyed (aka null), the players wins, so call the next scene (level)
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

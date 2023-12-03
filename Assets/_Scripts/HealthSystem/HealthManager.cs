@@ -16,6 +16,8 @@
         -> Removed enemyDeath call method for now and refactored the health UI to only workk for player
     -December 1, 2023
         -> Added player animator to call the player death anim in the playerController
+    -December 2, 2023
+        -> Refactored code and removed uneeded code.
  */
 
 using System.Collections;
@@ -97,11 +99,7 @@ public class HealthManager : MonoBehaviour
             updatePlayerRotation.enabled = false;
             PlayerAbilities.enabled = false;
 
-
-
-            //proper method call for referenced object
-            //Invoke(methodName, 0.5f); //removed for now
-
+            //call what happens upon player death
             Invoke(nameof(PlayerDeathCall), 3f);
         }
     }
@@ -149,20 +147,10 @@ public class HealthManager : MonoBehaviour
     {
         //player death sound from the SoundManager script
         //already have the hit noise so don't need this right now
-        //SoundManager.Instance.PlaySfx(SfxEvent.PlayerDeath);
+        SoundManager.Instance.PlaySfx(SfxEvent.PlayerDeath);
         //call change of scene to gameover (main menu for now) upon player death.
-        //SceneManager.LoadScene(SceneName.GameOver.ToString());
+        SceneManager.LoadScene(SceneName.GameOver.ToString());
     }
-
-
-    /// <summary>
-    /// This handles what happens upon enemy death (if anything at all).
-    /// This may be called by invoke depending what is set in the editor.
-    /// </summary>
-    //private void EnemyDeathCall()
-    //{
-        //call enemy death call code
-    //}
 
     /// <summary>
     /// This method intercepts the addition of health to the player. It ensures that the maximum health remains equal to the start
