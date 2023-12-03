@@ -12,7 +12,7 @@
                             November 11, 2023: Changed the modifier of the start function and added a comment to it. 
                             November 21, 2023: Added the slider.
                             December 02, 2023: Changed to FixedUpdate()
-                            December 03, 2023: Added a list of clips and an audio component
+                            December 03, 2023: Added a list of clips and an audio component and changed the Update() method to FixedUptade()
  */
 
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ using UnityEngine.UI;
 public abstract class EnemyController : MonoBehaviour {
 
     public List<AudioClip> clips;
-    protected internal AudioSource audio; 
+    protected internal new AudioSource audio; 
 
     protected internal EnemyStateMachine stateMachine;
     protected internal Animator anim; 
@@ -50,6 +50,8 @@ public abstract class EnemyController : MonoBehaviour {
     public GameObject path;
     public int nextWayPointIndex = 0;
 
+    public bool is_attacking = false;
+
     /// <summary>
     /// Awake method called by Unity. It initiates the Singleton instance of the state machine.
     /// </summary>
@@ -70,7 +72,7 @@ public abstract class EnemyController : MonoBehaviour {
     /// Update method called by Unity. It calles the update method of the state machine.
     /// </summary>
     public void FixedUpdate() {
-        stateMachine.Update();
+        stateMachine.FixedUpdate();
         health_bar.value = health;
     }
 

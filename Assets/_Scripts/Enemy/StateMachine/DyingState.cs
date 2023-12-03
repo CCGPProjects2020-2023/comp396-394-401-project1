@@ -11,6 +11,8 @@
                             November 11, 2023: Added a is_dead and controller position re-assigments to the DoDying function.
                             December 02, 2023: Removed Debug.Logs
                             December 03, 2023: Added a way to play a death sound by accessing the appropriate clip in the clips list.
+                                               Also, setting the is_attacking variable in the Enter() method and freezing the enemy's constraints 
+                                               when dying.
  */
 
 using UnityEngine;
@@ -36,7 +38,7 @@ public class DyingState : EnemyStateMachine.State
     /// </summary>
     public override void OnEnter() {
         controller.audio.PlayOneShot(controller.clips[0]);
-
+        controller.is_attacking = false;
     }
 
     /// <summary>
@@ -59,6 +61,7 @@ public class DyingState : EnemyStateMachine.State
     private void DoDying() {
         controller.anim.SetInteger("state", (int)AnimState.DYING);        
         controller.transform.position = new(controller.transform.position.x, 0.1f, controller.transform.position.z);
+        controller.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         controller.is_dead = true;
     }
 }

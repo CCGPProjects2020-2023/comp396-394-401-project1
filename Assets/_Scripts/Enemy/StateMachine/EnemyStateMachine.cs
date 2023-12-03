@@ -2,13 +2,14 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     December 02, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    State machine class that manages and updates the states.
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 1, 2023: Added the AnimState enum.
                             November 2, 2023: Removed the singleton pattern from the state machine.
                             November 8, 2023: Added the AttackingState to the StateEnum
                             December 02, 2023: Removed Debug.Logs
+                            December 03, 2023: Changed the Update() method to FixedUpdate() and added the EnragingState in the StateEnum
  */
 
 using System;
@@ -27,6 +28,7 @@ public class EnemyStateMachine
         ChasingState,
         ShootingState,
         AttackingState,
+        EnragingState,
         EvadingState,
         DyingState
     }
@@ -81,7 +83,7 @@ public class EnemyStateMachine
     /// Updates the state to the state that the controller needs to change to.
     /// </summary>
     /// <exception cref="Exception"></exception>
-    public void Update()
+    public void FixedUpdate()
     {
         if (states.Count == 0) throw new Exception("*** State machine has no states! ***");
 
