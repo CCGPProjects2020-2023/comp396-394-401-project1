@@ -1345,6 +1345,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc339ceb93e5a924b8d522b37433cec4, type: 3}
+--- !u!1 &2027543338909603339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4431230155058316696, guid: bc339ceb93e5a924b8d522b37433cec4, type: 3}
+  m_PrefabInstance: {fileID: 2404257776221721491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7251447150785570186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5044017795914610201, guid: bc339ceb93e5a924b8d522b37433cec4, type: 3}
@@ -1597,9 +1602,9 @@ MonoBehaviour:
   currentTime: 0
   bullet: {fileID: 2168224650231722223, guid: 1760f14b919819f4e87db8927ebc492e, type: 3}
   playerCamera: {fileID: 4392247505666928481}
-  scoreManager: {fileID: 6219174841914603363, guid: e2b467504893d03458c605cb504141a8, type: 3}
+  scoreManager: {fileID: 0}
   playerAnimator: {fileID: 8605391425848796179}
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 2027543338909603339}
   muzzleToggle: 0
 --- !u!114 &3401630729536335352
 MonoBehaviour:
