@@ -12,8 +12,6 @@ using UnityEngine;
 
 public class AttackingState : EnemyStateMachine.State
 {
-    
-
     /// <summary>
     /// Initializes the action and controller.
     /// </summary>
@@ -66,6 +64,10 @@ public class AttackingState : EnemyStateMachine.State
     private void DoAttacking()
     {
         controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
-        controller.weapon.Activate();     
+        controller.weapon.Activate();
+
+        if (controller.anim.GetCurrentAnimatorStateInfo(0).IsName("super punch") && !(controller as CloseRangedController).audio.isPlaying) {
+            (controller as CloseRangedController).audio.PlayOneShot((controller as CloseRangedController).audio.clip);
+        }                
     }
 }

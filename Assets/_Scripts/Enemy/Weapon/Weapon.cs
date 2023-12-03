@@ -28,11 +28,16 @@ public abstract class Weapon : MonoBehaviour
     protected internal bool isLoaded = false;
     public float loadingTime = 2f;
 
+    protected internal new AudioSource audio;
+
+    protected internal bool isActivated = false;
+
     /// <summary>
     /// Start method called by Unity that initializes the Ammunition Factory.
     /// </summary>
     protected internal void Start()
     {
+        audio = GetComponent<AudioSource>();
         factory = gameObject.GetComponent<AmmunitionFactory>();
     }
 
@@ -59,4 +64,5 @@ public abstract class Weapon : MonoBehaviour
     /// This method is meant to implement the shoot function of a weapon type.
     /// </summary>
    public abstract void Activate();
+   public abstract void Deactivate();
 }
