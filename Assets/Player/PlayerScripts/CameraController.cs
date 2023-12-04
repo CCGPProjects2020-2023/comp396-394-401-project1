@@ -1,36 +1,47 @@
-/*
-    Author's Name: Alexander  Maynard
-    Creation Date: October 26, 2023
-    Last Modified By: Alexander Maynard
-    Last Modified Date: October 30, 2023
-    Program Description: This script handles the camera movement of the player and rotation of the player 
-    object as well (to make the camera and player X rotations the same).
-    Revision History:   
-    -October 26, 2023
-        -> Added firstvariables.
-        -> Added list of ressources used to help make the camera turn with mouse imput.
-        -> Added code in the start to lock the cursor and make it invisible.
-        -> Added code in the update to move the camera X and Y using the camera speed.
-        -> Added links to references used to help learn how to make the camera follow the mouse input.
-        -> Added code to pair the player object and camera X rotations together.
-        -> Added initial fix for player rortation for movement matching the camera's rotation
-    -October 27, 2023 
-        -> Added more fixes to the player rotation matching only the camera on the x axis.
-        ->transfered the player rotations adjustments to a new script named UpdatePlayerRotation
-    -November 10, 2023 
-        -> Added player camera seperate from the player so added code here for the camera to follow the player instead of the camera being a parent. This removed some negative behaviours
-        ->Added comments to reflect this
-    -November 30, 2023
-        -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player)
-    -December 1, 2023
-        -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player) again.
+/* 
+ * Author's Name:           Alexander  Maynard
+ * Creation Date:           October 26, 2023
+ * Last Modified By:        Alexander Maynard
+ * Last Modified Date:      December 3, 2023
+ * 
+ * Program Description:     This script handles the camera movement of the player and rotation of the player 
+ *                          object as well (to make the camera and player X rotations the same).
+ *                          
+ * Revision History:        October 26, 2023:
+ *                              -> Added firstvariables.
+ *                              -> Added list of ressources used to help make the camera turn with mouse imput.
+ *                              -> Added code in the start to lock the cursor and make it invisible.
+ *                              -> Added code in the update to move the camera X and Y using the camera speed.
+ *                              -> Added links to references used to help learn how to make the camera follow the mouse input.
+ *                              -> Added code to pair the player object and camera X rotations together.
+ *                              -> Added initial fix for player rortation for movement matching the camera's rotation
+ *                              
+ *                          October 27, 2023:
+ *                              -> Added more fixes to the player rotation matching only the camera on the x axis.
+ *                              -> transfered the player rotations adjustments to a new script named UpdatePlayerRotation
+ *                              
+ *                          November 10, 2023: 
+ *                              -> Added player camera seperate from the player so added code here for the camera to follow the player 
+ *                                  instead of the camera being a parent. This removed some negative behaviours
+ *                              ->Added comments to reflect this
+ *                              
+ *                          November 30, 2023:
+ *                              -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player)
+ *                              
+ *                          December 1, 2023:
+ *                              -> Changed values for the camera to fit the soldier Asset purchased from the Unity Store (used for the player) again.
+ *                              
+ *                          December 3, 2023:
+ *                              -> Changed public variables to private and updated comments/comments headers
  */
 
-using System.Collections;
-using System.Collections.Generic;
-using System.Timers;
+
 using UnityEngine;
 
+/// <summary>
+/// This class take the mouse input and translates that camera movement to in game. 
+/// It also tracks the postion of the player and follows the player wwhere specified. 
+/// </summary>
 public class CameraController : MonoBehaviour
 {
     //*** NOTE: Ressources used to learn on how to move the camera with mouse input:
@@ -39,24 +50,23 @@ public class CameraController : MonoBehaviour
     // https://forum.unity.com/threads/how-to-lock-or-set-the-cameras-z-rotation-to-zero.68932/#post-441968
     // https://discussions.unity.com/t/how-do-i-move-a-camera-with-mouse/194032/3
 
-
+    [Header("Player Object Reference")]
     //Reference to the player object
-    public GameObject player;
+    [SerializeField] private GameObject player;
 
+    [Header("Camera Values")]
     //cameraX and Y speeds
-    public float cameraSpeedX = 4;
-    public float cameraSpeedY = 4;
-    
+    [SerializeField] private float cameraSpeedX = 4;
+    [SerializeField] private float cameraSpeedY = 4;
     //values for camera X and Y positions
-    float cameraPitch = 0.0f;
-    float cameraYaw = 0.0f;
-
-    public float yawLimitUpper = 0;
-    public float yawLimitLower = 0;
-
+    [SerializeField] private float cameraPitch = 0.0f;
+    [SerializeField] private float cameraYaw = 0.0f;
+    //values to limit the yaws (how far up and down the mouse can travel)
+    [SerializeField] private float yawLimitUpper = -40;
+    [SerializeField] private float yawLimitLower = 40;
 
     /// <summary>
-    /// The code in the start sets the cursor to the cneter and makes it invisible
+    /// The code in the start sets the cursor to the cneter and makes it invisible (like in other FPS games)
     /// </summary>
     // Start is called before the first frame update
     void Start()
@@ -64,7 +74,6 @@ public class CameraController : MonoBehaviour
         //Locks the cursor to the center
         Cursor.lockState = CursorLockMode.Locked;
     }
-
 
     /// <summary>
     /// The code in the update sets the camera rotation based on the Mouse X and Y inputs. 
@@ -75,9 +84,9 @@ public class CameraController : MonoBehaviour
     {
         //sets the cursor to always visible
         Cursor.visible = true;
-        //updates the X and Y Camera movement positions
+        
+        //updates the X and Y Camera movement positions --> the yaw one subtracts or you get inverted controls for mouse y
         cameraPitch += cameraSpeedX * Input.GetAxis("Mouse X");
-        //this one substracts or the up and dowwn movement is inverted for the controls
         cameraYaw -= cameraSpeedY * Input.GetAxis("Mouse Y");
         
         //clamp for look limit on the the Y axis. We do not need to do this to the x variable as

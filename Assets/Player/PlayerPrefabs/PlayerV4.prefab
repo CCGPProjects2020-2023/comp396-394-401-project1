@@ -770,6 +770,8 @@ MonoBehaviour:
   player: {fileID: 8605391425841599879}
   cameraSpeedX: 4
   cameraSpeedY: 4
+  cameraPitch: 0
+  cameraYaw: 0
   yawLimitUpper: -40
   yawLimitLower: 40
 --- !u!1 &4412066366003063448

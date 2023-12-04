@@ -1,68 +1,89 @@
 /*
-    Author's Name: Alexander  Maynard
-    Creation Date: November 11, 2023
-    Last Modified By: Alexander Maynard
-    Last Modified Date: December 2, 2023
-    Program Description: This is the simple healthManager script that handles health for various enenmy or playertypes and calls the appropriate death method calls.
-    
-    Revision History: 
-    -November 11, 2023
-        -> Added health variables and other object references
-        -> Added functionality for the slider to decrease upon the referenced object getting damaged.
-        -> added player death and enemy death (empty) methods.
-    -Novemebr 25, 2023
-        -> Added the Toggle_IsImmune and Add_Health methods.
-        -> Added player hit and player death sounds
-        -> Removed enemyDeath call method for now and refactored the health UI to only workk for player
-    -December 1, 2023
-        -> Added player animator to call the player death anim in the playerController
-    -December 2, 2023
-        -> Refactored code and removed uneeded code.
+ * Author's Name:           Alexander Maynard
+ * Creation Date:           November 11, 2023
+ * Last Modified By:        Alexander Maynard
+ * Last Modified Date:      December 3, 2023
+ * 
+ * Program Description:     This is a simple healthManager script that handles health, damage, damage immunity and etc 
+ *                          for the player and calls the appropriate scene, sounds and animation changes whent the player is
+ *                          hurt or dead.
+ * 
+ * Revision History:    November 11, 2023:
+ *                          -> Added health variables and other object references.
+ *                          -> Added functionality for the slider to decrease upon the referenced object getting damaged.
+ *                          -> added player death and enemy death (empty) methods.
+ *                      
+ *                      November 25, 2023:
+ *                          -> Added the Toggle_IsImmune and Add_Health methods.
+ *                          -> Added player hit and player death sounds
+ *                          -> Removed enemyDeath call method for now and refactored the health UI to only workk for player.
+ *                          
+ *                      December 1, 2023:
+ *                          -> Added player animator to call the player death anim in the playerController.
+ *                      
+ *                      December 2, 2023:
+ *                          -> Refactored code and removed uneeded code.
+ *                      
+ *                      December 3, 2023:
+ *                          -> Changed public variables to private and updated comments/comments headers. 
+ *                          -> Also refactored the OnTriggerEnter() method and removed unecessary usings.
  */
 
+
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+/// <summary>
+/// This script manages player health, damage, damage immunity and etc 
+/// It also calls the appropriate scene, sounds and animation changes whent the player is hurt or dead.
+/// </summary>
 public class HealthManager : MonoBehaviour
 {
-    //health slider object reference
     [Header("Health Slider Reference")]
-    public Slider healthSliderHandle;
+    //health slider object reference
+    [SerializeField] private Slider healthSliderHandle;
 
-    //health value for object this scriIt is attached to.
     [Header("Health Attributes of referenced object")]
-    public int health = 100;
+    //health value for object this scriIt is attached to.
+    [SerializeField] private int health = 100;
+    //starting health value
     protected internal int health_start = 0;
-    public GameObject healthAtZero;
-
     //set the damage that the referenced object will take
-    [Header("How much damage to take")]
-    public int damageToTake = 10;
+    [SerializeField] private int damageToTake = 10;
 
-    [Header("Player animator for the player death")]
+    [Header("Is Player Immune to damage?")]
+    [SerializeField] private bool is_immune = false;
+
+    [Header("Slider to be disabled upon health at 0")]
+    //slider object refrence to disable when health is at zero --> otherwise there is always a bit of health showing.
+    [SerializeField] private GameObject healthAtZero;
+    
+
+
+    //---------------------------------------------------------------------
+    //** These fields should not be accessible to the editor **
+    //Player animator to call the player death animation later on
     private Animator playerAnimator;
 
-    //set the method call name for invoke dependant on which object reference this script is placed on.
-    //[Header("Method to invoke on death")]
-    //public string methodName; //not used for now
-
-    private bool is_immune = false;
-
-
-    //references to all playerscripts (except for camera controller script
-    PlayerController playerController;
-    UpdatePlayerRotation updatePlayerRotation;
-    PlayerAbilities PlayerAbilities;
+    //references to all playerscripts (except for camera controller script)
+    private PlayerController playerController;
+    private UpdatePlayerRotation updatePlayerRotation;
+    private PlayerAbilities PlayerAbilities;
+    //---------------------------------------------------------------------
 
 
+    /// <summary>
+    /// Start gets all player related scripts (except for camera) on the player.
+    /// It also assigns the health_start to health which is initially 100 and
+    /// sets the healthSliderHandle.value == to health.
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {
-        //get reference to the player scripts
+        //get reference to the player scripts to disable upon player death.
         playerController = GetComponent<PlayerController>();
         updatePlayerRotation = GetComponent<UpdatePlayerRotation>();
         PlayerAbilities = GetComponent<PlayerAbilities>();
@@ -76,13 +97,15 @@ public class HealthManager : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// Update mothod updates the healthSliderHandle.value to current health and checks if health <= 0.
+    /// If health <= 0 then it calls the approporate death related events. 
+    /// </summary>
     // Update is called once per frame
     void Update()
     {
         //update the health slider value to the referenced object health.
         healthSliderHandle.value = health;
-
 
         //checks if health for referenced object is less or equal to 0...
         if(health <= 0)
@@ -99,26 +122,36 @@ public class HealthManager : MonoBehaviour
             updatePlayerRotation.enabled = false;
             PlayerAbilities.enabled = false;
 
-            //call what happens upon player death
-            Invoke(nameof(PlayerDeathCall), 3f);
+            //Invoke the PlayerDeathCall() method (what happens upon player death) with 2 sec delay.
+            Invoke(nameof(PlayerDeathCall), 2f);
         }
     }
 
 
-
+    /// <summary>
+    /// OnTriggerEnter checks if collider "other" with a layer of doesDamage hits the player. 
+    /// If so it does damage to the player, decrements health (checks if !is_immmune first) and 
+    /// then calls the takeDamage sound (iuf health > 0).
+    /// </summary>
+    /// <param name="other">This refers to the collider that hit the player</param>
     //checks for OnTriggerEnter collision with another object.
     private void OnTriggerEnter(Collider other)
     {
-        //So if layer is doesDamage and hits the referenced object then...
+        //So if the other.collider is on layer "doesDamage" and hits the player then...
         if (other.gameObject.layer == 10)
         {
-            //decrement health only if not immune
+            // ...decrement health only if not is_immune
             if(!is_immune) health -= damageToTake;
 
-            //player damage sound from the sound manager script
-            SoundManager.Instance.PlaySfx(SfxEvent.PlayerDamage);
+            //checks if health is > 0 cause otherwise death sound gets called.
+            if(health > 0)
+            {
+                //player damage sound from the sound manager script
+                SoundManager.Instance.PlaySfx(SfxEvent.PlayerDamage);
+            }
         }
     }
+
 
 
     /// <summary>
@@ -140,8 +173,7 @@ public class HealthManager : MonoBehaviour
 
 
     /// <summary>
-    /// This handles what happens upon player death.
-    /// THis may be called by invoke depending what is set in the editor.
+    /// This handles what happens upon player death: calls the death sound and game over scene
     /// </summary>
     private void PlayerDeathCall()
     {
