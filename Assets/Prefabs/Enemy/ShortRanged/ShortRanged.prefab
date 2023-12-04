@@ -1469,6 +1469,7 @@ MonoBehaviour:
   weapon: {fileID: 4098595291850732891}
   path: {fileID: 0}
   nextWayPointIndex: 0
+  is_attacking: 0
 --- !u!54 &2547368385687429883
 Rigidbody:
   m_ObjectHideFlags: 0
