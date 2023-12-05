@@ -1890,11 +1890,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You win the game when the timer runs out and your health is above zero.
+  m_text: 'You win the game when all enemies is taken care of, and your health is
+    above zero.
 
 
-    You
-    lose the game if your health reaches zero.'
+    You lose the game if your health reaches zero.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f16097658b2fd8a41b33bd7e20163dad, type: 2}
   m_sharedMaterial: {fileID: 6323462142661865541, guid: f16097658b2fd8a41b33bd7e20163dad, type: 2}
@@ -1921,7 +1921,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.1
+  m_fontSize: 34.45
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1
