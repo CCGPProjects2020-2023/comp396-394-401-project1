@@ -1,4 +1,4 @@
-/*  Author's Name:          Marcus Ngooi
+/** Author's Name:          Marcus Ngooi
  *  Last Modified By:       Alexander Maynard
  *  Date Last Modified:     November 25, 2023
  *  Program Description:    Manages sound --> Plays sounds and changes volume.

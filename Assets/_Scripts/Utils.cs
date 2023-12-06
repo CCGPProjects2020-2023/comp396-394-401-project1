@@ -1,4 +1,4 @@
-/*
+/**
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose

@@ -1,4 +1,4 @@
-/*
+/**
     //***NOTE: This code is modified from the COMP396 classwork examples***
 
     Author's Name: Alexander  Maynard

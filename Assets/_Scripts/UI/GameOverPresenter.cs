@@ -1,4 +1,4 @@
-/*  Author's Name:          Marcus Ngooi
+/** Author's Name:          Marcus Ngooi
  *  Last Modified By:       Marcus Ngooi
  *  Date Last Modified:     November 12, 2023
  *  Program Description:    Receives the user inputs via UI events (e.g., Button click)
