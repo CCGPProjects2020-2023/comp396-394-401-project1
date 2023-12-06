@@ -2,9 +2,11 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Date Modified:     December 2, 2023
     Program Description:    Sets the type of target to the object.
-    Revision History:       November 11, 2023: Initial script and documentation.                            
+    Revision History:       November 11, 2023: Initial script and documentation.  
+                            December 2, 2023: Changed OnTriggerEnter to a public function to work with raycast.
+                            December 03, 2023: Added a way to access the clips' list and playing the appropriate clip on hit.
  */
 
 using UnityEngine;
@@ -15,22 +17,25 @@ public class Target : MonoBehaviour
     public int multiplier = 1;
     public EnemyController controller;
 
+
     /// <summary>
-    /// Checks whether the other object is a bullet coming from the player.
-    /// If it is, it adjusts the player score, and enemy's health.
+    /// This gets called by a message sent by the PlayerController Shoot() method.
+    /// A raycast from playcontroller on the 'Enemy' layer gets sent a then if it hits 
+    /// a collider it on that layer it calls this method by the collider.SendMessage() function
+    /// This method also looks for the playerController and adjusts the player score, and enemy's health.
     /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    public void HitEnemy()
     {
         PlayerController p = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        if (other.gameObject.CompareTag("PlayerBullet")) {
-            if (multiplier > 0) {
-                p.scoreManager.GetComponent<ScoreManager>().Add((int)type * multiplier);
-            } 
-            else p.scoreManager.GetComponent<ScoreManager>().Add((int)type);
-
-            controller.health -= (int)type;
+        
+        if (multiplier > 0)
+        {
+            p.scoreManager.GetComponent<ScoreManager>().Add((int)type * multiplier);
         }
+        else p.scoreManager.GetComponent<ScoreManager>().Add((int)type);
+
+        controller.health -= (int)type;
+        controller.audio.PlayOneShot(controller.clips[1]);
     }
 }
 

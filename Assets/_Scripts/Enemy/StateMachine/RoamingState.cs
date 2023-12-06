@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 28, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Roaming state of a controller; specifies the path and 
                             roaming behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -14,6 +14,8 @@
                             November 10, 2023: Adjusted the y-position of the player in DoRoaming()
                             November 28, 2023: Instead of using 0 on the y-axis of the controller.transform.position, it was changed to be using 
                                                the nextPointIndex y position.
+                            December 02, 2023: Removed Debug.Logs
+                            December 03, 2023: Setting the is_attacking in the OnEnter and adding a transition to the EnragingState
  */
 
 using UnityEngine;
@@ -36,14 +38,15 @@ public class RoamingState : EnemyStateMachine.State {
     /// <summary>
     /// Delegates to the OnEnter action of this state.
     /// </summary>
-    public override void OnEnter() { }
+    public override void OnEnter() {
+        controller.is_attacking = false;
+    }
 
     /// <summary>
     /// Delegates to the OnFrame action of this state - it specifies the roaming behavior and
     /// the state transitions from this state.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Roaming state - On Frame");        
         DoRoaming();
 
         if (controller.health <= 0)
@@ -56,6 +59,8 @@ public class RoamingState : EnemyStateMachine.State {
             else
                 stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
         }
+        else if (Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.EnragingState);
     }
 
     /// <summary>

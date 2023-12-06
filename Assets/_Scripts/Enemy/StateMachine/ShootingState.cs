@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Shooting state of a controller; specifies the
                             shooting behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
@@ -11,13 +11,14 @@
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
                             November 8, 2023: Added differentiation for the specific controllers.
                             November 11, 2023: Removed the Rotate() function.
+                            December 02, 2023: Changed the way the weapon is being activated and deactivated and removed Debug.Logs
+                            December 03, 2023: Adding a transition to the EnragingState and setting the is_attacking in the DoShooting
  */
 
 using UnityEngine;
 
 public class ShootingState : EnemyStateMachine.State {
 
-    private bool hasRotated = false;
 
     /// <summary>
     /// Initializes the action and controller.
@@ -42,7 +43,6 @@ public class ShootingState : EnemyStateMachine.State {
     /// state transitions from this state.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Shooting State - On Frame");
         DoShooting();
 
         if (!controller.SensePlayer())
@@ -55,21 +55,25 @@ public class ShootingState : EnemyStateMachine.State {
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.ChasingState);
 
         else if (Utils.IsBelowThreshold(controller._start_health / 2, controller.health))
-            stateMachine.ChangeState(EnemyStateMachine.StateEnum.EvadingState);
+            stateMachine.ChangeState(EnemyStateMachine.StateEnum.EnragingState);
     }
 
     /// <summary>
     /// Delegates to the OnExit action of this state.
     /// </summary>
-    public override void OnExit() { hasRotated = false; }
+    public override void OnExit() { 
+        controller.weapon.Deactivate();
+    }
 
     /// <summary>
     /// Calls the shoot method of the weapon of this controller.
     /// </summary>
     private void DoShooting() {
+        controller.is_attacking = true;
         controller.anim.SetInteger("state", (int)AnimState.SHOOTING);
         controller.transform.LookAt(controller.player.transform.position);
         
-        controller.weapon.Activate();        
+        if(!controller.weapon.isActivated)
+            controller.weapon.Activate();        
     }
 }

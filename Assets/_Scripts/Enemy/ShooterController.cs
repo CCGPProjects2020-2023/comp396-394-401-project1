@@ -2,7 +2,7 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Subclass that specifies specific types of enemies.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the dying state.
@@ -10,6 +10,8 @@
                             November 2, 2023: Added the statemachine variable to the states' constructors.
                             November 8, 2023: Removed the override modifier from the IsWeaponReady() method.
                             November 11, 2023: Changed the modifier of the Start function and added a check to see if controller is dead.
+                            December 02, 2023: Changed to FixedUpdate()
+                            December 03, 2023: Added the EnragingState()
  */
 
 using UnityEngine;
@@ -27,12 +29,13 @@ public class ShooterController : EnemyController {
         stateMachine.AddState(new LoadingState(this, stateMachine));
         stateMachine.AddState(new ChasingState(this, stateMachine));
         stateMachine.AddState(new ShootingState(this, stateMachine));
+        stateMachine.AddState(new EnragingState(this, stateMachine));
         stateMachine.AddState(new EvadingState(this, stateMachine));
         stateMachine.AddState(new DyingState(this, stateMachine));
     }
 
-    new void Update() {
-        base.Update();
+    new void FixedUpdate() {
+        base.FixedUpdate();
         if(is_dead)        
             Destroy(gameObject, 5);        
     }

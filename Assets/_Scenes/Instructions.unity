@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RULES
+  m_text: 'HOW TO PLAY:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6823af299e9e3b418e632e189dcb37f, type: 2}
   m_sharedMaterial: {fileID: 4427292245365258850, guid: c6823af299e9e3b418e632e189dcb37f, type: 2}
@@ -1244,23 +1244,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Aiming and Shooting: You can aim and shoot your gun to damage enemies.
+  m_text: 'Aiming & Shooting: Mouse movement to aim and left mouse click to shoot
 
 
     Phase
-    Shift: You have the ability to phase shit allowing you to run through walls and
-    dodge bullets.
+    Shift: Allow you to run through walls and dodge bullets by pressing ''E''
 
 
-    Teleportation: You can teleport around the map using your
-    teleporter gun.
+    Teleportation:
+    You can teleport around the map pressing ''F''
 
 
-    Running and Jumping: You can run and jump.
+    Moving & Jumping: WASD for
+    moving and SPACE for jumping
 
 
-    Scoring:
-    Points are scored for defeating enemies.
+    Point System: 50 per head, 20 per body, 15
+    per arm, 10 per leg
 
 '
   m_isRightToLeft: 0
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.45
+  m_fontSize: 24.85
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1890,11 +1890,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You win the game when the timer runs out and your health is above zero.
+  m_text: 'You win the game when all enemies is taken care of, and your health is
+    above zero.
 
 
-    You
-    lose the game if your health reaches zero.'
+    You lose the game if your health reaches zero.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f16097658b2fd8a41b33bd7e20163dad, type: 2}
   m_sharedMaterial: {fileID: 6323462142661865541, guid: f16097658b2fd8a41b33bd7e20163dad, type: 2}
@@ -1921,7 +1921,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.1
+  m_fontSize: 34.45
   m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 1

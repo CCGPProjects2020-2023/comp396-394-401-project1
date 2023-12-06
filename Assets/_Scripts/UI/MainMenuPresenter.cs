@@ -38,7 +38,7 @@ public class MainMenuPresenter : MonoBehaviour
     public void OnPlayButtonClicked()
     {
         SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
-        SceneManager.LoadScene(SceneName.LevelOne.ToString());
+        SceneManager.LoadScene(SceneName.LevelOneV2.ToString());
     }
     /// <summary>
     /// Event handler for Instructions button.

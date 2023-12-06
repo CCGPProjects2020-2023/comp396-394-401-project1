@@ -2,11 +2,12 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 21, 2023
+    Last Date Modified:     December 02, 2023
     Program Description:    Abstract class used as a base to other weapon types. 
     Revision History:       October 28, 2023: Initial script and documentation.
                             November 8, 2023: Changed the Start() method modifier to protected internal
 `                           November 21, 2023: Changed the initial number of the currentCount from 0 to 20;
+                            December 02, 2023: Added the audio and isActivated properties, as well as the Deactivate() method.
  */
 
 using System.Collections;
@@ -28,11 +29,16 @@ public abstract class Weapon : MonoBehaviour
     protected internal bool isLoaded = false;
     public float loadingTime = 2f;
 
+    protected internal new AudioSource audio;
+
+    protected internal bool isActivated = false;
+
     /// <summary>
     /// Start method called by Unity that initializes the Ammunition Factory.
     /// </summary>
     protected internal void Start()
     {
+        audio = GetComponent<AudioSource>();
         factory = gameObject.GetComponent<AmmunitionFactory>();
     }
 
@@ -55,8 +61,9 @@ public abstract class Weapon : MonoBehaviour
     }
 
     /// <summary>
-    /// Abstract method that is to be overwritten by the subclasses of this class.
-    /// This method is meant to implement the shoot function of a weapon type.
+    /// Abstract methods that are to be overwritten by the subclasses of this class.
+    /// These methods are meant to implement the shoot function of a weapon type.
     /// </summary>
    public abstract void Activate();
+   public abstract void Deactivate();
 }

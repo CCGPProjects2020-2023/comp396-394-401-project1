@@ -2,13 +2,15 @@
  * 
     Author's Name:          Audrey Bernier Larose
     Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     October 29, 2023
+    Last Date Modified:     December 03, 2023
     Program Description:    Evading state of a controller; specifies the
                             evading behavior.
     Revision History:       October 28, 2023: Initial script and documentation.
                             October 29, 2023: Added the transition to the dying state.
                             November 1, 2023: Added the animation for this state.
                             November 2, 2023: Added an EnemyStateMachine parameter to the state constructor.
+                            December 02, 2023: Removed Debug.Logs
+                            December 03, 2023: Removed the transition to RoamingState and setting the is_attacking in the OnEnter
  */
 
 using UnityEngine;
@@ -30,21 +32,19 @@ public class EvadingState : EnemyStateMachine.State {
     /// <summary>
     /// Delegates to the OnEnter action of this state.
     /// </summary>
-    public override void OnEnter() { }
+    public override void OnEnter() {
+        controller.is_attacking = false;
+    }
 
     /// <summary>
     /// Delegates to the OnFrame action of this state - it specifies the 
     /// state transitions.
     /// </summary>
     public override void OnFrame() {
-        Debug.Log("Evading state - On Frame");
         DoEvading();
 
         if (this.controller.health <= 0)
             stateMachine.ChangeState(EnemyStateMachine.StateEnum.DyingState);
-
-        if (!controller.SensePlayer())
-            stateMachine.ChangeState(EnemyStateMachine.StateEnum.RoamingState);
     }
 
     /// <summary>
