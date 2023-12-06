@@ -1,8 +1,8 @@
 /*
  * Author's Name:           Alexander  Maynard
  * Creation Date:           October 26, 2023
- * Last Modified By:        Alexander Maynard
- * Last Modified Date:      December 3, 2023
+ * Last Modified By:        Marcus Ngooi
+ * Last Modified Date:      December 5, 2023
  * 
  * Program Description:     This is the simple playerController that handles player movement 
  *                          and shooting as well as any other player controls
@@ -54,15 +54,18 @@
  *                          
  *                          December 3, 2023:
  *                              -> Removed unecessary usings, made variables private and updated comments, comment headers, variable names and refactored code.
+ *                          December 5, 2023:
+ *                              -> Added multiplayer components.
 */
 
+using Unity.Netcode;
 using UnityEngine;
 
 
 /// <summary>
 /// This class controls the player movement, jumping and shooting.
 /// </summary>
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     //reference to the player variables
     [Header("General Player Attributes")]
@@ -111,6 +114,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
+        if (!IsOwner) return;
+
+
         //this code is not controller by the playerStateMachine. It is player derived purely from player inputs so it is independant 
         //should have some code for attacking and running here. Other abilites like phase and telport should be in states.
         MovePlayer();
