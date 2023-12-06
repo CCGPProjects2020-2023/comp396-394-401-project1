@@ -7,11 +7,14 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 moveInputVector = Vector2.zero;
     Vector2 viewInputVector = Vector2.zero;
     bool isJumpButtonPressed = false;
+    bool isFireButtonPressed = false;
 
+    LocalCameraHandler localCameraHandler;
     CharaterMovementHandler characterMovementHandler;
 
     private void Awake()
     {
+        localCameraHandler = GetComponentInChildren<LocalCameraHandler>();
         characterMovementHandler = GetComponent<CharaterMovementHandler>();
     }
 
@@ -25,26 +28,37 @@ public class CharacterInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!characterMovementHandler.Object.HasInputAuthority) return;
+
+
         viewInputVector.x = Input.GetAxis("Mouse X");
         viewInputVector.y = Input.GetAxis("Mouse Y") * -1;
-
-        characterMovementHandler.SetViewInputVector(viewInputVector);
 
         moveInputVector.x = Input.GetAxis("Horizontal");
         moveInputVector.y = Input.GetAxis("Vertical");
 
-        isJumpButtonPressed = Input.GetButtonDown("Jump");
-                
+        if(Input.GetButtonDown("Jump"))
+            isJumpButtonPressed = true;
+
+        if (Input.GetButtonDown("Fire1"))
+            isFireButtonPressed = true;
+
+        localCameraHandler.SetViewInputVector(viewInputVector);
     }
 
     public NetworkInputData GetNetworkInput() { 
         NetworkInputData networkInputData = new NetworkInputData();
 
-        networkInputData.rotationInput = viewInputVector.x;
+        networkInputData.aimForwardVector = localCameraHandler.transform.forward;
 
         networkInputData.movementInput = moveInputVector;
 
         networkInputData.isJumpPressed = isJumpButtonPressed;
+
+        networkInputData.isFirePressed = isFireButtonPressed;
+
+        isJumpButtonPressed = false;
+        isFireButtonPressed = false;
 
         return networkInputData;
     }

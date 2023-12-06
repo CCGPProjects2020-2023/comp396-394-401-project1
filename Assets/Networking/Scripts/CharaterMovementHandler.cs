@@ -5,17 +5,16 @@ using Fusion;
 
 public class CharaterMovementHandler : NetworkBehaviour
 {
+    bool isRespawnRequested = false;
+
     NetworkCharacterControllerPrototypeCustom networkCharacterControllerPrototypeCustom;
+    HPHandler hPHandler;
 
-    Vector2 viewInput;
-
-    float cameraRotationX = 0;
-    Camera localCamera;
 
     private void Awake()
     {
         networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
-        localCamera = GetComponentInChildren<Camera>();
+        hPHandler = GetComponent<HPHandler>();
     }
 
     // Start is called before the first frame update
@@ -24,33 +23,64 @@ public class CharaterMovementHandler : NetworkBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        cameraRotationX += viewInput.y * Time.deltaTime * networkCharacterControllerPrototypeCustom.viewUpDownRotationSpeed;
-        cameraRotationX = Mathf.Clamp(cameraRotationX, -90, 90);
-
-        localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX, 0, 0);
-    }
-
     public override void FixedUpdateNetwork()
     {
-        if (GetInput(out NetworkInputData networkInputData)) {
-            networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationInput);
+        if (Object.HasStateAuthority) {
+            if(isRespawnRequested)
+            {
+                Respawn();
+                return;
+            }
+
+            if (hPHandler.isDead) return;
+        }
+        
+
+        if (GetInput(out NetworkInputData networkInputData))
+        {
+
+            transform.forward = networkInputData.aimForwardVector;
+
+            Quaternion rotation = transform.rotation;
+            rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z);
+            transform.rotation = rotation;
 
             Vector3 moveDirection = transform.forward * networkInputData.movementInput.y + transform.right * networkInputData.movementInput.x;
             moveDirection.Normalize();
 
             networkCharacterControllerPrototypeCustom.Move(moveDirection);
 
-            if(networkInputData.isJumpPressed)
-            {
+            if (networkInputData.isJumpPressed)
                 networkCharacterControllerPrototypeCustom.Jump();
+
+            CheckFallRespawn();
+        }
+    }  
+
+    void CheckFallRespawn() {
+        if (transform.position.y < -12) {
+            if(Object.HasStateAuthority)
+            {
+                Debug.Log($"{Time.time} Respawn due to fall outside of map at position {transform.position}");
+
+                Respawn();
             }
         }
     }
 
-    public void SetViewInputVector(Vector2 viewinput) { 
-        viewInput = viewinput;
+    public void SetCharacterControllerEnabled(bool isEnabled) { 
+        networkCharacterControllerPrototypeCustom.Controller.enabled = isEnabled;
+    }
+
+    public void RequestRespawn() {
+        isRespawnRequested = true;
+    }
+
+    void Respawn() { 
+        networkCharacterControllerPrototypeCustom.TeleportToPosition(NetworkUtils.GetRandomSpawnPoint());
+
+        hPHandler.OnRespawned();
+
+        isRespawnRequested = false;
     }
 }

@@ -8,8 +8,14 @@ public static class NetworkUtils
         return new Vector3(Random.Range(-20, 20), 4, Random.Range(-20, 20));
     }
 
-    public static void SetRenderLayerInChildren(Transform transform, int layerNumber) { 
-        foreach(Transform trans in transform.GetComponentsInChildren<Transform>(true))
+    public static void SetRenderLayerInChildren(Transform transform, int layerNumber) {
+        foreach (Transform trans in transform.GetComponentsInChildren<Transform>(true)) {
+            if(trans.CompareTag("IgnoreLayerChange")) continue;
+
             trans.gameObject.layer = layerNumber;
+        }
+        
+
+
     }
 }
