@@ -65,6 +65,8 @@
  *                          December 3, 2023:
  *                              -> Changed public variables to private, updated comments/comments headers, removed unecessary usings and  tidied the script up.
  *                              -> Commented out Debug.Logs and update some variable names.
+ *                          December 7, 2023:
+ *                              -> Added layerMask and slightly refactored raycast for teleporation to only hit the "Default" or "Ground" layers.
  */
 
 using TMPro;
@@ -263,15 +265,17 @@ public class PlayerAbilities : MonoBehaviour
 
         //Debug.Log("Player just teleported");
 
-        //point to be teleported to 
-        RaycastHit teleportPoint;
+
+        //bit wise shift for layerMask. It is used so the raycast should only hit "Default" or "Ground" layer
+        int layerMask = (1 << 0) | (1 << 3);
+
 
         //ray to be cast from the center of the screen (where the mouse or reticle is)
         Ray teleportRay = playerCam.ScreenPointToRay(Input.mousePosition);
 
 
-        //set the teleport point where the ray hits a collider
-        if (Physics.Raycast(teleportRay, out teleportPoint))
+        //set the teleport point where the ray hits a collider on layer "Default"
+        if (Physics.Raycast(teleportRay, out RaycastHit teleportPoint, Mathf.Infinity, layerMask))
         {
             //set transform of the player to the teleport point
             this.transform.position = teleportPoint.point; //objectHit.position;
