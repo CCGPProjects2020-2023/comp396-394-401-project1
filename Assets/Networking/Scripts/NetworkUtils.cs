@@ -5,7 +5,7 @@ using UnityEngine;
 public static class NetworkUtils
 {
     public static Vector3 GetRandomSpawnPoint() {
-        return new Vector3(Random.Range(-20, 20), 4, Random.Range(-20, 20));
+        return new Vector3(Random.Range(-150, -130), 4, Random.Range(10, 20));
     }
 
     public static void SetRenderLayerInChildren(Transform transform, int layerNumber) {

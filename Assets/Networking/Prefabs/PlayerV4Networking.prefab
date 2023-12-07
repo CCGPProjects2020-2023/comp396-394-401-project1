@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 5774239913756761916}
   - component: {fileID: 4936468335256711161}
   - component: {fileID: 6813165151233747298}
+  - component: {fileID: 4384971770110627388}
   m_Layer: 0
   m_Name: PlayerV4Networking
   m_TagString: Untagged
@@ -251,6 +252,7 @@ MonoBehaviour:
   - {fileID: 5774239913756761916}
   - {fileID: 4936468335256711161}
   - {fileID: 6813165151233747298}
+  - {fileID: 4384971770110627388}
   SimulationBehaviours: []
 --- !u!143 &8109052011295120305
 CharacterController:
@@ -328,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  characterAnimator: {fileID: 3674863376610642591}
 --- !u!114 &8639764311662799368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +415,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &4384971770110627388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665010814564611668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 3674863376610642591}
+  TotalWords: 2
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 000000008a18fce4b9abd9d344e1fab3dce045d6
+  TriggerHashes: 00000000
 --- !u!1 &1141972471837709904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,7 +2201,7 @@ PrefabInstance:
     - target: {fileID: 9561254, guid: 15d3ed90eb166aa4e9de7f63be94a87b, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 150c5f9387bd13a4fb11d8bd6b3cc9ca, type: 2}
+      objectReference: {fileID: 9100000, guid: 1b60ed9d14a89e14384b330d603694b4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

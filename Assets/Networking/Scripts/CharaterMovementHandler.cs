@@ -5,12 +5,16 @@ using Fusion;
 
 public class CharaterMovementHandler : NetworkBehaviour
 {
+    public Animator characterAnimator;
+    
     bool isRespawnRequested = false;
 
     NetworkCharacterControllerPrototypeCustom networkCharacterControllerPrototypeCustom;
     HPHandler hPHandler;
     NetworkInGameMessages networkInGameMessages;
     NetworkPlayer networkPlayer;
+
+    float walkSpeed = 0;
 
 
     private void Awake()
@@ -56,6 +60,17 @@ public class CharaterMovementHandler : NetworkBehaviour
 
             if (networkInputData.isJumpPressed)
                 networkCharacterControllerPrototypeCustom.Jump();
+
+            Vector2 walkVector = new Vector2(networkCharacterControllerPrototypeCustom.Velocity.x, networkCharacterControllerPrototypeCustom.Velocity.z);
+            walkVector.Normalize();
+
+            walkSpeed = Mathf.Lerp(walkSpeed, Mathf.Clamp01(walkVector.magnitude), Runner.DeltaTime * 5);
+            characterAnimator.SetFloat("walkSpeed", walkSpeed);
+
+            characterAnimator.SetBool("isShooting", networkInputData.isFirePressed);
+
+            Debug.Log("IsFiring Input: " + networkInputData.isFirePressed);
+            
 
             CheckFallRespawn();
         }
