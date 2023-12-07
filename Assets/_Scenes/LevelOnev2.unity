@@ -11495,6 +11495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stairs (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6879395389366940852, guid: 3d4d827279b4f4149a77cac5f3cae2b9, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: ce8bb9b6c5df63a4394e070b71d82ee4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
