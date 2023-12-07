@@ -8,6 +8,7 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 viewInputVector = Vector2.zero;
     bool isJumpButtonPressed = false;
     bool isFireButtonPressed = false;
+    bool isProjectileButtonPressed = false;
 
     LocalCameraHandler localCameraHandler;
     CharaterMovementHandler characterMovementHandler;
@@ -43,6 +44,8 @@ public class CharacterInputHandler : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
             isFireButtonPressed = true;
 
+        if(Input.GetKeyDown(KeyCode.G)) isProjectileButtonPressed = true;
+
         localCameraHandler.SetViewInputVector(viewInputVector);
     }
 
@@ -57,8 +60,11 @@ public class CharacterInputHandler : MonoBehaviour
 
         networkInputData.isFirePressed = isFireButtonPressed;
 
+        networkInputData.isProjectilePressed = isProjectileButtonPressed;
+
         isJumpButtonPressed = false;
         isFireButtonPressed = false;
+        isProjectileButtonPressed=false;
 
         return networkInputData;
     }

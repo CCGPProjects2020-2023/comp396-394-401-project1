@@ -13,8 +13,11 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     CharacterInputHandler characterInputHandler;
 
+    SessionListUIHandler sessionListUIHandler;
+
     void Awake() { 
         mapTokenIDWithNetworkPlayer = new Dictionary<int, NetworkPlayer>();
+        sessionListUIHandler = FindObjectOfType<SessionListUIHandler>(true);
     }
 
     // Start is called before the first frame update
@@ -124,6 +127,25 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
+        if (sessionListUIHandler == null)
+            return;
+
+        if (sessionList.Count == 0)
+        {
+            Debug.Log("Joined lobby no sessions found");
+
+            sessionListUIHandler.OnNoSessionsFound();
+        }
+        else {
+            sessionListUIHandler.ClearList();
+
+            foreach (SessionInfo sessionInfo in sessionList)
+            {
+                sessionListUIHandler.AddToList(sessionInfo);
+                Debug.Log($"Found session {sessionInfo.Name} playerCount {sessionInfo.PlayerCount}");
+            }
+
+        }
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)

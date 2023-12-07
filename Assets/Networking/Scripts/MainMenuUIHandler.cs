@@ -7,22 +7,64 @@ using UnityEngine.SceneManagement;
 public class MainMenuUIHandler : MonoBehaviour
 {
 
-    public TMP_InputField inputField;
+    public GameObject playerDetailsPanel;
+    public GameObject sessionDetailsPanel;
+    public GameObject createSessionDetailsPanel;
+    public GameObject statusPanel;
+
+    public TMP_InputField playerNameInputField;
+    public TMP_InputField sessionNameInputField;
+
     // Start is called before the first frame update
     void Start()
     {
         if (PlayerPrefs.HasKey("PlayerNickname"))
         {
-            inputField.text = PlayerPrefs.GetString("PlayerNickname");
+            playerNameInputField.text = PlayerPrefs.GetString("PlayerNickname");
         }
     }
 
-    public void OnJoinGameClicked() {
-        PlayerPrefs.SetString("PlayerNickname", inputField.text);
+    void HideAllPanels() { 
+        playerDetailsPanel.SetActive(false);
+        sessionDetailsPanel.SetActive(false);
+        createSessionDetailsPanel.SetActive(false);
+        statusPanel.gameObject.SetActive(false);
+    }
+
+    public void OnFindGameClicked() {
+        PlayerPrefs.SetString("PlayerNickname", playerNameInputField.text);
         PlayerPrefs.Save();
 
-        GameManager.instance.playerNickName = inputField.text;
+        GameManager.instance.playerNickName = playerNameInputField.text;
 
-        SceneManager.LoadScene("Multiplayer");
+        NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        
+        networkRunnerHandler.OnJoinLobby();
+
+        HideAllPanels();
+        
+        sessionDetailsPanel.SetActive(true);
+
+        FindObjectOfType<SessionListUIHandler>(true).OnLookingForGameSession();
+    }
+
+    public void OnCreateNewGameClicked() {
+        HideAllPanels();
+        createSessionDetailsPanel.SetActive(true);
+    }
+
+    public void OnStartNewSessionClicked() {
+        NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
+        networkRunnerHandler.CreateGame(sessionNameInputField.text, "Multiplayer");
+
+        HideAllPanels();
+
+        statusPanel.gameObject.SetActive(true);
+    }
+
+    public void OnJoiningServer() {
+        HideAllPanels();
+
+        statusPanel.gameObject.SetActive(true);
     }
 }

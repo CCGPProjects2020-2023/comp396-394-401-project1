@@ -5,17 +5,27 @@ using Fusion;
 
 public class WeaponHandler : NetworkBehaviour
 {
+    [Header("Prefabs")]
+    public NetworkProjectile projectile;
+
     [Networked(OnChanged = nameof(OnFireChanged))]
     public bool isFiring { get; set; }
 
+    [Header("Effects")]
     public ParticleSystem fireParticleSystem;
+
+    [Header("Aim")]
     public Transform aimPoint;
+
+    [Header("Collision")]
     public LayerMask collisionLayers;
 
     HPHandler hPHandler;
     NetworkPlayer networkPlayer;
 
     float lastTimeFired = 0f;
+
+    TickTimer projectileFireDelay = TickTimer.None;
 
     private void Awake()
     {
@@ -51,7 +61,7 @@ public class WeaponHandler : NetworkBehaviour
             Debug.Log($"{Time.time} {transform.name} hit hitbox {hitinfo.Hitbox.transform.root.name}");
 
             if (Object.HasStateAuthority)
-                hitinfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString()); //TODO: Need to do something like this but on the enemy weapon - Will need to add a HPHandler on the enemy as well
+                hitinfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString(), 1); //TODO: Need to do something like this but on the enemy weapon - Will need to add a HPHandler on the enemy as well
 
             isHitOtherPlayer = true;
         }
@@ -69,6 +79,17 @@ public class WeaponHandler : NetworkBehaviour
         }
 
         lastTimeFired = Time.time;
+    }
+
+    void FireProjectile(Vector3 aimForwardVector) { 
+        if(projectileFireDelay.ExpiredOrNotRunning(Runner))
+        {
+            Runner.Spawn(projectile, aimPoint.position + aimForwardVector * 1.5f, Quaternion.LookRotation(aimForwardVector), Object.InputAuthority, (runner, spawnedProjectile) =>
+            {
+                spawnedProjectile.GetComponent<NetworkProjectile>().Throw(aimForwardVector * 15, Object.InputAuthority, networkPlayer.nickName.ToString());
+            });
+            projectileFireDelay = TickTimer.CreateFromSeconds(Runner, 1.0f); ;
+        }
     }
 
     IEnumerator FireEffectCO() {     
@@ -91,6 +112,11 @@ public class WeaponHandler : NetworkBehaviour
             if(networkInputData.isFirePressed)
             {
                 Fire(networkInputData.aimForwardVector);
+            }
+
+            if(networkInputData.isProjectilePressed)
+            {
+                FireProjectile(networkInputData.aimForwardVector);
             }
         }
     }

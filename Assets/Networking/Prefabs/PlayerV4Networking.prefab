@@ -221,6 +221,7 @@ MonoBehaviour:
       Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   localCameraHandler: {fileID: 891514138669394269}
   localUI: {fileID: 6723466897460754155}
+  _token: 0
 --- !u!114 &1246765107383041570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  projectile: {fileID: -2144520669386207195, guid: b11913eebf49202409d6bb94300a9869, type: 3}
   _isFiring: 0
   fireParticleSystem: {fileID: 5907510851938720610}
   aimPoint: {fileID: 9208288399460212410}
@@ -393,6 +395,7 @@ MonoBehaviour:
   _isDead: 0
   uiOnhitColor: {r: 1, g: 0.2028302, b: 0.2028302, a: 0.78431374}
   uiOnhitImage: {fileID: 388971232680308162}
+  skipSettingStartValues: 0
   bodyMeshRenderer: {fileID: 3674863376606463045}
   playerModel: {fileID: 2677312617899281675}
   deathGameObjectPrefab: {fileID: 5805222802155041988, guid: 7d363f6a8bc85ae49a5477ed550a449e, type: 3}
@@ -537,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraAnchorPoint: {fileID: 9208288399460212410}
+  localCamera: {fileID: 0}
 --- !u!1 &1197273287673766789
 GameObject:
   m_ObjectHideFlags: 0

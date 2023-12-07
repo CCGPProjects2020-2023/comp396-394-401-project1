@@ -13,14 +13,28 @@ public class NetworkRunnerHandler : MonoBehaviour
     public NetworkRunner networkRunnerPrefab;
     NetworkRunner networkRunner;
 
+    private void Awake()
+    {
+        NetworkRunner networkRunnerInScene = FindObjectOfType<NetworkRunner>();
+
+        if (networkRunnerInScene != null)
+            networkRunner = networkRunnerInScene;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        networkRunner = Instantiate(networkRunnerPrefab);
-        networkRunner.name = "Network runner";
+        if (networkRunner == null)
+        {
+            networkRunner = Instantiate(networkRunnerPrefab);
+            networkRunner.name = "Network runner";
 
-        var clientTask = InitializeNetworkRunner(networkRunner, GameMode.AutoHostOrClient, GameManager.instance.GetConnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
-        Debug.Log("Server NetworkRunner Started...");
+            if (SceneManager.GetActiveScene().name != "MultiplayerMenu") {
+                var clientTask = InitializeNetworkRunner(networkRunner, GameMode.AutoHostOrClient, "TestSession", GameManager.instance.GetConnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
+            }            
+
+            Debug.Log("Server NetworkRunner Started...");
+        }        
     }
 
     public void StartHostMigration(HostMigrationToken hostMigrationToken) {
@@ -43,7 +57,7 @@ public class NetworkRunnerHandler : MonoBehaviour
         return sceneManager;
     }
 
-    protected virtual Task InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, byte[] connectionToken, NetAddress address, SceneRef scene, Action<NetworkRunner> initialized) {
+    protected virtual Task InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName, byte[] connectionToken, NetAddress address, SceneRef scene, Action<NetworkRunner> initialized) {
 
         var sceneManager = GetSceneManager(runner);
 
@@ -54,7 +68,8 @@ public class NetworkRunnerHandler : MonoBehaviour
             GameMode = gameMode,
             Address = address,
             Scene = scene,
-            SessionName = "TestRoom",
+            SessionName = sessionName,
+            CustomLobbyName = "OurLobbyID",
             Initialized = initialized,
             SceneManager = sceneManager,
             ConnectionToken = connectionToken
@@ -115,5 +130,37 @@ public class NetworkRunnerHandler : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         FindObjectOfType<Spawner>().OnHostMigrationCleanUp();
+    }
+
+    public void OnJoinLobby() {
+        var clientTask = JoinLobby();
+    }
+
+    private async Task JoinLobby() {
+        Debug.Log("JoinLobby started");
+
+        string lobbyID = "OurLobbyID";
+
+        var result = await networkRunner.JoinSessionLobby(SessionLobby.Custom, lobbyID);
+
+        if (!result.Ok)
+        {
+            Debug.LogError($"Unable to join lobby {lobbyID}");
+        }
+        else {
+            Debug.Log("JoinLobby ok");
+        }
+    }
+
+    public void CreateGame(string sessionName, string sceneName) {
+        Debug.Log($"Create session {sessionName} scene {sceneName} build index {SceneUtility.GetBuildIndexByScenePath($"scenes/{sceneName}")}");
+
+        var clientTask = InitializeNetworkRunner(networkRunner, GameMode.Host, sessionName, GameManager.instance.GetConnectionToken(), NetAddress.Any(), SceneUtility.GetBuildIndexByScenePath($"Networking/Scene/{sceneName}"), null);
+    }
+
+    public void JoinGame(SessionInfo session) {
+        Debug.Log($"Join session {session.Name}");
+
+        var clientTask = InitializeNetworkRunner(networkRunner, GameMode.Client, session.Name, GameManager.instance.GetConnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
     }
 }

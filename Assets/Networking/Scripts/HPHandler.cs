@@ -75,10 +75,12 @@ public class HPHandler : NetworkBehaviour
         characteraterMovementHandler.RequestRespawn();
     }
 
-    public void OnTakeDamage(string damageCausedByPlayer) { 
+    public void OnTakeDamage(string damageCausedByPlayer, byte damageAmount) { 
         if(isDead) return;
 
-        HP -= 1;
+        if(damageAmount > HP) damageAmount = HP;
+
+        HP -= damageAmount;
 
         Debug.Log($"{Time.time} {transform.name} took damage got {HP} left");
 
