@@ -279,7 +279,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2905691436000625679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
     _value: 0
     _inverse: 0
     _hash: -814817977
-  StateHashes: 000000008a18fce4b9abd9d344e1fab3dce045d6
+  StateHashes: 000000008a18fce4b9abd9d344e1fab3c9d3859d
   TriggerHashes: 00000000
 --- !u!1 &1141972471837709904
 GameObject:
@@ -2454,6 +2454,10 @@ PrefabInstance:
     - target: {fileID: 4331815610483475181, guid: e5d99ce56b30ceb48b24d22742f8641c, type: 3}
       propertyPath: m_Name
       value: PlayerUICanvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331815610483475181, guid: e5d99ce56b30ceb48b24d22742f8641c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5215717537125103804, guid: e5d99ce56b30ceb48b24d22742f8641c, type: 3}
       propertyPath: m_AnchorMax.y
