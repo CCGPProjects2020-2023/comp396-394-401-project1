@@ -13,6 +13,19 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
     [Networked(OnChanged = nameof(OnNickNameChanged))]
     public NetworkString<_16> nickName { get; set; }
 
+    bool isPublicJoinMessageSent = false;
+
+    public LocalCameraHandler localCameraHandler;
+    public GameObject localUI;
+
+    NetworkInGameMessages networkInGameMessages;
+
+    [Networked] public int token { get; set; }
+
+    void Awake() {
+        networkInGameMessages = GetComponent<NetworkInGameMessages>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,28 +39,49 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
             Local = this;
             NetworkUtils.SetRenderLayerInChildren(playerModel, LayerMask.NameToLayer("LocalPlayerModel"));
 
-            Camera.main.gameObject.SetActive(false);
+            if(Camera.main != null)
+                Camera.main.gameObject.SetActive(false);
 
-            RPC_SetNickName(PlayerPrefs.GetString("PlayerNickname"));
+            AudioListener audioListener = GetComponentInChildren<AudioListener>(true);
+            audioListener.enabled = true;
+
+            localCameraHandler.localCamera.enabled = true;
+            localCameraHandler.transform.parent = null;
+            localUI.SetActive(true);
+
+            RPC_SetNickName(GameManager.instance.playerNickName);
 
             Debug.Log("Spawned Local player");
         }
         else {
-            Camera localCamera = GetComponentInChildren<Camera>();
-            localCamera.enabled = false;
+            localCameraHandler.localCamera.enabled = false;
+
+            localUI.SetActive(false);
 
             AudioListener audioListener = GetComponentInChildren<AudioListener>();
             audioListener.enabled = false;
 
+            localUI.SetActive(false);
+
             Debug.Log("Spawned remote player");
         }
+
+        Runner.SetPlayerObject(Object.InputAuthority, Object);
 
         transform.name = $"P_{Object.Id}";
     }
 
     public void PlayerLeft(PlayerRef player)
     {
-        if(player == Object.InputAuthority)
+        if (Object.HasStateAuthority) {
+            if (Runner.TryGetPlayerObject(player, out NetworkObject playerLeftNetworkObject)) {
+                if (playerLeftNetworkObject == Object)
+                    Local.GetComponent<NetworkInGameMessages>().SendInGameRPCMessage(playerLeftNetworkObject.GetComponent<NetworkPlayer>().nickName.ToString(), "left");
+            }            
+        }
+        
+
+        if (player == Object.InputAuthority)
         {
             Runner.Despawn(Object);
         }
@@ -71,6 +105,15 @@ public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 
         this.nickName = nickName;
 
+        if(!isPublicJoinMessageSent)
+        {
+            networkInGameMessages.SendInGameRPCMessage(nickName, "joined");
+            isPublicJoinMessageSent = true;
+        }
+    }
 
+    void OnDestroy() {
+        if (localCameraHandler != null)
+            Destroy(localCameraHandler.gameObject);
     }
 }

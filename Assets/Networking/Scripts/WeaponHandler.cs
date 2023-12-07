@@ -13,12 +13,14 @@ public class WeaponHandler : NetworkBehaviour
     public LayerMask collisionLayers;
 
     HPHandler hPHandler;
+    NetworkPlayer networkPlayer;
 
     float lastTimeFired = 0f;
 
     private void Awake()
     {
         hPHandler = GetComponent<HPHandler>();
+        networkPlayer = GetBehaviour<NetworkPlayer>();
     }
 
     // Start is called before the first frame update
@@ -34,7 +36,7 @@ public class WeaponHandler : NetworkBehaviour
 
         StartCoroutine(FireEffectCO());
 
-        Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, 100, Object.InputAuthority, out var hitinfo, collisionLayers, HitOptions.IncludePhysX);
+        Runner.LagCompensation.Raycast(aimPoint.position, aimForwardVector, 100, Object.InputAuthority, out var hitinfo, collisionLayers, HitOptions.IgnoreInputAuthority);
 
         float hitDistance = 100;
         bool isHitOtherPlayer = false;
@@ -49,7 +51,7 @@ public class WeaponHandler : NetworkBehaviour
             Debug.Log($"{Time.time} {transform.name} hit hitbox {hitinfo.Hitbox.transform.root.name}");
 
             if (Object.HasStateAuthority)
-                hitinfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(); //TODO: Need to do something like this but on the enemy weapon - Will need to add a HPHandler on the enemy as well
+                hitinfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString()); //TODO: Need to do something like this but on the enemy weapon - Will need to add a HPHandler on the enemy as well
 
             isHitOtherPlayer = true;
         }

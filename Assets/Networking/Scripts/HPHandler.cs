@@ -19,6 +19,8 @@ public class HPHandler : NetworkBehaviour
     public Color uiOnhitColor;
     public Image uiOnhitImage;
 
+    public bool skipSettingStartValues = false;
+
     public SkinnedMeshRenderer bodyMeshRenderer;
     Color defaultMeshBodyColor;
 
@@ -28,19 +30,25 @@ public class HPHandler : NetworkBehaviour
     HitboxRoot hitboxRoot;
 
     CharaterMovementHandler characteraterMovementHandler;
+    NetworkInGameMessages networkInGameMessages;
+    NetworkPlayer networkPlayer;
 
     private void Awake()
     {
         characteraterMovementHandler = GetComponent<CharaterMovementHandler>();
         hitboxRoot = GetComponentInChildren<HitboxRoot>();
+        networkPlayer = GetComponent<NetworkPlayer>();
+        networkInGameMessages = GetComponent<NetworkInGameMessages>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        HP = startingHP;
-        isDead = false;
-
+        if (!skipSettingStartValues) {
+            HP = startingHP;
+            isDead = false;
+        }
+       
         defaultMeshBodyColor = bodyMeshRenderer.material.color;
 
         isInitialized = true;
@@ -67,7 +75,7 @@ public class HPHandler : NetworkBehaviour
         characteraterMovementHandler.RequestRespawn();
     }
 
-    public void OnTakeDamage() { 
+    public void OnTakeDamage(string damageCausedByPlayer) { 
         if(isDead) return;
 
         HP -= 1;
@@ -75,6 +83,7 @@ public class HPHandler : NetworkBehaviour
         Debug.Log($"{Time.time} {transform.name} took damage got {HP} left");
 
         if (HP <= 0) {
+            networkInGameMessages.SendInGameRPCMessage(damageCausedByPlayer, $"Killed <b>{networkPlayer.nickName.ToString()}</b>");
             Debug.Log($"{Time.time} {transform.name} died");
 
             StartCoroutine( ServerReviveCO());
