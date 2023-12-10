@@ -7,7 +7,7 @@
  * Author's Name:           Alexander  Maynard
  * Creation Date:           October 23, 2023
  * Last Modified By:        Alexander Maynard
- * Last Modified Date:      December 3, 2023
+ * Last Modified Date:      December 10, 2023
  * 
  * Program Description:     This is script manages the PlayerAbilities using the StateMachine script implementation. 
  *                          Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
@@ -67,6 +67,9 @@
  *                              -> Commented out Debug.Logs and update some variable names.
  *                          December 7, 2023:
  *                              -> Added layerMask and slightly refactored raycast for teleporation to only hit the "Default" or "Ground" layers.
+ *                          
+ *                          December 10, 2023:
+ *                              -> Refactored code to include a check if the pause menu is active. This will play into whether the abilities work or not. 
  */
 
 using TMPro;
@@ -108,6 +111,11 @@ public class PlayerAbilities : MonoBehaviour
 
     [Header("Player Camera Reference")]
     [SerializeField] private Camera playerCam; // refernece to the player camera
+
+
+    [Header("InGamePauseMenu Object")]
+    //to return isPaused from InGamePauseMenu.cs
+    [SerializeField] private InGamePauseMenu pauseMenu;
 
 
     //instance of player machine machine
@@ -154,12 +162,16 @@ public class PlayerAbilities : MonoBehaviour
 
 
     /// <summary>
-    /// Update calls the playerStateMachine.Update() every frame.
+    /// Update checks if pauseMenu is active or not. 
+    /// If the puaseMenu is active then just return.
+    /// If the pauseMenu is false then Update calls the playerStateMachine.Update() every frame.
     /// Also Updates the timer since an ability has been used.
     /// </summary>
     // Update is called once per frame
     void Update()
     {
+        //inverted if. If pauseMenu == true just return as we dont want the camera to move. Otherwise call MoveCamera();
+        if (pauseMenu.isPaused == true) return;
         //playerAbilitesStateMachine.Update is called from this update instance
         playerAbilitesStateMachine.Update();
         //timer for cooldown time (amount of time before the player can use the next ability) code here:

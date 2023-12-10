@@ -40,13 +40,11 @@
  *                          December 10, 2023:
  *                              -> Refactored code to get a local reference of the player position to be more efficient instead of repeated calls
  *                                  to access the playerTransform.position. x, y or z (inefficient).
+ *                              -> Refactored code to include a check if the pause menu is active. This will play into whether the camera movement works or not. 
  */
 
 
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 /// <summary>
@@ -79,6 +77,10 @@ public class CameraController : MonoBehaviour
     //transform caching for the camera and player
     private Transform camTransform;
 
+    [Header("InGamePauseMenu Object")]
+    //to return isPaused from InGamePauseMenu.cs
+    [SerializeField] private InGamePauseMenu pauseMenu;
+
     /// <summary>
     /// The code in the start sets the cursor to the center and makes it invisible (like in other FPS games)
     /// </summary>
@@ -93,18 +95,32 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// The code in the update sets the camera rotation based on the Mouse X and Y inputs. 
-    /// It also sets the X rotation of the player to the same as the camera so the the movement controls match.
+    /// Update() checks if isPaused from the pauseMenu is true or not. 
+    /// If true then just return
+    /// If not true then call MoveCamera();
     /// </summary>
     // Update is called once per frame
     private void Update()
+    {
+        //inverted if. If pauseMenu == true just return as we dont want the camera to move. Otherwise call MoveCamera();
+        if (pauseMenu.isPaused == true) return;
+        MoveCamera();
+    }
+
+
+
+    /// <summary>
+    /// The code in this function sets the camera rotation based on the Mouse X and Y inputs. 
+    /// It also sets the X rotation of the player to the same as the camera so the the movement controls match.
+    /// </summary>
+    private void MoveCamera()
     {
         //sets the cursor to always visible
         Cursor.visible = true;
         //updates the X and Y Camera movement positions --> the yaw one subtracts or you get inverted controls for mouse y
         cameraPitch += cameraSpeedX * Input.GetAxis("Mouse X");
         cameraYaw -= cameraSpeedY * Input.GetAxis("Mouse Y");
-        
+
         //clamp for look limit on the the Y axis. We do not need to do this to the x variable as
         //we need free 360 degree movement on the horizontal plane. We need to limit Y so we do not see the player or loop around too far on the y axis and get disoriented 
         cameraYaw = Mathf.Clamp(cameraYaw, yawLimitUpper, yawLimitLower);
@@ -114,9 +130,9 @@ public class CameraController : MonoBehaviour
 
         //get a local reference of the player position to be more efficient.
         var playerPositionLocal = playerTransform.position;
-        
+
         //code for the camera to follow the player.This removed some negative behaviours when it came to rotations and positioning
         //player.transform.position.y + 2f is for the camera to be adjusted to the player height
-        camTransform.position = new Vector3(playerPositionLocal.x,playerPositionLocal.y + 2f, playerPositionLocal.z);
+        camTransform.position = new Vector3(playerPositionLocal.x, playerPositionLocal.y + 2f, playerPositionLocal.z);
     }
 }

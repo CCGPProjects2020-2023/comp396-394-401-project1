@@ -9,19 +9,36 @@
  * Revision History:        December 10 2023: 
  *                              -> Added the intial version of this script which include being able to pause/resume with ESC key, resume/quit btn functionality and main menu btn.
  *                              -> Added the proper comments/comment headers.
+ *                              -> Added functionality to pause through another btn to pause the menu and changed cursorlock mode depending on if paused or not.
+ *                              -> Refactored the pause menu to only pause on tab and resume with the resume button.
+ *                              -> Made the isPaused bool public get and private set to restrict setting to only this class but to be able to be read from other classes.
  */
 
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 /// <summary>
 /// This class handles all the InGamePauseMenu functionality, including pausing/resuming through esc or buttons and returning to the main menu.
 /// </summary>
 public class InGamePauseMenu : MonoBehaviour
 {
-    //isPaused bool
-    private bool _isPaused = false;
+    //isPaused bool. Private setter for this class and public to be called by other scripts.
+    public bool isPaused { get; private set; } 
+
     //GameObject reference to the ingamePause menu.
     [SerializeField] private GameObject _inGamePauseMenu;
+
+
+    /// <summary>
+    /// set isPaused to false to start off.
+    /// </summary>
+    void Awake()
+    {
+        isPaused = false;
+    }
+
+
 
     /// <summary>
     /// Update just checks if the ESC key is pressed to appply it's functionality.
@@ -30,7 +47,8 @@ public class InGamePauseMenu : MonoBehaviour
     void Update()
     {
         //if we press ESC key then...
-        if (Input.GetKey(KeyCode.Escape)) {
+        if (Input.GetKey(KeyCode.Tab)) {
+            isPaused = true;
             //call PauseGameCheck();
             PauseGameCheck();
         }
@@ -43,20 +61,22 @@ public class InGamePauseMenu : MonoBehaviour
     /// </summary>
     private void PauseGameCheck()
     {
-        //inverts the value of isPaused as ESC may be called multiple times (to pause/unpause).
-        _isPaused = !_isPaused;
         //checks the value of paused
-        switch (_isPaused)
+        switch (isPaused)
         {
             //if scene should be paused...
             case true:
                 //...pause the scene and set the pause menu as active
                 Time.timeScale = 0.0f;
+                //unlock the cursor to use the menu
+                Cursor.lockState = CursorLockMode.None;
                 _inGamePauseMenu.SetActive(true);
                 break;
             case false:
                 //...resume the scene and set the pause menu as inactive
                 Time.timeScale = 1.0f;
+                Cursor.lockState = CursorLockMode.Locked;
+                //relock the cursor to use the menu
                 _inGamePauseMenu.SetActive(false);
                 break;
         }
@@ -69,6 +89,8 @@ public class InGamePauseMenu : MonoBehaviour
     /// </summary>
     public void ResumeGameBtn()
     {
+        //set is paused to false to resume the game.
+        isPaused = false;
         //call this again as _isPaused will be inverted anyway to resume the game in PauseGameCheck();
         PauseGameCheck();
     }
@@ -94,6 +116,7 @@ public class InGamePauseMenu : MonoBehaviour
     /// </summary>
     private void MainMenuBtn()
     {
-        SceneManager.LoadScene(SceneManager.GetSceneByName("MainMenu").buildIndex);
+        //load the main menu scene
+        SceneManager.LoadScene(0);
     }
 }
