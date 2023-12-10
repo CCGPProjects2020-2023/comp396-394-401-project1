@@ -1602,7 +1602,7 @@ MonoBehaviour:
   isGrounded: 0
   shootingDelay: 0.5
   shootingCurrentTime: 0
-  player: {fileID: 0}
+  player: {fileID: 349599036243514488}
   playerCamera: {fileID: 4392247505666928481}
   scoreManager: {fileID: 0}
   playerAnimator: {fileID: 8605391425848796179}
