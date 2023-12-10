@@ -8,7 +8,7 @@
  *                          object as well (to make the camera and player X rotations the same).
  *                          
  * Revision History:        October 27, 2023:
- *                              -> Transfered this code from CameraController
+ *                              -> Transferred this code from CameraController
  *                              -> modified the code added to work in this script and removed the start
  *                              -> Added more comments
  *                              -> Changed to FixedUpdate for more consistent Lerp to adjust player rotation.

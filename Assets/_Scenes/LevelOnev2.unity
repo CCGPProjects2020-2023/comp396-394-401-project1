@@ -5831,6 +5831,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5164528025297685112, guid: 0f7edc8e592e74a4c83b1fc7e0a7e3ff, type: 3}
   m_PrefabInstance: {fileID: 1997188231}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &982261851 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8316088468630907359, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
+  m_PrefabInstance: {fileID: 1479793798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &994985464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1013778559179756257, guid: 5c5369e5fa4991b4dbeeedf92e400039, type: 3}
@@ -8786,6 +8791,10 @@ PrefabInstance:
       propertyPath: scoreManager
       value: 
       objectReference: {fileID: 309658419}
+    - target: {fileID: 1578092335536620324, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
+      propertyPath: headReference
+      value: 
+      objectReference: {fileID: 982261851}
     - target: {fileID: 2660944175427245795, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_Name
       value: PlayerV4

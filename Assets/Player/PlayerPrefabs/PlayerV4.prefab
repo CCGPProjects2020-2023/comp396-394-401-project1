@@ -767,7 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a2c3e98c325e44c84b121f8b4e5b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8605391425841599879}
+  playerTransform: {fileID: 8605391425841889149}
   cameraSpeedX: 4
   cameraSpeedY: 4
   cameraPitch: 0
