@@ -12,6 +12,7 @@
  *                              -> Added functionality to pause through another btn to pause the menu and changed cursorlock mode depending on if paused or not.
  *                              -> Refactored the pause menu to only pause on tab and resume with the resume button.
  *                              -> Made the isPaused bool public get and private set to restrict setting to only this class but to be able to be read from other classes.
+ *                              -> Fixed bug for not moving once you pressing Pause -> enter Main Menu -> hit play. 
  */
 
 using System.Runtime.CompilerServices;
@@ -104,6 +105,8 @@ public class InGamePauseMenu : MonoBehaviour
     /// </summary>
     public void CallMainMenuBtn()
     {
+        //this is needed otherwise if we pause then go to main menu and then back to level the player no longer moves unless you hit pause first.
+        Time.timeScale = 1.0f;
         //call the MainMenuBtn functionality
         MainMenuBtn();
     }
