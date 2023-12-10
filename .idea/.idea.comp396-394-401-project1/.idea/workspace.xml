@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="06025210-470d-4b6d-8374-70ce80dfa799" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.comp396-394-401-project1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.comp396-394-401-project1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Player/PlayerPrefabs/PlayerV4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/PlayerPrefabs/PlayerV4.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Player/PlayerScripts/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/PlayerScripts/CameraController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Player/PlayerScripts/UpdatePlayerRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/PlayerScripts/UpdatePlayerRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/LevelOnev2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/LevelOnev2.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +99,9 @@
       <workItem from="1702005912306" duration="1976000" />
       <workItem from="1702096503159" duration="3000" />
       <workItem from="1702173004960" duration="696000" />
-      <workItem from="1702237460638" duration="1064000" />
+      <workItem from="1702237460638" duration="1165000" />
+      <workItem from="1702239104412" duration="20000" />
+      <workItem from="1702239140790" duration="596000" />
     </task>
     <servers />
   </component>
