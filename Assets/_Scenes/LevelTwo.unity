@@ -4526,6 +4526,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1595300903930477587, guid: 3b15a62b74945c74b88d73474bcdafe4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1693222138672565006, guid: 3b15a62b74945c74b88d73474bcdafe4, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -13089,6 +13093,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1595300903930477587, guid: 3b15a62b74945c74b88d73474bcdafe4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2183600746534782025, guid: 3b15a62b74945c74b88d73474bcdafe4, type: 3}
       propertyPath: m_Material
       value: 
@@ -13358,7 +13366,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

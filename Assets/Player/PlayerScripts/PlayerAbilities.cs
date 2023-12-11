@@ -70,6 +70,9 @@
  *                          
  *                          December 10, 2023:
  *                              -> Refactored code to include a check if the pause menu is active. This will play into whether the abilities work or not. 
+ *                          
+ *                          December 11, 2023:
+ *                              -> Refactored teleportation code to make the player not teleport too high and cause the player to vault over the level height.
  */
 
 using TMPro;
@@ -278,8 +281,11 @@ public class PlayerAbilities : MonoBehaviour
         //Debug.Log("Player just teleported");
 
 
-        //bit wise shift for layerMask. It is used so the raycast should only hit "Default" or "Ground" layer
-        int layerMask = (1 << 0) | (1 << 3);
+        //bit wise shift for layerMask. It is used so the raycast should only hit "Default", "Ground" or Phaseable walls layer
+        int layerMask = (1 << 0) | (1 << 3) | (1 << 6);
+
+
+   
 
 
         //ray to be cast from the center of the screen (where the mouse or reticle is)
@@ -289,11 +295,22 @@ public class PlayerAbilities : MonoBehaviour
         //set the teleport point where the ray hits a collider on layer "Default"
         if (Physics.Raycast(teleportRay, out RaycastHit teleportPoint, Mathf.Infinity, layerMask))
         {
-            //set transform of the player to the teleport point
-            this.transform.position = teleportPoint.point; //objectHit.position;
+
+            //checks if player is too high in the levels to not teleport over the top of the levels.
+            if(teleportPoint.point.y > 9f)
+            {
+                //set transform of the player to the teleport point, however the Y value will be set to 9f as that is as high as the player should go.
+                this.transform.position = new Vector3(teleportPoint.point.x, 9f, teleportPoint.point.z); //objectHit.position;
+            }
+            //if high is fine then just teleport normally.
+            else
+            {
+                //set transform of the player to the teleport point
+                this.transform.position = new Vector3(teleportPoint.point.x, teleportPoint.point.y, teleportPoint.point.z); //objectHit.position;
+            }
             
             //instantiate ability particles once player teleports
-            Instantiate(abilityParticles, this.transform.position, this.transform.rotation);
+            Instantiate(abilityParticles, this.transform);
         }
 
         //sets the teleport indicator as active (or visible) --> on player UI
