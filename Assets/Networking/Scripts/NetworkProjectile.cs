@@ -1,4 +1,11 @@
-using System.Collections;
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Handles network projectiles
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
@@ -19,6 +26,12 @@ public class NetworkProjectile : NetworkBehaviour
     NetworkObject networkObject;
     NetworkRigidbody networkRigidbody;
 
+    /// <summary>
+    /// Handles a projectile's movement and velocity when it is thrown
+    /// </summary>
+    /// <param name="throwForce"></param>
+    /// <param name="thrownByPlayerRef"></param>
+    /// <param name="thrownByPlayerName"></param>
     public void Throw(Vector3 throwForce, PlayerRef thrownByPlayerRef, string thrownByPlayerName) {
         networkObject = GetComponent<NetworkObject>();
         networkRigidbody = GetComponent<NetworkRigidbody>();
@@ -32,6 +45,9 @@ public class NetworkProjectile : NetworkBehaviour
 
     }
 
+    /// <summary>
+    /// Similar to the update method from unity - this updates the player's hitcount 
+    /// </summary>
     public override void FixedUpdateNetwork()
     {
         if(Object.HasStateAuthority)
@@ -55,6 +71,11 @@ public class NetworkProjectile : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Instantiates particle system when the object is despawned.
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="hasState"></param>
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
         MeshRenderer projectileMesh = GetComponentInChildren<MeshRenderer>();

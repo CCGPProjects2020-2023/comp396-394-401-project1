@@ -1,4 +1,11 @@
-using System.Collections;
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Spawns network objects
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
@@ -15,17 +22,20 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     SessionListUIHandler sessionListUIHandler;
 
+    /// <summary>
+    /// Awake method called by unity - Initializes properties.
+    /// </summary>
     void Awake() { 
         mapTokenIDWithNetworkPlayer = new Dictionary<int, NetworkPlayer>();
         sessionListUIHandler = FindObjectOfType<SessionListUIHandler>(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    /// <summary>
+    /// Return the player token
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="player"></param>
+    /// <returns></returns>
     int GetPlayerToken(NetworkRunner runner, PlayerRef player) {
         if (runner.LocalPlayer == player)
         {
@@ -44,15 +54,29 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         }        
     }
 
+    /// <summary>
+    /// Debugs when connected to server
+    /// </summary>
+    /// <param name="runner"></param>
     public void OnConnectedToServer(NetworkRunner runner)
     {
         Debug.Log("OnConnectedToServer");
     }
 
+    /// <summary>
+    /// Adds the token to a dictionary
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="networkPlayer"></param>
     public void SetconnectionTokenMapping(int token, NetworkPlayer networkPlayer) { 
         mapTokenIDWithNetworkPlayer.Add(token, networkPlayer);
     }
 
+    /// <summary>
+    /// Handles actions when the player joins a session
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="player"></param>
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
@@ -81,10 +105,11 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-    }
-
+    /// <summary>
+    /// Handles actions when an input is registered
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="input"></param>
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         if (characterInputHandler == null && NetworkPlayer.Local != null) { 
@@ -97,25 +122,42 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
-    {
-    }
-
+    /// <summary>
+    /// Handles actions when session is shutdown
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="shutdownReason"></param>
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         Debug.Log("OnShhutDown");
     }
 
+    /// <summary>
+    /// Handles actions when server is disconnected
+    /// </summary>
+    /// <param name="runner"></param>
     public void OnDisconnectedFromServer(NetworkRunner runner)
     {
         Debug.Log("OnDisconnectedFromServer");
     }
 
+    /// <summary>
+    /// Handles actions when a request to connect is made
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="request"></param>
+    /// <param name="token"></param>
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
         Debug.Log("OnConnectRequest");
     }
 
+    /// <summary>
+    /// Handles actions when a connection is failed
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="remoteAddress"></param>
+    /// <param name="reason"></param>
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
         Debug.Log("OnConnectFailed");
@@ -125,6 +167,11 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
     }
 
+    /// <summary>
+    /// Handles actions when the session list is updated
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="sessionList"></param>
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
         if (sessionListUIHandler == null)
@@ -152,6 +199,11 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     {
     }
 
+    /// <summary>
+    /// Handles actions on host migration
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="hostMigrationToken"></param>
     public async void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
         Debug.Log("OnHostMigration");
@@ -174,6 +226,9 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     }
 
+    /// <summary>
+    /// Handles actions on host migration cleanup
+    /// </summary>
     public void OnHostMigrationCleanUp() {
         Debug.Log("Spawner OnHostMigrationCleanUp started");
 
@@ -187,5 +242,15 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         Debug.Log("Spawner OnHostMigrationCleanUp completed");
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
+    {
+        throw new NotImplementedException();
     }
 }

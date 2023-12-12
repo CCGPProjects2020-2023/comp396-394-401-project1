@@ -1,4 +1,11 @@
-using System;
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Customization of the NetworkCharacterControllerPrototype class
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using Fusion;
 using UnityEngine;
 

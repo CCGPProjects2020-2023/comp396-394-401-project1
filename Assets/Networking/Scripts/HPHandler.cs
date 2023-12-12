@@ -1,5 +1,13 @@
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Handles player's health
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
@@ -33,6 +41,9 @@ public class HPHandler : NetworkBehaviour
     NetworkInGameMessages networkInGameMessages;
     NetworkPlayer networkPlayer;
 
+    /// <summary>
+    /// Awake method called by unity - Initializes properties
+    /// </summary>
     private void Awake()
     {
         characteraterMovementHandler = GetComponent<CharaterMovementHandler>();
@@ -41,7 +52,9 @@ public class HPHandler : NetworkBehaviour
         networkInGameMessages = GetComponent<NetworkInGameMessages>();
     }
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start method called by unity - initializes properties
+    /// </summary>
     void Start()
     {
         if (!skipSettingStartValues) {
@@ -54,6 +67,10 @@ public class HPHandler : NetworkBehaviour
         isInitialized = true;
     }
 
+    /// <summary>
+    /// Changes the mesh renderes color to white for 0.2 seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator OnHitCO() {
 
         bodyMeshRenderer.material.color = Color.white;
@@ -69,12 +86,22 @@ public class HPHandler : NetworkBehaviour
             uiOnhitImage.color = new Color(0, 0, 0, 0);
     }
 
+    /// <summary>
+    /// Respawns the character after 2 secs.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ServerReviveCO() {
         yield return new WaitForSeconds(2.0f);
 
         characteraterMovementHandler.RequestRespawn();
     }
 
+    /// <summary>
+    /// Diminishes the player health when it takes damage. 
+    /// Sends a message to the RPCMessage when a player kills another player.
+    /// </summary>
+    /// <param name="damageCausedByPlayer"></param>
+    /// <param name="damageAmount"></param>
     public void OnTakeDamage(string damageCausedByPlayer, byte damageAmount) { 
         if(isDead) return;
 
@@ -93,6 +120,11 @@ public class HPHandler : NetworkBehaviour
             isDead = true;
         }
     }
+
+    /// <summary>
+    /// Calls the OnHPReduced method based on appropriate condition
+    /// </summary>
+    /// <param name="changed"></param>
     static void OnHPChanged(Changed<HPHandler> changed) {
         Debug.Log($"{Time.time} OnHPChanged value {changed.Behaviour.HP}");   
 
@@ -105,12 +137,19 @@ public class HPHandler : NetworkBehaviour
         if(newHP < oldHP) changed.Behaviour.OnHPReduced();
     }
 
+    /// <summary>
+    /// Starts the coroutine when called
+    /// </summary>
     private void OnHPReduced() { 
         if(!isInitialized) { return; }
 
         StartCoroutine(OnHitCO());
     }
 
+    /// <summary>
+    /// Checks if player is dead, and handles witha appropriate behavior.
+    /// </summary>
+    /// <param name="changed"></param>
     static void OnStateChanged(Changed<HPHandler> changed) {
         Debug.Log($"{Time.time} OnStateChanged value {changed.Behaviour.isDead}");
 
@@ -125,6 +164,9 @@ public class HPHandler : NetworkBehaviour
             changed.Behaviour.OnRevive();
     }
 
+    /// <summary>
+    /// Handles actions when player is dead.
+    /// </summary>
     private void OnDeath()
     {
         Debug.Log($"{Time.time} OnDeath");
@@ -136,6 +178,9 @@ public class HPHandler : NetworkBehaviour
         Instantiate(deathGameObjectPrefab, transform.position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Revive the player by enabling the model, hitbox, and movement handler.
+    /// </summary>
     private void OnRevive()
     {
         Debug.Log($"{Time.time} OnRevive");
@@ -149,6 +194,9 @@ public class HPHandler : NetworkBehaviour
         characteraterMovementHandler.SetCharacterControllerEnabled(true);
     }
 
+    /// <summary>
+    /// Sets appropriate properties when respawned.
+    /// </summary>
     public void OnRespawned() {
         HP = startingHP;
         isDead = false;

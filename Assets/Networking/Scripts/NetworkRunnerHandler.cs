@@ -1,5 +1,13 @@
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Manages scenes on the network
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
@@ -13,6 +21,9 @@ public class NetworkRunnerHandler : MonoBehaviour
     public NetworkRunner networkRunnerPrefab;
     NetworkRunner networkRunner;
 
+    /// <summary>
+    /// Awake method called by unity - Initializes properties.
+    /// </summary>
     private void Awake()
     {
         NetworkRunner networkRunnerInScene = FindObjectOfType<NetworkRunner>();
@@ -21,7 +32,9 @@ public class NetworkRunnerHandler : MonoBehaviour
             networkRunner = networkRunnerInScene;
     }
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start method called by unity - Initializes properties.
+    /// </summary>
     void Start()
     {
         if (networkRunner == null)
@@ -37,6 +50,10 @@ public class NetworkRunnerHandler : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// Starts the normal, host migration.
+    /// </summary>
+    /// <param name="hostMigrationToken"></param>
     public void StartHostMigration(HostMigrationToken hostMigrationToken) {
         networkRunner = Instantiate(networkRunnerPrefab);
         networkRunner.name = "Network runner - Migrated";
@@ -47,7 +64,11 @@ public class NetworkRunnerHandler : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Accesses the network scene manager.
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <returns></returns>
     INetworkSceneManager GetSceneManager(NetworkRunner runner) {
         var sceneManager = runner.GetComponents(typeof(MonoBehaviour)).OfType<INetworkSceneManager>().FirstOrDefault();
 
@@ -57,6 +78,17 @@ public class NetworkRunnerHandler : MonoBehaviour
         return sceneManager;
     }
 
+    /// <summary>
+    /// Initializes and start the NetworkRunner
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="gameMode"></param>
+    /// <param name="sessionName"></param>
+    /// <param name="connectionToken"></param>
+    /// <param name="address"></param>
+    /// <param name="scene"></param>
+    /// <param name="initialized"></param>
+    /// <returns></returns>
     protected virtual Task InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName, byte[] connectionToken, NetAddress address, SceneRef scene, Action<NetworkRunner> initialized) {
 
         var sceneManager = GetSceneManager(runner);
@@ -76,6 +108,12 @@ public class NetworkRunnerHandler : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Initalizes the Host Migration system so that when the host disconnects, the game can go on
+    /// </summary>
+    /// <param name="runner"></param>
+    /// <param name="hostMigrationToken"></param>
+    /// <returns></returns>
     protected virtual Task InitializeNetworkRunnerHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
 
@@ -85,11 +123,6 @@ public class NetworkRunnerHandler : MonoBehaviour
 
         return runner.StartGame(new StartGameArgs
         {
-            //GameMode = gameMode,
-            //Address = address,
-            //Scene = scene,
-            //SessionName = "TestRoom",
-            //Initialized = initialized,
             SceneManager = sceneManager,
             HostMigrationToken = hostMigrationToken,
             HostMigrationResume = HostMigrationResume,
@@ -97,6 +130,10 @@ public class NetworkRunnerHandler : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Resumes the host migration once the host is disconnected
+    /// </summary>
+    /// <param name="runner"></param>
     void HostMigrationResume(NetworkRunner runner) {
         Debug.Log($"HostMigrationResume started");
 
@@ -126,16 +163,28 @@ public class NetworkRunnerHandler : MonoBehaviour
         Debug.Log($"HostMigrationResume completed");
     }
 
+    /// <summary>
+    /// Cleans up after host migration
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CleanUpHostMigrationCO() {
         yield return new WaitForSeconds(5);
 
         FindObjectOfType<Spawner>().OnHostMigrationCleanUp();
     }
 
+    /// <summary>
+    /// Calls the JoinLobby method
+    /// </summary>
     public void OnJoinLobby() {
         var clientTask = JoinLobby();
     }
 
+
+    /// <summary>
+    /// Handles actions when the player joins a lobby
+    /// </summary>
+    /// <returns></returns>
     private async Task JoinLobby() {
         Debug.Log("JoinLobby started");
 
@@ -152,12 +201,21 @@ public class NetworkRunnerHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates a game using the InitializeNetworkRunner method
+    /// </summary>
+    /// <param name="sessionName"></param>
+    /// <param name="sceneName"></param>
     public void CreateGame(string sessionName, string sceneName) {
         Debug.Log($"Create session {sessionName} scene {sceneName} build index {SceneUtility.GetBuildIndexByScenePath($"scenes/{sceneName}")}");
 
         var clientTask = InitializeNetworkRunner(networkRunner, GameMode.Host, sessionName, GameManager.instance.GetConnectionToken(), NetAddress.Any(), SceneUtility.GetBuildIndexByScenePath($"Networking/Scene/{sceneName}"), null);
     }
 
+    /// <summary>
+    /// Add a player to a session
+    /// </summary>
+    /// <param name="session"></param>
     public void JoinGame(SessionInfo session) {
         Debug.Log($"Join session {session.Name}");
 

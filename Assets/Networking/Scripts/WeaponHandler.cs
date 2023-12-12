@@ -1,5 +1,12 @@
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Handles the player's weapon
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
@@ -27,18 +34,19 @@ public class WeaponHandler : NetworkBehaviour
 
     TickTimer projectileFireDelay = TickTimer.None;
 
+    /// <summary>
+    /// Awake method similar to the unity awake method - Initializes the properties
+    /// </summary>
     private void Awake()
     {
         hPHandler = GetComponent<HPHandler>();
         networkPlayer = GetBehaviour<NetworkPlayer>();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
+    /// <summary>
+    /// Handles actions when a weapon is fired
+    /// </summary>
+    /// <param name="aimForwardVector"></param>
     void Fire(Vector3 aimForwardVector) {
         if (Time.time - lastTimeFired < 0.15f) {
             return;
@@ -81,6 +89,10 @@ public class WeaponHandler : NetworkBehaviour
         lastTimeFired = Time.time;
     }
 
+    /// <summary>
+    /// Handles the action of firing a projectile
+    /// </summary>
+    /// <param name="aimForwardVector"></param>
     void FireProjectile(Vector3 aimForwardVector) { 
         if(projectileFireDelay.ExpiredOrNotRunning(Runner))
         {
@@ -92,6 +104,10 @@ public class WeaponHandler : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles actions of playing the proper particle system when firing a weapon
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FireEffectCO() {     
         isFiring = true;
 
@@ -102,7 +118,9 @@ public class WeaponHandler : NetworkBehaviour
         isFiring = false;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Similar to the unity update method - Handles the update of properties
+    /// </summary>
     public override void FixedUpdateNetwork()
     {
         if(hPHandler.isDead) return;    
@@ -121,10 +139,12 @@ public class WeaponHandler : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles actions when weapon is fired
+    /// </summary>
+    /// <param name="changed"></param>
     static void OnFireChanged(Changed<WeaponHandler> changed)
-    {
-        //Debug.Log($"{Time.time} OnFireChanged value {changed.Behaviour.isFiring}");
-
+    {    
         bool isFiringCurrent = changed.Behaviour.isFiring;
         changed.LoadOld();
 
@@ -133,6 +153,9 @@ public class WeaponHandler : NetworkBehaviour
         if( isFiringCurrent && !isFiringOld) { changed.Behaviour.OnFireRemote(); }
     }
 
+    /// <summary>
+    /// Handles actions of remote weapons when fired
+    /// </summary>
     void OnFireRemote()
     {
         if(!Object.HasInputAuthority) fireParticleSystem.Play();

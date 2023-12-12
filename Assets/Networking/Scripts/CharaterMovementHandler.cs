@@ -1,5 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Handles network character movement
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using UnityEngine;
 using Fusion;
 
@@ -16,7 +22,9 @@ public class CharaterMovementHandler : NetworkBehaviour
 
     float walkSpeed = 0;
 
-
+    /// <summary>
+    /// Awake method called by unity - Initializes properties
+    /// </summary>
     private void Awake()
     {
         networkCharacterControllerPrototypeCustom = GetComponent<NetworkCharacterControllerPrototypeCustom>();
@@ -25,12 +33,10 @@ public class CharaterMovementHandler : NetworkBehaviour
         networkPlayer = GetComponent<NetworkPlayer>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    /// <summary>
+    /// Method similar to the update() method from unity, but on the network.
+    /// Used to check the status and inputs of the player.
+    /// </summary>
     public override void FixedUpdateNetwork()
     {
         if (Object.HasStateAuthority) {
@@ -46,7 +52,6 @@ public class CharaterMovementHandler : NetworkBehaviour
 
         if (GetInput(out NetworkInputData networkInputData))
         {
-
             transform.forward = networkInputData.aimForwardVector;
 
             Quaternion rotation = transform.rotation;
@@ -58,8 +63,7 @@ public class CharaterMovementHandler : NetworkBehaviour
 
             networkCharacterControllerPrototypeCustom.Move(moveDirection);
 
-            if (networkInputData.isJumpPressed)
-                networkCharacterControllerPrototypeCustom.Jump();
+            if (networkInputData.isJumpPressed) networkCharacterControllerPrototypeCustom.Jump();
 
             Vector2 walkVector = new Vector2(networkCharacterControllerPrototypeCustom.Velocity.x, networkCharacterControllerPrototypeCustom.Velocity.z);
             walkVector.Normalize();
@@ -71,11 +75,13 @@ public class CharaterMovementHandler : NetworkBehaviour
 
             Debug.Log("IsFiring Input: " + networkInputData.isFirePressed);
             
-
             CheckFallRespawn();
         }
     }  
 
+    /// <summary>
+    /// Checks if the player has fallen off the world.
+    /// </summary>
     void CheckFallRespawn() {
         if (transform.position.y < -12) {
             if(Object.HasStateAuthority)
@@ -89,14 +95,24 @@ public class CharaterMovementHandler : NetworkBehaviour
         }
     }
 
+    /// <summary>
+    /// Enables or disables the character controller.
+    /// </summary>
+    /// <param name="isEnabled">Sets the controller to this</param>
     public void SetCharacterControllerEnabled(bool isEnabled) { 
         networkCharacterControllerPrototypeCustom.Controller.enabled = isEnabled;
     }
 
+    /// <summary>
+    /// Sets the property isRespawnRequested to true.
+    /// </summary>
     public void RequestRespawn() {
         isRespawnRequested = true;
     }
 
+    /// <summary>
+    /// Respawns the character in the world and sets the isRespawnRequested property to false.
+    /// </summary>
     void Respawn() { 
         networkCharacterControllerPrototypeCustom.TeleportToPosition(NetworkUtils.GetRandomSpawnPoint());
 

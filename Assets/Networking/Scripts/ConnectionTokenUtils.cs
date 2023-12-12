@@ -1,9 +1,14 @@
+/*
+    Author's Name:          Audrey Bernier Larose
+    Last Modified By:       Audrey Bernier Larose
+    Last Date Modified:     December 12, 2023
+    Program Description:    Utility class that takes care of creating tokens.
+    Revision History:       December 12, 2023: Initial script and documentation.                            
+ */
+//***The following is based on this tutorial:   https://www.youtube.com/watch?v=KqpMOdPj3co&list=PLyDa4NP_nvPfHhPuumJylSj8jXyULsT1X&index=1YouTube
 using System;
 
 
-/// <summary>
-/// Fusion Connection Token Utility methods
-/// </summary>
 public static class ConnectionTokenUtils
 {
     /// <summary>
