@@ -6,8 +6,8 @@
  * 
  * Author's Name:           Alexander  Maynard
  * Creation Date:           October 23, 2023
- * Last Modified By:        Alexander Maynard
- * Last Modified Date:      December 10, 2023
+ * Last Modified By:        Ikamjot Hundal 
+ * Last Modified Date:      December 12, 2023
  * 
  * Program Description:     This is script manages the PlayerAbilities using the StateMachine script implementation. 
  *                          Furthermore, the states managed in this file are AbilitiesReady, Phase, Teleport and Cooldown.
@@ -73,6 +73,8 @@
  *                          
  *                          December 11, 2023:
  *                              -> Refactored teleportation code to make the player not teleport too high and cause the player to vault over the level height.
+ *                          December 12, 2023 (Ikamjot Hundal):
+ *                              -> Refactored teleportation code to make the player not teleport outside of the doorways' top.
  */
 
 using TMPro;
@@ -282,8 +284,10 @@ public class PlayerAbilities : MonoBehaviour
 
 
         //bit wise shift for layerMask. It is used so the raycast should only hit "Default", "Ground" or Phaseable walls layer
-        int layerMask = (1 << 0) | (1 << 3) | (1 << 6);
+        int layerMask = (1 << 0) | (1 << 3) | (1 << 6) | (1 << 12);
 
+        // a layer to prevent any teleportation outside of the top of the doorway
+        int layerToIgnore = (1 << 14);
 
    
 
@@ -300,7 +304,13 @@ public class PlayerAbilities : MonoBehaviour
             if(teleportPoint.point.y > 9f)
             {
                 //set transform of the player to the teleport point, however the Y value will be set to 9f as that is as high as the player should go.
-                this.transform.position = new Vector3(teleportPoint.point.x, 9f, teleportPoint.point.z); //objectHit.position;
+                this.transform.position = new Vector3(teleportPoint.point.x, 5f, teleportPoint.point.z); //objectHit.position;
+            }
+
+            // if the raycast hit the layer 14 (NoPhase)-- prevent the player from going outside of the doorway's top
+            else if (layerToIgnore == (1 <<14))
+            {
+                this.transform.position = new Vector3(teleportPoint.point.x, 0f, teleportPoint.point.z);
             }
             //if high is fine then just teleport normally.
             else
