@@ -32,6 +32,7 @@ public class MainMenuUIHandler : MonoBehaviour
     }
 
     public void OnFindGameClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         PlayerPrefs.SetString("PlayerNickname", playerNameInputField.text);
         PlayerPrefs.Save();
 
@@ -48,12 +49,20 @@ public class MainMenuUIHandler : MonoBehaviour
         FindObjectOfType<SessionListUIHandler>(true).OnLookingForGameSession();
     }
 
+    public void OnBackButtonClicked()
+    {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
+        SceneManager.LoadScene(SceneName.ModeMenu.ToString());
+    }
+
     public void OnCreateNewGameClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         HideAllPanels();
         createSessionDetailsPanel.SetActive(true);
     }
 
     public void OnStartNewSessionClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         NetworkRunnerHandler networkRunnerHandler = FindObjectOfType<NetworkRunnerHandler>();
         networkRunnerHandler.CreateGame(sessionNameInputField.text, "Multiplayer");
 

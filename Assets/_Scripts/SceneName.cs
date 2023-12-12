@@ -1,8 +1,9 @@
 /*  Author's Name:          Marcus Ngooi
- *  Last Modified By:       Marcus Ngooi
+ *  Last Modified By:       Audrey Bernier Larose
  *  Date Last Modified:     October 24, 2023
  *  Program Description:    Contains all the scenes in the game.
  *  Revision History:       October 24, 2023: Initial SceneName enum script.
+ *                          December 12, 2023: Added ModeMenu, MultiplayerMenu, and Multiplayer
  */
 
 /// <summary>
@@ -10,6 +11,9 @@
 /// </summary>
 public enum SceneName
 {
+    ModeMenu,
+    MultiplayerMenu,
+    Multiplayer,
     MainMenu,
     OptionsMenu,
     Instructions,
