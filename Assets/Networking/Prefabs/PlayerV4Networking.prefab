@@ -521,7 +521,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4095
+    m_Bits: 20479
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -553,13 +553,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a2c3e98c325e44c84b121f8b4e5b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3674863376601430795}
+  playerTransform: {fileID: 0}
   cameraSpeedX: 4
   cameraSpeedY: 4
   cameraPitch: 0
   cameraYaw: 0
   yawLimitUpper: -40
   yawLimitLower: 40
+  pauseMenu: {fileID: 0}
 --- !u!114 &891514138669394269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2276,6 +2277,7 @@ MonoBehaviour:
   teleportIndicator: {fileID: 1687615818158925540}
   abilitiesStatusText: {fileID: 5137582903836005834}
   playerCam: {fileID: 243296447327764798}
+  pauseMenu: {fileID: 0}
 --- !u!114 &6966818993067212117
 MonoBehaviour:
   m_ObjectHideFlags: 0
