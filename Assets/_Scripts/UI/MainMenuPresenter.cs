@@ -64,6 +64,22 @@ public class MainMenuPresenter : MonoBehaviour
         SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         mainMenu.Quit();
     }
+
+    public void OnSinglePlayerClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
+        SceneManager.LoadScene(SceneName.MainMenu.ToString());
+    }
+
+    public void OnMultiplayerClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
+        SceneManager.LoadScene(SceneName.MultiplayerMenu.ToString());
+    }
+
+    public void OnBackButtonClicked() {
+        SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
+        SceneManager.LoadScene(SceneName.ModeMenu.ToString());
+    }
+
     /// <summary>
     /// Updates the view of the Main Menu.
     /// </summary>
