@@ -1,10 +1,11 @@
-/*
+/**
  * 
     Author's Name:          Audrey Bernier Larose
-    Last Modified By:       Audrey Bernier Larose
-    Last Date Modified:     November 11, 2023
+    Last Modified By:       Marcus Ngooi
+    Last Date Modified:     December 13, 2023
     Program Description:    Manages the score for the player.
-    Revision History:       November 11, 2023: Initial script and documentation.                            
+    Revision History:       November 11, 2023 (Audrey Bernier Larose): Initial script and documentation. 
+                            December 13, 2023 (Marcus Ngooi): Added a score reset function and allowed for setting a score back to 0 on play again.
  */
 using TMPro;
 using UnityEngine;
@@ -17,11 +18,11 @@ public class ScoreManager: MonoBehaviour
 
     /// <summary>
     /// Getter and Setter for the property Score
-    /// It checks if the score we are trying to set is abvove 0.
+    /// It checks if the score we are trying to set is 0 or above 0.
     /// </summary>
     public static int Score { set {
-            if (value > 0) _score = value;
-            else throw new System.Exception("Trying to set a score to something that is less than or equal to 0...");
+            if (value >= 0) _score = value;
+            else throw new System.Exception("Trying to set a score to something that is less than 0...");
     } get { return _score; } }
 
     /// <summary>
@@ -52,6 +53,15 @@ public class ScoreManager: MonoBehaviour
         int temp = _score;
         temp -= score;
         Score = temp;        
+        score_text.text = s_score + Score.ToString();
+    }
+    /// <summary>
+    /// Resets the Score property to 0.
+    /// </summary>
+    /// <param name="score"></param>
+    protected internal void Reset()
+    {
+        Score = 0;
         score_text.text = s_score + Score.ToString();
     }
 }
