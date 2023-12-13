@@ -75,6 +75,7 @@
  *                              -> Refactored teleportation code to make the player not teleport too high and cause the player to vault over the level height.
  *                          December 12, 2023 (Ikamjot Hundal):
  *                              -> Refactored teleportation code to make the player not teleport outside of the doorways' top.
+ *                              -> Refactored teleportation code to rename "NoPhase" to "NoTeleportation"
  */
 
 using TMPro;
@@ -304,10 +305,10 @@ public class PlayerAbilities : MonoBehaviour
             if(teleportPoint.point.y > 9f)
             {
                 //set transform of the player to the teleport point, however the Y value will be set to 9f as that is as high as the player should go.
-                this.transform.position = new Vector3(teleportPoint.point.x, 5f, teleportPoint.point.z); //objectHit.position;
+                this.transform.position = new Vector3(teleportPoint.point.x, 9f, teleportPoint.point.z); //objectHit.position;
             }
 
-            // if the raycast hit the layer 14 (NoPhase)-- prevent the player from going outside of the doorway's top
+            // if the raycast hit the layer 14 (NoTeleportation)-- prevent the player from going outside of the doorway's top
             else if (layerToIgnore == (1 <<14))
             {
                 this.transform.position = new Vector3(teleportPoint.point.x, 0f, teleportPoint.point.z);
