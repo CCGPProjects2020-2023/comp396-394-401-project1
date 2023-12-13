@@ -79,7 +79,8 @@
  *                              -> Refactored teleportation code to rename "NoPhase" to "NoTeleportation"
  *                          
  *                          December 12, 2023 (Alexander Maynard):
- *                              -> Increased the teleport time by a factor of 2.
+ *                              -> Increased the teleport cooldown time by a factor of 2. -> fixed again
+ *                              -> Fixed the teleportation being too fast... -> refactored wrong. -> set the factor to a variable
  */
 
 using TMPro;
@@ -115,6 +116,8 @@ public class PlayerAbilities : MonoBehaviour
     //to check if phase is active
     [SerializeField] private bool teleported = false;
     [SerializeField] private GameObject teleportIndicator; //image denoting teleportation
+    [Header("Teleport cooldown is set to factor of phase")]
+    [SerializeField] private float teleportTimeFactor = 2; //cooldown is set to a factor of the time the phase takes.
 
     [Header("Abilities Status Text element")]
     [SerializeField] private TextMeshProUGUI abilitiesStatusText; //text on player UI tell the player important information.
@@ -372,7 +375,7 @@ public class PlayerAbilities : MonoBehaviour
         //checks if the time of the ability used is greater than half the time for abilities cooldown and that teleport was used.
         //this is needed as we need time to display "Abilties Status: Teleported!" from the teleport implementation and the "Abilties Status: Cooling down..." in the cooldown implementation.
         //also sets the indicator for 'teleportated' as invisible again
-        if (timeSinceAbilityUsed * 2 >= cooldownAfterAbilities/2 && teleported == true) // time for teleportation is set to a factor of 2 for a ratio of 1/2 to the phase ability
+        if (timeSinceAbilityUsed >= cooldownAfterAbilities/2 && teleported == true)
         {
             //sets the teleport indicator as inactive (or invisible)
             teleportIndicator.SetActive(false);
@@ -383,7 +386,7 @@ public class PlayerAbilities : MonoBehaviour
 
         //checks if the time of the ability used is greater than the time for abilites cooldown and that teleport was used (teleport == true).
         //if so we set the abilitesReadyCheck to true (to transition states) and set teleported back to false
-        if (timeSinceAbilityUsed * 2 >= cooldownAfterAbilities && teleported == true) // time for teleportation is set to a factor of 2 for a ratio of 1/2 to the phase ability
+        if (timeSinceAbilityUsed >= (cooldownAfterAbilities * teleportTimeFactor) && teleported == true) // time for entire teleportation cooldown is set to a factor of 2 for a ratio of 1/2 to the phase ability
         {
             //sets the ability check to true to denote that the player ability cooldown is over. This is necessary for the change in state from cooldown to abilitiesReady
             abilitiesReadyCheck = true;

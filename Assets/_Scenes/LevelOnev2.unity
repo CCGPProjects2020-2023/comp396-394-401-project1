@@ -8831,6 +8831,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3401630729536335352, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
+      propertyPath: teleportTimeFactor
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4392247505666928481, guid: 0255f45fd85101042a96c7c0144ce86c, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 24447

@@ -14,6 +14,9 @@
  *                              
  *                          December 3, 2023:
  *                              -> Change public variables to private and updated comments/comments headers
+ *                          
+ *                          December 12, 2023:
+ *                              -> Increased time for the WinManager EnemyCheck() was increased through invoke repeating.
  */
 
 using System.Collections.Generic;
@@ -40,7 +43,7 @@ public class WinManager : MonoBehaviour
     {
         // Repeatedly invokes the EnemyCheck function to check how many enemies are in the List every half second with no delay.
         // OnAwake calls this immediately 
-        InvokeRepeating(nameof(EnemyCheck), 0.0f, 0.5f * Time.deltaTime);
+        InvokeRepeating(nameof(EnemyCheck), 0.0f, 0.2f * Time.deltaTime);
     }
 
     /// <summary>
