@@ -6,7 +6,7 @@
  * 
  * Author's Name:           Alexander  Maynard
  * Creation Date:           October 23, 2023
- * Last Modified By:        Ikamjot Hundal 
+ * Last Modified By:        Alexander Maynard 
  * Last Modified Date:      December 12, 2023
  * 
  * Program Description:     This is script manages the PlayerAbilities using the StateMachine script implementation. 
@@ -73,9 +73,13 @@
  *                          
  *                          December 11, 2023:
  *                              -> Refactored teleportation code to make the player not teleport too high and cause the player to vault over the level height.
+ *                              
  *                          December 12, 2023 (Ikamjot Hundal):
  *                              -> Refactored teleportation code to make the player not teleport outside of the doorways' top.
  *                              -> Refactored teleportation code to rename "NoPhase" to "NoTeleportation"
+ *                          
+ *                          December 12, 2023 (Alexander Maynard):
+ *                              -> Increased the teleport time by a factor of 2.
  */
 
 using TMPro;
@@ -368,7 +372,7 @@ public class PlayerAbilities : MonoBehaviour
         //checks if the time of the ability used is greater than half the time for abilities cooldown and that teleport was used.
         //this is needed as we need time to display "Abilties Status: Teleported!" from the teleport implementation and the "Abilties Status: Cooling down..." in the cooldown implementation.
         //also sets the indicator for 'teleportated' as invisible again
-        if (timeSinceAbilityUsed >= cooldownAfterAbilities/2 && teleported == true)
+        if (timeSinceAbilityUsed * 2 >= cooldownAfterAbilities/2 && teleported == true) // time for teleportation is set to a factor of 2 for a ratio of 1/2 to the phase ability
         {
             //sets the teleport indicator as inactive (or invisible)
             teleportIndicator.SetActive(false);
@@ -379,7 +383,7 @@ public class PlayerAbilities : MonoBehaviour
 
         //checks if the time of the ability used is greater than the time for abilites cooldown and that teleport was used (teleport == true).
         //if so we set the abilitesReadyCheck to true (to transition states) and set teleported back to false
-        if (timeSinceAbilityUsed >= cooldownAfterAbilities && teleported == true)
+        if (timeSinceAbilityUsed * 2 >= cooldownAfterAbilities && teleported == true) // time for teleportation is set to a factor of 2 for a ratio of 1/2 to the phase ability
         {
             //sets the ability check to true to denote that the player ability cooldown is over. This is necessary for the change in state from cooldown to abilitiesReady
             abilitiesReadyCheck = true;
