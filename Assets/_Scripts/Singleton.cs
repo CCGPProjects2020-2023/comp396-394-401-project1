@@ -25,6 +25,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
                 instance = (T)FindObjectOfType(typeof(T));
                 if(instance == null)
                 {
+                    
                     SetupInstance();
                 }
             }
@@ -59,11 +60,14 @@ public class Singleton<T> : MonoBehaviour where T : Component
         if (instance == null)
         {
             instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            if (this != instance)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
