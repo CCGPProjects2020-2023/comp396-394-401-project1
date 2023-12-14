@@ -5,7 +5,7 @@
     Last Date Modified:     December 13, 2023
     Program Description:    Manages the score for the player.
     Revision History:       November 11, 2023 (Audrey Bernier Larose): Initial script and documentation. 
-                            December 13, 2023 (Marcus Ngooi): Added a score reset function and allowed for setting a score back to 0 on play again.
+                            December 13, 2023 (Marcus Ngooi): Allowed Score to be set to 0 for when it needs to be reset.
  */
 using TMPro;
 using UnityEngine;
@@ -30,7 +30,6 @@ public class ScoreManager: MonoBehaviour
     /// </summary>
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         score_text.text = s_score + Score.ToString();
     }
 
@@ -53,15 +52,6 @@ public class ScoreManager: MonoBehaviour
         int temp = _score;
         temp -= score;
         Score = temp;        
-        score_text.text = s_score + Score.ToString();
-    }
-    /// <summary>
-    /// Resets the Score property to 0.
-    /// </summary>
-    /// <param name="score"></param>
-    protected internal void Reset()
-    {
-        Score = 0;
         score_text.text = s_score + Score.ToString();
     }
 }

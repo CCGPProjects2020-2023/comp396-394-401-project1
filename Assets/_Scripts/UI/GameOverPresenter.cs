@@ -19,14 +19,10 @@ public class GameOverPresenter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    // Debug
-    [SerializeField] private ScoreManager scoreManager;
-
     private readonly string scoreString = "Score: ";
 
     private void Start()
     {
-        scoreManager = GameObject.Find("ScoreManager").GetComponent<ScoreManager>();
         // Populate score text with player's score.
         scoreText.text = scoreString + ScoreManager.Score.ToString();
     }
@@ -36,6 +32,7 @@ public class GameOverPresenter : MonoBehaviour
     /// </summary>
     public void OnMainMenuButtonClicked()
     {
+        ScoreManager.Score = 0;
         SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         SceneManager.LoadScene(SceneName.MainMenu.ToString());
     }
@@ -44,7 +41,7 @@ public class GameOverPresenter : MonoBehaviour
     /// </summary>
     public void OnPlayAgainButtonClicked()
     {
-        scoreManager.Reset();
+        ScoreManager.Score = 0;
         SoundManager.Instance.PlaySfx(SfxEvent.ButtonClick);
         SceneManager.LoadScene(SceneName.LevelOneV2.ToString());
     }

@@ -1,8 +1,8 @@
 /*
  * Author's Name:           Alexander  Maynard
  * Creation Date:           December 10, 2023
- * Last Modified By:        Alexander Maynard
- * Last Modified Date:      December 10, 2023
+ * Last Modified By:        Marcus Ngooi
+ * Last Modified Date:      December 13, 2023
  * 
  * Program Description:     This script handles the InGamePauseMenu being called and it's functionality like calling main menu and resume.
  * 
@@ -13,6 +13,8 @@
  *                              -> Refactored the pause menu to only pause on tab and resume with the resume button.
  *                              -> Made the isPaused bool public get and private set to restrict setting to only this class but to be able to be read from other classes.
  *                              -> Fixed bug for not moving once you pressing Pause -> enter Main Menu -> hit play. 
+ *                          December 13, 2023 (Marcus Ngooi):
+ *                              -> Reset score on going back to main menu.
  */
 
 using System.Runtime.CompilerServices;
@@ -119,6 +121,8 @@ public class InGamePauseMenu : MonoBehaviour
     /// </summary>
     private void MainMenuBtn()
     {
+        //reset score
+        ScoreManager.Score = 0;
         //load the main menu scene
         SceneManager.LoadScene(0);
     }
