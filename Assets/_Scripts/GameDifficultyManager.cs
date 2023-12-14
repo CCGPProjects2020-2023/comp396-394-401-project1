@@ -29,13 +29,20 @@ public class GameDifficultyManager : Singleton<GameDifficultyManager>
     [SerializeField] private GameDifficulty currentGameDifficulty = GameDifficulty.EASY;
 
     public GameDifficulty CurrentGameDifficulty { get { return currentGameDifficulty; } }
-
+    /// <summary>
+    /// Awake method called by Unity. It adds an event listener on scene loaded.
+    /// </summary>
     private void Awake()
     {
         base.Awake();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    /// <summary>
+    /// Triggers logic when a scene loads. This function was made specifically to handle the feedback panel.
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="mode"></param>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == SceneName.OptionsMenu.ToString())
@@ -99,6 +106,11 @@ public class GameDifficultyManager : Singleton<GameDifficultyManager>
         feedbackText.text = $"{currentGameDifficulty} difficulty selected!";
         StartCoroutine(ShowAndHide(displayTime));
     }
+    /// <summary>
+    /// Shows the feedback window for a set amount of time.
+    /// </summary>
+    /// <param name="displayTime"></param>
+    /// <returns></returns>
     IEnumerator ShowAndHide(float displayTime)
     {
         feedbackPanel.SetActive(true);

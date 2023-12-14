@@ -25,6 +25,7 @@ public class InstructionsPresenter : MonoBehaviour
         }
         UpdateView();
     }
+    // OnDestroy is called when the game object is destroyed.
     private void OnDestroy()
     {
         if (instructions != null)
