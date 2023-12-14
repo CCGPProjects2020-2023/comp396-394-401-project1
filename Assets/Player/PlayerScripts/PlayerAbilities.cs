@@ -288,17 +288,11 @@ public class PlayerAbilities : MonoBehaviour
         //text to display to the user for the status of the abilites --> on the player UI
         abilitiesStatusText.text = "Abilties Status: Teleported!";
 
-        //Debug.Log("Player just teleported");
-
-
         //bit wise shift for layerMask. It is used so the raycast should only hit "Default", "Ground" or Phaseable walls layer
         int layerMask = (1 << 0) | (1 << 3) | (1 << 6) | (1 << 12);
 
         // a layer to prevent any teleportation outside of the top of the doorway
         int layerToIgnore = (1 << 14);
-
-   
-
 
         //ray to be cast from the center of the screen (where the mouse or reticle is)
         Ray teleportRay = playerCam.ScreenPointToRay(Input.mousePosition);
@@ -307,7 +301,6 @@ public class PlayerAbilities : MonoBehaviour
         //set the teleport point where the ray hits a collider on layer "Default"
         if (Physics.Raycast(teleportRay, out RaycastHit teleportPoint, Mathf.Infinity, layerMask))
         {
-
             //checks if player is too high in the levels to not teleport over the top of the levels.
             if(teleportPoint.point.y > 9f)
             {
@@ -368,10 +361,7 @@ public class PlayerAbilities : MonoBehaviour
     /// </summary>
     private void Cooldown()
     {
-        //Debug.Log("Ability is cooling down");
-
         //***------CHECKS FOR TELEPORT BEGIN------***
-
         //checks if the time of the ability used is greater than half the time for abilities cooldown and that teleport was used.
         //this is needed as we need time to display "Abilties Status: Teleported!" from the teleport implementation and the "Abilties Status: Cooling down..." in the cooldown implementation.
         //also sets the indicator for 'teleportated' as invisible again
@@ -383,7 +373,6 @@ public class PlayerAbilities : MonoBehaviour
             //text to display to the user for the status of the abilites
             abilitiesStatusText.text = "Abilties Status: Cooling down...";
         }
-
         //checks if the time of the ability used is greater than the time for abilites cooldown and that teleport was used (teleport == true).
         //if so we set the abilitesReadyCheck to true (to transition states) and set teleported back to false
         if (timeSinceAbilityUsed >= (cooldownAfterAbilities * teleportTimeFactor) && teleported == true) // time for entire teleportation cooldown is set to a factor of 2 for a ratio of 1/2 to the phase ability
@@ -394,9 +383,6 @@ public class PlayerAbilities : MonoBehaviour
         }
         
         //***------CHECKS FOR TELEPORT END ------***
-
-
-
         //***------CHECK FOR PHASE COOLDOWN BEGIN------***
 
         //checks if the timeSince an ability was used is >= to the phase duration set and that isPhasing == true 

@@ -20,7 +20,10 @@ public class GameOverPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private readonly string scoreString = "Score: ";
-
+    /// <summary>
+    /// Start method called by Unity. It initializes the states
+    /// and properties of this controller.
+    /// </summary>
     private void Start()
     {
         // Populate score text with player's score.

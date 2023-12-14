@@ -32,7 +32,6 @@ public class InGamePauseMenu : MonoBehaviour
     //GameObject reference to the ingamePause menu.
     [SerializeField] private GameObject _inGamePauseMenu;
 
-
     /// <summary>
     /// set isPaused to false to start off.
     /// </summary>
@@ -40,8 +39,6 @@ public class InGamePauseMenu : MonoBehaviour
     {
         isPaused = false;
     }
-
-
 
     /// <summary>
     /// Update just checks if the ESC key is pressed to appply it's functionality.
@@ -85,7 +82,6 @@ public class InGamePauseMenu : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// If the ResumeGameBtn in the scene is called then this function gets called.
     /// Calls the private PauseGame functionality again to up-pause the scene.
@@ -97,9 +93,6 @@ public class InGamePauseMenu : MonoBehaviour
         //call this again as _isPaused will be inverted anyway to resume the game in PauseGameCheck();
         PauseGameCheck();
     }
-
-
-
 
     // <summary>
     /// If the Main Menu Btn in the scene is called then this function gets called.
